@@ -19,6 +19,10 @@ def build_expanded(page, url, ROOT, DIST, CHECKED):
             detail = f'<p>{e(r["summary"])}</p><p class="note">Checked {e(r["checked"])} · <a href="{e(r["source"])}" rel="noopener noreferrer">Official rules</a></p>'
             if r.get("plans"):
                 detail += "<div class=table-scroll><table><thead><tr><th>Phase</th><th>Target</th><th>Daily loss</th><th>Max loss</th><th>Days</th></tr></thead><tbody>" + "".join(f"<tr><td>{e(a)}</td><td>{b}%</td><td>{c}%</td><td>{d}%</td><td>{n}</td></tr>" for a,b,c,d,n in r["plans"]) + "</tbody></table></div>"
+        if r.get("account_plans"):
+            detail += '<div class="table-scroll"><table><thead><tr><th>Account</th><th>Published base price / fees</th><th>Target</th><th>Drawdown</th><th>Consistency</th></tr></thead><tbody>' + "".join("<tr>"+"".join("<td>"+e(str(p.get(k,"Not verified")))+"</td>" for k in ["label","price","target","dd","consistency"])+"</tr>" for p in r["account_plans"])+"</tbody></table></div>"
+        if r.get("pricing_sources"):
+            detail += "<ul>"+"".join(f'<li><a href="{e(u)}" rel="noopener noreferrer">{e(t)}</a></li>' for u,t in r["pricing_sources"])+"</ul>"
         link = url(firm_path(r))
         action = "View firm rules" if known else "View firm profile"
         if not known:
