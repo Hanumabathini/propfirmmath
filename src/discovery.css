@@ -169,7 +169,7 @@ header.site :focus-visible, footer.site :focus-visible, .site-home :focus-visibl
   position: absolute;
   inset: 0;
   z-index: -2;
-  background: url("assets/market-night.webp") center 49% / cover no-repeat;
+  background: url("assets/trading-chart.webp") center 49% / cover no-repeat;
 }
 
 .discover-hero::after {
@@ -408,41 +408,24 @@ header.site :focus-visible, footer.site :focus-visible, .site-home :focus-visibl
 .coverage-label.covered { border-color: #547f72; color: var(--mint); }
 
 .discover-workspace {
-  position: relative;
-  isolation: isolate;
-  overflow: hidden;
   display: grid;
-  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
   align-items: center;
   gap: clamp(18px, 5vw, 56px);
   padding: clamp(20px, 4.5vw, 58px);
-  min-height: 360px;
   background: var(--night-panel);
   border: 1px solid var(--night-line);
   border-radius: 8px;
 }
-.discover-workspace-image, .discover-workspace::before {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-}
-.discover-workspace-image { z-index: -2; object-fit: cover; object-position: center 62%; }
-.discover-workspace::before {
-  content: "";
-  z-index: -1;
-  background: linear-gradient(90deg, #090e17f2, #090e1780 65%, #090e174d);
-}
+.discover-workspace-preview { margin: 0; }
+.discover-workspace-preview img { display: block; width: 100%; height: auto; border-radius: 8px; }
+.discover-workspace-preview figcaption { margin-top: 8px; color: var(--night-muted); font-size: .8rem; }
 .discover-workspace p { max-width: 53ch; color: var(--night-muted); }
 .discover-workspace-links {
   display: grid;
-  align-self: end;
-  padding: 0 15px;
-  border: 1px solid var(--night-line);
-  border-radius: 6px;
-  background: #101923f0;
+  margin-top: 20px;
+  border-top: 1px solid var(--night-line);
 }
-.discover-workspace-links a:last-child { border-bottom: 0; }
 .discover-workspace-links a { justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--night-line); }
 .discover-disclaimer { margin-top: 24px; }
 
@@ -456,8 +439,6 @@ header.site :focus-visible, footer.site :focus-visible, .site-home :focus-visibl
   .discover-scene { background-position: 64% top; }
   .discover-hero::after { background: linear-gradient(90deg, #090e17ed, #090e1766), linear-gradient(0deg, var(--night) 5%, #090e1700 80%); }
   .discover-workspace { grid-template-columns: 1fr; }
-  .discover-workspace-image { object-position: 65% center; }
-  .discover-workspace::before { background: #090e17bf; }
 }
 
 @media (max-width: 520px) {

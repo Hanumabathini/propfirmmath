@@ -167,11 +167,14 @@ def build_prop(h):
   <div class="discover-tools">{tools}</div>
 </section>
 <section class="discover-workspace">
-  <img class="discover-workspace-image" src="{url('assets/trading-desk.webp')}" alt="" width="1200" height="675" loading="lazy" decoding="async">
   <div><h2>One workspace.<br>Every account.</h2><p>Track your journal, compare account performance and separate trading P/L from actual cash received. Preview memberships with 1, 10 or 25 active accounts.</p>
   <div class="discover-actions"><a class="discover-primary" href="{url('account/')}">Open the dashboard</a><a class="discover-secondary" href="{url('membership/')}">See memberships</a></div>
-  <p class="discover-note">Local demonstration only. Registration, cloud storage and payments are not connected.</p></div>
-  <div class="discover-workspace-links"><a href="{url('plan-compare/')}">Plan analysis &amp; daily journal <span class="route-arrow" aria-hidden="true"></span></a><a href="{url('global-traders/')}">International payout estimates <span class="route-arrow" aria-hidden="true"></span></a><a href="{url('workspace/')}">Portfolio payout scenarios <span class="route-arrow" aria-hidden="true"></span></a></div>
+  <p class="discover-note">Local demonstration only. Registration, cloud storage and payments are not connected.</p>
+  <div class="discover-workspace-links"><a href="{url('plan-compare/')}">Plan analysis &amp; daily journal <span class="route-arrow" aria-hidden="true"></span></a><a href="{url('global-traders/')}">International payout estimates <span class="route-arrow" aria-hidden="true"></span></a><a href="{url('workspace/')}">Portfolio payout scenarios <span class="route-arrow" aria-hidden="true"></span></a></div></div>
+  <figure class="discover-workspace-preview">
+    <img src="{url('assets/portfolio-preview.webp')}" alt="PropFirmMath portfolio chart showing cumulative trading profit and loss over ten sample trading days." width="1100" height="545" loading="lazy" decoding="async">
+    <figcaption>PropFirmMath workspace with sample data</figcaption>
+  </figure>
 </section>
 <p class="discover-note discover-disclaimer">Independent planning tools, not financial advice or a guarantee of eligibility. Sources and limitations are disclosed on each firm profile.</p>
 </div><script defer src="{url('home-finder.js')}"></script>"""

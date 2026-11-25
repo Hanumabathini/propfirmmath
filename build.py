@@ -38,7 +38,7 @@ def page(path, title, desc, body, schema=None, crumbs=None):
     if LIVE_DEALS: nav_html += f'<a href="{url("deals/")}">Deals</a>'
     nav_html += f'<a href="{url("membership/")}">Membership</a><a class="nav-account" href="{url("account/")}">My dashboard</a>'
     home_class = ' class="site-home"' if not path else ""
-    hero_preload = f'<link rel="preload" as="image" href="{url("assets/market-night.webp")}">' if not path else ""
+    hero_preload = f'<link rel="preload" as="image" href="{url("assets/trading-chart.webp")}">' if not path else ""
     canon = abs_url(path)
     blocks = list(schema or [])
     if crumbs:
