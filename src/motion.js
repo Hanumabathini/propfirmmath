@@ -21,7 +21,10 @@
     }));
     output.forEach(el=>{last.set(el,el.textContent);observer.observe(el,{childList:true,subtree:true,characterData:true});});
   }
-  const inputs = document.querySelectorAll('main input:not([type=hidden]), main select, main textarea');
+  // Only attach scenario copying to actual calculation sections, not directory or comparison grids.
+  const target=document.querySelector('main .calc');
+  if(!target)return;
+  const inputs = target.querySelectorAll('input:not([type=hidden]), select, textarea');
   if(!inputs.length)return;
   const bar=document.createElement('div');
   bar.className='scenario-tools';
@@ -40,6 +43,5 @@
     catch{status.textContent='Clipboard unavailable in this browser.';}
   });
   bar.append(button,status);
-  const target=document.querySelector('main .calc')||inputs[0].closest('.card');
-  if(target)target.after(bar);
+  target.after(bar);
 })();
