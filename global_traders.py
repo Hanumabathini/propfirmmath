@@ -1,29 +1,34 @@
-"""International trader: transparent payout scenario, not firm approval or real-time FX."""
-import shutil
+"""Country-aware payout tracker; never assumes regional eligibility or live FX."""
+import shutil,json,html
+from expanded import firm_path
 def build_global_traders(page,url,ROOT,DIST,checked):
     shutil.copy(ROOT/"src/global-traders.js",DIST/"global-traders.js")
-    body='''<h1>Funded trading has borders. Your math should know them.</h1>
-<p class="lede">Estimate the local-currency amount from a hypothetical approved USD payout, using your actual exchange rate and transfer fees. Verify citizenship, residence, account type and payout path with the firm first.</p>
-<div class="warn"><strong>Eligibility is not automatic.</strong> Topstep changed its country restrictions on 17 November 2026. Tradeify has a separate restricted-country list, and availability may depend on residence, citizenship or account type. Selecting a country here never means you can buy a challenge or receive a payout.</div>
-<section class="calc" id="global-traders">
-<div class="card"><h2 style="margin-top:0">Your international payout scenario</h2>
-<div class="fields">
-<div class="full"><label for="gt-firm">Firm to verify (links below are official)</label><select id="gt-firm"><option value="topstep">Topstep</option><option value="tradeify">Tradeify</option><option value="mffu">MyFundedFutures</option><option value="other">Other firm / custom</option></select></div>
-<div class="full"><label for="gt-country">Country of permanent residence (for your own review, not an eligibility verdict)</label><select id="gt-country"><option value="">Select your location</option><option>United States</option><option>Canada</option><option>United Kingdom</option><option>India</option><option>Australia</option><option>Germany</option><option>France</option><option>Brazil</option><option>Mexico</option><option>South Africa</option><option>United Arab Emirates</option><option>Philippines</option><option>Singapore</option><option>Japan</option><option>Other country</option></select></div>
-<div class="full"><label for="gt-currency">Receiving-account currency</label><select id="gt-currency"><option>USD</option><option>EUR</option><option>GBP</option><option>CAD</option><option>AUD</option><option>INR</option><option>BRL</option><option>MXN</option><option>ZAR</option><option>AED</option><option>PHP</option><option>SGD</option><option>JPY</option><option>NZD</option><option>CHF</option><option>TRY</option><option>PKR</option><option>NGN</option><option>BDT</option><option>KRW</option><option>Other</option></select></div>
+    records=json.loads((ROOT/"data/directory.json").read_text())
+    firms={f["name"]:f for f in json.loads((ROOT/"data/prop.json").read_text())["firms"].values()}
+    entries=[]
+    for r in records:
+        f=firms.get(r["name"],{})
+        plans=[{"label":p.get("label",str(p.get("size",""))),"price":p.get("price","Not verified"),"target":p.get("target"),"dd":p.get("dd")} for p in f.get("plans",[])]
+        plans += [{"label":"2-Step · "+p[0],"price":"Not verified","target":str(p[1])+"%","dd":str(p[3])+"%"} for p in r.get("plans",[])]
+        entries.append({"name":r["name"],"category":r["category"],"status":r["status"],"profile":url(firm_path(r)),"plans":plans or [{"label":"Custom / not verified","price":"Not verified"}]})
+    payload=json.dumps(entries,ensure_ascii=True).replace("<","\\u003c")
+    body=f"""<h1>Global trackers</h1><p class="lede">Choose your country, browse firm accounts and estimate your payout in your local currency. Regional approval and live checkout pricing are not implied.</p>
+<section class="card"><h2 style="margin-top:0">Country and account</h2><div class="fields">
+<div><label for="gt-country">Country of residence</label><select id="gt-country"><option value="">Select country</option></select></div>
+<div><label for="gt-currency">Receiving currency</label><select id="gt-currency"></select></div>
+<div><label for="gt-firm">Prop firm</label><select id="gt-firm"></select></div>
+<div><label for="gt-plan">Account / plan</label><select id="gt-plan"></select></div>
+</div><p id="gt-eligibility" class="note" role="status"></p><p id="gt-plan-price" class="note"></p><p><a id="gt-profile" href="{url('directory/')}">View firm profile</a> · <a id="gt-policy" href="{url('directory/')}">Review regional rules</a></p></section>
+<section class="calc" id="global-traders" style="margin-top:20px">
+<div class="card"><h2 style="margin-top:0">Payout scenario</h2><div class="fields">
 <div><label for="gt-gross">Gross approved payout, USD</label><input id="gt-gross" type="number" min="0" step=".01" value="2000"></div>
-<div><label for="gt-split">Trader payout share, %</label><input id="gt-split" type="number" min="0" max="100" step=".1" value="90"></div>
+<div><label for="gt-split">Trader payout share, % (manual)</label><input id="gt-split" type="number" min="0" max="100" step=".1" value="90"></div>
 <div><label for="gt-transfer">Bank / transfer fees, USD</label><input id="gt-transfer" type="number" min="0" step=".01" value="0"></div>
-<div><label for="gt-tax">Estimated withholding / taxes, % (optional)</label><input id="gt-tax" type="number" min="0" max="100" step=".1" value="0"></div>
-<div class="full"><label for="gt-fx">Real FX rate: receiving currency per 1 USD (enter provider's quoted rate)</label><input id="gt-fx" type="number" min="0" step="any" placeholder="Required; no exchange rate is guessed"></div>
-<div class="full"><label for="gt-markup">Extra FX / provider markup, % (0 if already included in the rate)</label><input id="gt-markup" type="number" min="0" max="100" step=".1" value="0"></div>
-</div><p class="note">Do not enter a firm balance as an approved payout. Many firms require winning days, minimum buffers, payout windows, KYC and approval. USD inputs above are illustrative until you supply your own.</p></div>
-<div class="card" aria-live="polite"><h2 style="margin-top:0">Modeled amount received</h2><p id="gt-status" class="note"></p><div id="gt-total" class="big">—</div><div class="kpis"><div class="kpi"><small>Trader share, USD</small><b id="gt-share">—</b></div><div class="kpi"><small>After USD charges</small><b id="gt-net">—</b></div><div class="kpi"><small>Conversion rate used</small><b id="gt-rate">—</b></div></div><p class="note">Not a payout eligibility decision, tax calculation, or guaranteed bank amount. Your payment provider may impose additional charges.</p></div></section>
-<h2>Verify your country before paying for an evaluation</h2>
-<ul class="grid-links two"><li><a rel="noopener" target="_blank" href="https://help.topstep.com/en/articles/8284116-am-i-eligible-to-trade-with-topstep">Topstep eligibility rules<small>Official citizenship/residency restrictions and Live vs Express eligibility. Updated 17 November 2026.</small></a></li>
-<li><a rel="noopener" target="_blank" href="https://help.tradeify.co/en/articles/10495888-rules-restricted-countries">Tradeify restricted countries<small>Official residence-based restrictions; not the same as Topstep.</small></a></li>
-<li><a rel="noopener" target="_blank" href="https://www.myfundedfutures.com/">MyFundedFutures<small>Check current residency, payout, KYC and plan terms with the firm directly.</small></a></li>
-<li><a rel="noopener" target="_blank" href="https://wise.com/help/articles/2932395/whats-the-mid-market-exchange-rate">What exchange rate should I enter?<small>Read the provider quote for your conversion date; mid-market and actual received rates can differ.</small></a></li></ul>
-<h2>What the existing firm calculators do</h2><p><a href="'''+url("consistency-rule-calculator/")+'''">Consistency</a>, <a href="'''+url("prop-firm-payout-calculator/")+'''">payout estimates</a>, <a href="'''+url("trailing-drawdown-calculator/")+'''">trailing drawdown</a> and <a href="'''+url("futures-position-size-calculator/")+'''">contract risk</a> are independent mathematical models. They do not determine regional legal eligibility.</p>
-<script src="'''+url("global-traders.js")+'''"></script>'''
-    page("global-traders/","Worldwide funded trader payout estimator | PropFirmMath","Transparent international trader payout conversion. Enter a real quoted FX rate and verify country eligibility with official firm rules.",body,crumbs=[("Home",""),("Global traders","global-traders/")])
+<div><label for="gt-tax">Estimated withholding, % (optional)</label><input id="gt-tax" type="number" min="0" max="100" step=".1" value="0"></div>
+<div class="full"><label for="gt-fx">Provider FX quote (receiving currency per USD)</label><input id="gt-fx" type="number" min="0" step="any" placeholder="Enter actual quote"></div>
+<div class="full"><label for="gt-markup">Extra conversion cost, % (0 if included)</label><input id="gt-markup" type="number" min="0" max="100" step=".1" value="0"></div>
+</div><p class="note">Enter an approved gross payout, not the account balance. The split and costs are your assumptions, not automatically verified plan rules.</p></div>
+<div class="card" aria-live="polite"><h2 style="margin-top:0">Estimated local payout</h2><p id="gt-status" class="note"></p><div id="gt-total" class="big">—</div><div class="kpis"><div class="kpi"><small>Trader share, USD</small><b id="gt-share">—</b></div><div class="kpi"><small>After USD charges</small><b id="gt-net">—</b></div><div class="kpi"><small>Effective FX rate</small><b id="gt-rate">—</b></div></div></div></section>
+<h2>Accounts for your selected country</h2><p class="note">All research entries are visible. Country eligibility is unverified unless an explicit official policy establishes it. Check citizenship, residence, KYC, platform and plan restrictions.</p><div class="table-scroll"><table><thead><tr><th>Firm</th><th>Regional status</th><th>Account / plan</th><th>Published base price</th><th>Local price estimate</th></tr></thead><tbody id="gt-accounts"></tbody></table></div>
+<p class="note">Local amounts convert published USD base prices only when the price is explicitly identified as a single USD amount. Checkout fees and taxes may differ.</p><script type="application/json" id="gt-data">{payload}</script><script defer src="{url('global-traders.js')}"></script>"""
+    page("global-traders/","Global trackers | PropFirmMath","Country-aware firm account research and international payout calculator.",body,crumbs=[("Home",""),("Global trackers","global-traders/")])
