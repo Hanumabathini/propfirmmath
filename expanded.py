@@ -1,5 +1,8 @@
 """Interactive research directory and user-input scenario workspace."""
-import json, html, shutil
+import json, html, shutil, re
+
+def firm_path(r):
+    return r.get('path') or 'firms/' + re.sub(r'[^a-z0-9]+','-',r['name'].lower()).strip('-') + '/'
 def build_expanded(page, url, ROOT, DIST, CHECKED):
     e = html.escape
     records = json.loads((ROOT / "data/directory.json").read_text())
@@ -16,8 +19,12 @@ def build_expanded(page, url, ROOT, DIST, CHECKED):
             detail = f'<p>{e(r["summary"])}</p><p class="note">Checked {e(r["checked"])} · <a href="{e(r["source"])}" rel="noopener noreferrer">Official rules</a></p>'
             if r.get("plans"):
                 detail += "<div class=table-scroll><table><thead><tr><th>Phase</th><th>Target</th><th>Daily loss</th><th>Max loss</th><th>Days</th></tr></thead><tbody>" + "".join(f"<tr><td>{e(a)}</td><td>{b}%</td><td>{c}%</td><td>{d}%</td><td>{n}</td></tr>" for a,b,c,d,n in r["plans"]) + "</tbody></table></div>"
-        link = url(r["path"]) if known else url("workspace/")
-        action = "View existing calculator" if known else "Use manual scenario"
+        link = url(firm_path(r))
+        action = "View firm rules" if known else "View firm profile"
+        if not known:
+            profile = f"""<h1>{name}</h1><p class="lede">{category} · {status}</p>{detail}<div class="warn">This profile is not a complete rule set. Account availability, eligibility and terms require independent confirmation. Do not treat missing rules as zero or unlimited.</div><h2>Account and rule coverage</h2><div class="table-scroll"><table><thead><tr><th>Rule</th><th>Data status</th></tr></thead><tbody>""" + "".join(f"<tr><td>{e(k)}</td><td>Not fully verified</td></tr>" for k in ["Account sizes and fees","Profit targets","Drawdown and daily loss","Contract limits","Consistency","Payout minimum and cap","Profit split","Minimum trading days","Country restrictions"]) + "</tbody></table></div>"
+            profile += "<h2>Calculate using your own confirmed rules</h2><ul class=grid-links>" + "".join(f'<li><a href="{url(p)}">{e(t)}</a></li>' for p,t in [("workspace/","Multi-account workspace"),("prop-firm-payout-calculator/","Payout calculator"),("consistency-rule-calculator/","Consistency calculator"),("trailing-drawdown-calculator/","Drawdown calculator"),("profit-target-calculator/","Profit target planner"),("futures-position-size-calculator/","Futures position size"),("plan-compare/","Manual plan comparison"),("directory/","All firms")]) + "</ul>"
+            page(firm_path(r), r["name"]+" — Prop firm research profile", "Research status and manual calculators for "+r["name"]+".", profile, crumbs=[("Home",""),("Firm directory","directory/"),(r["name"],firm_path(r))])
         cards.append(f'<article class="directory-card card" data-category="{category}" data-status="{r["status"]}" data-name="{name.lower()}"><small>{category}</small><h3>{name}</h3><p class="note">{status}</p>{detail}<a class="btn" href="{link}">{action}</a></article>')
     directory = f"""<section class="experience-hero"><div class="eyebrow">GLOBAL RESEARCH DIRECTORY</div><h1>Explore funded trading programs.</h1><p class="lede">Discover research targets and existing sourced presets. Listing is not proof of current availability or eligibility.</p><div class="metric-strip"><strong>{len(records)}</strong> research entries <span>•</span> <strong>{sum(r["status"]=="sourced-preset" for r in records)}</strong> existing preset entries</div></section><section class="filter-panel card"><div class="fields"><div><label for="directory-search">Search by name</label><input id="directory-search" type="text" placeholder="Search directory"></div><div><label for="directory-category">Category</label><select id="directory-category"><option value="">All categories</option>{opts}</select></div><div><label for="directory-status">Data status</label><select id="directory-status"><option value="">All statuses</option><option value="sourced-preset">Existing sourced preset</option><option value="partial-source">Partial official rules</option><option value="research-needed">Research pending</option></select></div></div><p id="directory-count" role="status"></p></section><div class="directory-grid" id="directory-grid">{''.join(cards)}</div><p class="note">Research entries are not endorsements. Check official terms before paying or applying.</p><script defer src="{url('expanded.js')}"></script>"""
     page("directory/", "Global prop firm research directory", "Search existing sourced presets and research targets.", directory)
