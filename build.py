@@ -57,7 +57,7 @@ def page(path, title, desc, body, schema=None, crumbs=None):
 {gsc}
 {ld}</head><body>
 <header class="site"><div class="wrap"><a class="logo" href="{url('')}">PropFirm<span>Math</span></a>
-<nav class="top"><a href="{url('')}">Calculators</a><a href="{url('prop-firm-comparison/')}">Compare firms</a><a href="{url('global-traders/')}">Global traders</a><a href="{url('plan-compare/')}">Plan analysis</a><a href="{url('topstep-rules/')}">Topstep</a><a href="{url('tradeify-rules/')}">Tradeify</a><a href="{url('myfundedfutures-rules/')}">MFFU</a></nav></div></header>
+<nav class="top"><a href="{url('')}">Calculators</a><a href="{url('prop-firm-comparison/')}">Compare firms</a><a href="{url('global-traders/')}">Global traders</a><a href="{url('plan-compare/')}">Plan analysis</a><a href="{url('topstep-rules/')}">Topstep</a><a href="{url('tradeify-rules/')}">Tradeify</a><a href="{url('myfundedfutures-rules/')}">MFFU</a><a href="{url('directory/')}">Directory</a><a href="{url('workspace/')}">Workspace</a></nav></div></header>
 {crumb_html}
 <main class="wrap">
 {body}
@@ -118,6 +118,9 @@ def build():
     build_plan_comparison(page, url, ROOT, DIST, CHECKED)
     from global_traders import build_global_traders
     build_global_traders(page, url, ROOT, DIST, CHECKED)
+
+    from expanded import build_expanded
+    build_expanded(page, url, ROOT, DIST, CHECKED)
 
     today = datetime.date.today().isoformat()
     (DIST / "sitemap.xml").write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
