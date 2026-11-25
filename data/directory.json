@@ -1,0 +1,170 @@
+[
+  {
+    "name": "Topstep",
+    "category": "Futures",
+    "path": "topstep-rules/",
+    "status": "sourced-preset"
+  },
+  {
+    "name": "Apex Trader Funding",
+    "category": "Futures",
+    "path": null,
+    "status": "research-needed"
+  },
+  {
+    "name": "Tradeify",
+    "category": "Futures",
+    "path": "tradeify-rules/",
+    "status": "sourced-preset"
+  },
+  {
+    "name": "MyFundedFutures",
+    "category": "Futures",
+    "path": "myfundedfutures-rules/",
+    "status": "sourced-preset"
+  },
+  {
+    "name": "Take Profit Trader",
+    "category": "Futures",
+    "path": null,
+    "status": "research-needed"
+  },
+  {
+    "name": "Earn2Trade",
+    "category": "Futures",
+    "path": null,
+    "status": "research-needed"
+  },
+  {
+    "name": "Bulenox",
+    "category": "Futures",
+    "path": null,
+    "status": "research-needed"
+  },
+  {
+    "name": "OneUp Trader",
+    "category": "Futures",
+    "path": null,
+    "status": "research-needed"
+  },
+  {
+    "name": "UProfit",
+    "category": "Futures",
+    "path": null,
+    "status": "research-needed"
+  },
+  {
+    "name": "TickTickTrader",
+    "category": "Futures",
+    "path": null,
+    "status": "research-needed"
+  },
+  {
+    "name": "FundedNext Futures",
+    "category": "Futures",
+    "path": null,
+    "status": "research-needed"
+  },
+  {
+    "name": "TradeDay",
+    "category": "Futures",
+    "path": null,
+    "status": "research-needed"
+  },
+  {
+    "name": "Elite Trader Funding",
+    "category": "Futures",
+    "path": null,
+    "status": "research-needed"
+  },
+  {
+    "name": "The Trading Pit",
+    "category": "Futures",
+    "path": null,
+    "status": "research-needed"
+  },
+  {
+    "name": "FTMO",
+    "category": "Forex and CFD",
+    "path": null,
+    "status": "research-needed"
+  },
+  {
+    "name": "The5ers",
+    "category": "Forex and CFD",
+    "path": null,
+    "status": "research-needed"
+  },
+  {
+    "name": "FundedNext",
+    "category": "Forex and CFD",
+    "path": null,
+    "status": "research-needed"
+  },
+  {
+    "name": "E8 Markets",
+    "category": "Forex and CFD",
+    "path": null,
+    "status": "research-needed"
+  },
+  {
+    "name": "FundingPips",
+    "category": "Forex and CFD",
+    "path": null,
+    "status": "research-needed"
+  },
+  {
+    "name": "Alpha Capital Group",
+    "category": "Forex and CFD",
+    "path": null,
+    "status": "research-needed"
+  },
+  {
+    "name": "FXIFY",
+    "category": "Forex and CFD",
+    "path": null,
+    "status": "research-needed"
+  },
+  {
+    "name": "City Traders Imperium",
+    "category": "Forex and CFD",
+    "path": null,
+    "status": "research-needed"
+  },
+  {
+    "name": "Audacity Capital",
+    "category": "Forex and CFD",
+    "path": null,
+    "status": "research-needed"
+  },
+  {
+    "name": "Blue Guardian",
+    "category": "Forex and CFD",
+    "path": null,
+    "status": "research-needed"
+  },
+  {
+    "name": "Funded Trading Plus",
+    "category": "Forex and CFD",
+    "path": null,
+    "status": "research-needed"
+  },
+  {
+    "name": "FunderPro",
+    "category": "Forex and CFD",
+    "path": null,
+    "status": "research-needed"
+  },
+  {
+    "name": "Goat Funded Trader",
+    "category": "Forex and CFD",
+    "path": null,
+    "status": "research-needed"
+  },
+  {
+    "name": "DNA Funded",
+    "category": "Forex and CFD",
+    "path": null,
+    "status": "research-needed"
+  }
+]
