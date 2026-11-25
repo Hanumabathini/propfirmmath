@@ -70,7 +70,173 @@
     "name": "Tradeify",
     "category": "Futures",
     "path": "tradeify-rules/",
-    "status": "sourced-preset"
+    "status": "sourced-preset",
+    "account_plans": [
+      {
+        "label": "Growth 25K",
+        "price": "$99 one time; reset $60",
+        "consistency": "None in evaluation; 35% for funded payouts",
+        "days": "Not verified",
+        "target": "Not verified",
+        "dd": "Not verified",
+        "dll": "Not verified",
+        "contracts": "Not verified",
+        "dd_type": "Not verified"
+      },
+      {
+        "label": "Growth 100K",
+        "price": "$255 one time; reset $169",
+        "consistency": "None in evaluation; 35% for funded payouts",
+        "days": "Not verified",
+        "target": "Not verified",
+        "dd": "Not verified",
+        "dll": "Not verified",
+        "contracts": "Not verified",
+        "dd_type": "Not verified"
+      },
+      {
+        "label": "Growth 150K",
+        "price": "$369 one time; reset $229",
+        "consistency": "None in evaluation; 35% for funded payouts",
+        "days": "Not verified",
+        "target": "Not verified",
+        "dd": "Not verified",
+        "dll": "Not verified",
+        "contracts": "Not verified",
+        "dd_type": "Not verified"
+      },
+      {
+        "label": "Select 25K",
+        "price": "$109 one time; reset $75",
+        "consistency": "40% in evaluation",
+        "days": "3",
+        "target": "Not verified",
+        "dd": "Not verified",
+        "dll": "Not verified",
+        "contracts": "Not verified",
+        "dd_type": "Not verified"
+      },
+      {
+        "label": "Select 100K",
+        "price": "$265 one time; reset $169",
+        "consistency": "40% in evaluation",
+        "days": "3",
+        "target": "Not verified",
+        "dd": "Not verified",
+        "dll": "Not verified",
+        "contracts": "Not verified",
+        "dd_type": "Not verified"
+      },
+      {
+        "label": "Select 150K",
+        "price": "$369 one time; reset $239",
+        "consistency": "40% in evaluation",
+        "days": "3",
+        "target": "Not verified",
+        "dd": "Not verified",
+        "dll": "Not verified",
+        "contracts": "Not verified",
+        "dd_type": "Not verified"
+      },
+      {
+        "label": "Select 300K",
+        "price": "$570 one time; no reset available",
+        "consistency": "40% in evaluation",
+        "days": "3",
+        "target": "Not verified",
+        "dd": "Not verified",
+        "dll": "Not verified",
+        "contracts": "Not verified",
+        "dd_type": "Not verified"
+      },
+      {
+        "label": "Select 50% add-on 25K",
+        "price": "$135 one time; reset $90",
+        "consistency": "50% in evaluation",
+        "days": "2",
+        "target": "Not verified",
+        "dd": "Not verified",
+        "dll": "Not verified",
+        "contracts": "Not verified",
+        "dd_type": "Not verified"
+      },
+      {
+        "label": "Select 50% add-on 50K",
+        "price": "$216 one time; reset $152",
+        "consistency": "50% in evaluation",
+        "days": "2",
+        "target": "Not verified",
+        "dd": "Not verified",
+        "dll": "Not verified",
+        "contracts": "Not verified",
+        "dd_type": "Not verified"
+      },
+      {
+        "label": "Select 50% add-on 100K",
+        "price": "$329 one time; reset $230",
+        "consistency": "50% in evaluation",
+        "days": "2",
+        "target": "Not verified",
+        "dd": "Not verified",
+        "dll": "Not verified",
+        "contracts": "Not verified",
+        "dd_type": "Not verified"
+      },
+      {
+        "label": "Select 50% add-on 150K",
+        "price": "$459 one time; reset $319",
+        "consistency": "50% in evaluation",
+        "days": "2",
+        "target": "Not verified",
+        "dd": "Not verified",
+        "dll": "Not verified",
+        "contracts": "Not verified",
+        "dd_type": "Not verified"
+      },
+      {
+        "label": "Lightning 25K",
+        "price": "$345 one time; no reset available",
+        "consistency": "20% → 25% → 30% funded",
+        "days": "No evaluation",
+        "target": "No evaluation",
+        "dd": "Not verified",
+        "dll": "Not verified",
+        "contracts": "Not verified",
+        "dd_type": "Not verified"
+      },
+      {
+        "label": "Lightning 100K",
+        "price": "$660 one time; no reset available",
+        "consistency": "20% → 25% → 30% funded",
+        "days": "No evaluation",
+        "target": "No evaluation",
+        "dd": "Not verified",
+        "dll": "Not verified",
+        "contracts": "Not verified",
+        "dd_type": "Not verified"
+      },
+      {
+        "label": "Lightning 150K",
+        "price": "$796 one time; no reset available",
+        "consistency": "20% → 25% → 30% funded",
+        "days": "No evaluation",
+        "target": "No evaluation",
+        "dd": "Not verified",
+        "dll": "Not verified",
+        "contracts": "Not verified",
+        "dd_type": "Not verified"
+      }
+    ],
+    "pricing_sources": [
+      [
+        "https://help.tradeify.co/en/articles/14369021-tradeify-pricing-reference",
+        "Published price and reset fee schedule"
+      ],
+      [
+        "https://help.tradeify.co/en/articles/10468251-how-many-simulated-funded-accounts-can-i-have-at-once",
+        "Regional account limits"
+      ]
+    ]
   },
   {
     "name": "MyFundedFutures",
