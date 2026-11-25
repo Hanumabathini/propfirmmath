@@ -5,8 +5,8 @@ from urllib.parse import urlsplit, unquote
 import xml.etree.ElementTree as ET
 import os, sys, posixpath
 root=Path("dist")
-base=(os.environ.get("BASE_PATH") or "/").rstrip("/")
-origin=urlsplit(os.environ.get("SITE_URL","https://propfirmmath-xi.vercel.app")).netloc
+base=(os.environ.get("BASE_PATH") or "/propfirmmath").rstrip("/")
+origin=urlsplit(os.environ.get("SITE_URL") or "https://hanumabathini.github.io").netloc
 class Doc(HTMLParser):
     def __init__(self):
         super().__init__(); self.links=[]; self.ids=set(); self.canon=[]; self.h1=0; self.duplicates=[]

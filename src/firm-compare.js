@@ -3,6 +3,13 @@
   const data = JSON.parse(document.getElementById("fc-data").textContent);
   const firms = Array.from(document.querySelectorAll("[data-firm]"));
   const plans = Array.from(document.querySelectorAll("[data-plan]"));
+  const requested = [...new Set(new URLSearchParams(location.search).getAll("firm"))]
+    .map(name => data.findIndex(firm => firm.name === name))
+    .filter(index => index >= 0)
+    .slice(0, firms.length);
+  if (requested.length) {
+    firms.forEach((select, index) => { select.value = requested[index]?.toString() ?? ""; });
+  }
   const defaults = firms.map(select => select.value);
   const table = document.getElementById("fc-table");
   const results = document.getElementById("fc-results");

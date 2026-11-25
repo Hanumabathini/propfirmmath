@@ -33,10 +33,14 @@ from site_pages import validate_deals
 LIVE_DEALS, _DEAL_PROBLEMS = validate_deals(json.loads((ROOT / "data/deals.json").read_text()))
 
 def page(path, title, desc, body, schema=None, crumbs=None):
-    groups = [("Prop firms",[("directory/","Firm directory"),("country-finder/","Country finder"),("prop-firm-comparison/","Compare firms")]),("Tools",[("prop-firm-calculator/","All calculators"),("lifetime-cost-calculator/","Lifetime cost"),("plan-compare/","Plan analysis"),("workspace/","Payout scenarios"),("global-traders/","Global payout tracker")])]
+    groups = [("Prop firms",[("directory/","Firm directory"),("country-finder/","Country finder"),("prop-firm-comparison/","Compare firms"),("guides/","Trading rules guide")]),("Tools",[("prop-firm-calculator/","All calculators"),("lifetime-cost-calculator/","Lifetime cost"),("plan-compare/","Plan analysis"),("workspace/","Payout scenarios"),("global-traders/","International payout tools")])]
     nav_html = "".join(f'<details class="nav-group"><summary>{esc(label)}</summary><div class="nav-dropdown">'+"".join(f'<a href="{url(p)}"{(" aria-current=page" if path==p else "")}>{esc(n)}</a>' for p,n in items)+'</div></details>' for label,items in groups)
-    if LIVE_DEALS: nav_html += f'<a href="{url("deals/")}">Deals</a>'
-    nav_html += f'<a href="{url("membership/")}">Membership</a><a class="nav-account" href="{url("account/")}">My dashboard</a>'
+    if LIVE_DEALS:
+        deals_current = ' aria-current="page"' if path == "deals/" else ""
+        nav_html += f'<a href="{url("deals/")}"{deals_current}>Deals</a>'
+    membership_current = ' aria-current="page"' if path == "membership/" else ""
+    account_current = ' aria-current="page"' if path == "account/" else ""
+    nav_html += f'<a href="{url("membership/")}"{membership_current}>Membership</a><a class="nav-account" href="{url("account/")}"{account_current}>My dashboard</a>'
     home_class = ' class="site-home"' if not path else ""
     hero_preload = f'<link rel="preload" as="image" href="{url("assets/trading-chart.webp")}">' if not path else ""
     canon = abs_url(path)
@@ -47,8 +51,8 @@ def page(path, title, desc, body, schema=None, crumbs=None):
     ld = "".join('<script type="application/ld+json">' + json.dumps(b, separators=(",", ":")).replace("</", "<\\/") + "</script>\n" for b in blocks)
     crumb_html = ""
     if crumbs:
-        crumb_html = '<div class="crumbs wrap">' + " / ".join(
-            f'<a href="{url(p)}">{esc(n)}</a>' for n, p in crumbs[:-1]) + f" / {esc(crumbs[-1][0])}</div>"
+        crumb_html = '<nav class="crumbs wrap" aria-label="Breadcrumb">' + " / ".join(
+            f'<a href="{url(p)}">{esc(n)}</a>' for n, p in crumbs[:-1]) + f' / <span aria-current="page">{esc(crumbs[-1][0])}</span></nav>'
     gsc = f'<meta name="google-site-verification" content="{esc(GSC)}">' if GSC else ""
     if CF:
         gsc += f"""<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{{"token": "{esc(CF)}"}}'></script>"""
@@ -77,8 +81,9 @@ def page(path, title, desc, body, schema=None, crumbs=None):
 {body}
 </main>
 <footer class="site"><div class="wrap">
-<p><b>{BRAND}</b> is a free set of calculators for futures traders in prop firm evaluations and funded accounts. Firm rules read {CHECKED} from each firm's own pages. Every result is an estimate: your firm's dashboard is the final word. Nothing here is trading or financial advice.</p>
-<p class="foot-links"><a href="{url('country-finder/')}">Country finder</a><a href="{url('deals/')}">Deals &amp; disclosure</a><a href="{url('site-map/')}">Site map</a><a href="{url('about/')}">About</a><a href="{url('privacy/')}">Privacy</a></p>
+<a class="logo footer-logo" href="{url('')}">PropFirm<span>Math</span></a>
+<p>Independent prop firm research, planning calculators, and a trading workspace. Confirm current rules with your firm before paying for an evaluation or requesting a payout.</p>
+<nav class="foot-links" aria-label="Footer navigation"><a href="{url('directory/')}">Firm directory</a><a href="{url('country-finder/')}">Country finder</a><a href="{url('guides/')}">Trading rules guide</a><a href="{url('deals/')}">Deals &amp; disclosure</a><a href="{url('site-map/')}">Site map</a><a href="{url('about/')}">About</a><a href="{url('privacy/')}">Privacy</a></nav>
 <p class="note">{BRAND} isn't affiliated with any prop firm. Some links may be affiliate links: if you buy through them we may earn a commission at no cost to you.</p>
 </div></footer>
 <noscript><div class="wrap warn">Enable JavaScript to choose your country and use calculators.</div></noscript><script defer src="{url('motion.js')}"></script>
@@ -134,6 +139,22 @@ def build():
     nf = re.sub(r"<title>.*?</title>", f"<title>Page not found | {BRAND}</title>", nf, count=1)
     nf = re.sub(r'<link rel="canonical"[^>]*>', '<meta name="robots" content="noindex">', nf, count=1)
     (DIST / "404.html").write_text(nf)
+
+    guide_sections = [
+        ("Check where you can apply", "Start with the firm's rules for your country. Read the official restrictions and confirm any rules tied to the program or identity checks.", "country-finder/", "Check your country"),
+        ("Compare the fees you may pay", "List the evaluation fee, renewals, activation, resets, and platform or data fees. Use the firm's checkout to verify current prices and separate one-time fees from recurring costs.", "lifetime-cost-calculator/", "Estimate lifetime cost"),
+        ("Identify the drawdown rule", "Check what balance or equity the firm measures, when the threshold updates, and whether it stops moving at a specified level. Use the rule for the exact plan and stage.", "trailing-drawdown-calculator/", "Model your drawdown"),
+        ("Check how the firm counts consistency", "Confirm the stage, profit basis and measurement window. A best-day percentage is one calculation in a rule set that may also include minimum trading or winning days.", "consistency-rule-calculator/", "Check your best day"),
+        ("Review payout and withdrawal conditions", "Check the minimum, retained profit, request cap and trader share. Track trading profit and the cash you receive separately so you can account for costs and currency conversion.", "prop-firm-payout-calculator/", "Estimate a payout"),
+    ]
+    guide_cards = "".join(
+        f'<section class="guide-chapter"><h2>{title}</h2><div><p>{summary}</p><a href="{url(path)}">{action}</a></div></section>'
+        for title, summary, path, action in guide_sections
+    )
+    page("guides/", "Trading rules guide | PropFirmMath", "A practical checklist for researching prop firm eligibility, fees, drawdown, consistency, and payout rules.",
+         f"""<section class="experience-hero"><h1>Trading rules guide</h1><p class="lede">Five checks to make before you choose a funded trading program.</p><a class="btn" href="{url('prop-firm-comparison/')}">Compare published plans</a></section>
+<div class="guide-chapters">{guide_cards}</div>""",
+         crumbs=[("Home", ""), ("Trading rules guide", "guides/")])
 
     from plan_comparison import build_plan_comparison
     build_plan_comparison(page, url, ROOT, DIST, CHECKED)

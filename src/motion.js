@@ -1,5 +1,19 @@
 /* Progressive interaction layer: never changes calculation inputs or output values. */
 (() => {
+  const menus = document.querySelectorAll('header.site .nav-group');
+  document.addEventListener('click', event => {
+    menus.forEach(menu => {
+      if (menu.open && !menu.contains(event.target)) menu.open = false;
+    });
+  });
+  document.addEventListener('keydown', event => {
+    if (event.key !== 'Escape') return;
+    const menu = Array.from(menus).find(item => item.open && item.contains(event.target));
+    if (!menu) return;
+    menu.open = false;
+    menu.querySelector('summary').focus();
+  });
+
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   if (!reduced.matches && 'IntersectionObserver' in window) {
     const io = new IntersectionObserver(entries => {

@@ -124,7 +124,7 @@ def build_prop(h):
           ("Do I need an account?", "No. Everything runs in your browser and nothing you type is sent anywhere."),
           ("Which firms are covered?", "Topstep, Tradeify and MyFundedFutures, where we could read the rules on the firm's own pages. Apex Trader Funding's pages couldn't be read when we checked, so it has no presets yet.")]
     # Discovery-first homepage; no fabricated ratings, offers or payout totals.
-    from expanded import firm_path
+    from expanded import firm_compare_path, firm_path
     directory = json.loads((ROOT / "data/directory.json").read_text())
     categories = sorted(set(r["category"] for r in directory))
     markets = "".join(f'<a class="discover-market" href="{url("directory/")}?market={esc(c)}"><span><strong>{esc(c)}</strong><small>{sum(r["category"]==c for r in directory)} research profiles</small></span><span class="route-arrow" aria-hidden="true"></span></a>' for c in categories)
@@ -252,7 +252,8 @@ def build_prop(h):
         page(path, (f"{n} Rules {YEAR}: Profit Target, Drawdown, Consistency & Payouts" if len(n) < 12 else f"{n} Rules {YEAR}: Drawdown, Consistency & Payouts"),
              f"{n} rules for {YEAR} in one place: evaluation prices, profit targets, drawdown, daily loss limits, consistency rule and payout rules, from {n}'s own pages.",
              f"""<h1>{esc(n)} rules, {YEAR}</h1>
-<p class=lede>{esc(f['summary'])} Read from {esc(n)}'s own help pages on {CHK}.</p>{WARN}
+<p class=lede>{esc(f['summary'])} Read from {esc(n)}'s own help pages on {CHK}.</p>
+<p class="page-actions"><a class="btn" href="{url(firm_compare_path(n))}">Compare this firm</a><a href="{url('directory/')}">Back to the directory</a></p>{WARN}
 <h2>{esc(f.get('plans_title', 'Evaluation'))} at a glance</h2>
 <div class=table-scroll><table><thead><tr><th>Account</th><th>Price</th><th class=n>Profit target</th><th class=n>Drawdown</th><th>Drawdown type</th><th>Daily loss limit</th><th>Max size</th><th class=n>Min days</th><th>Consistency</th></tr></thead><tbody>{rows}</tbody></table></div>
 <h2>Evaluation rules</h2><ul>{lis(f['rules'])}</ul>

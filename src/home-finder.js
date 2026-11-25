@@ -6,5 +6,15 @@ function row(label,n,cls){var d=document.createElement("div");d.className="row";
 function draw(){var c=s.value;out.replaceChildren();go.setAttribute("href",c?base+"?country="+c:base);if(!c){var p=document.createElement("p");p.className="note hf-note";p.textContent="See which firms restrict your country, straight from each firm's own policy page.";out.append(p);return}
 var f=Object.keys(P),k={restricted:0,ok:0,review:0};f.forEach(function(n){var r=window.PFMEligibility.evaluate(P,n,c);if(r.status==="restricted")k.restricted++;else if(r.status==="review")k.review++;else k.ok++});
 out.append(row("Restricted for new accounts",k.restricted),row("Not on restricted list",k.ok),row("Confirm with the firm",k.review));var n=document.createElement("p");n.className="sep";n.textContent="Of the "+f.length+" firms with a reviewed country policy. Not on a restricted list is not a promise: KYC and plan checks still apply.";out.append(n)}
-try{var v=sessionStorage.getItem("pfm-country");if(v&&R.mapping[v])s.value=v}catch(e){}
-s.addEventListener("change",function(){try{sessionStorage.setItem("pfm-country",s.value)}catch(e){}draw()});draw()})();
+var siteSelect = document.getElementById("site-country");
+function syncCountry() {
+  s.value = R.mapping[R.get()] ? R.get() : "";
+  draw();
+}
+s.addEventListener("change", function () {
+  siteSelect.value = s.value;
+  siteSelect.dispatchEvent(new Event("change"));
+});
+window.addEventListener("pfm-country-change", syncCountry);
+syncCountry();
+})();

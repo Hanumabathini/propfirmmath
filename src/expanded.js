@@ -1,7 +1,68 @@
 (()=>{'use strict';
 const $=id=>document.getElementById(id);
 const search=$('directory-search');
-if(search){const market=new URLSearchParams(location.search).get('market');if([...$('directory-category').options].some(o=>o.value===market))$('directory-category').value=market;const cards=[...document.querySelectorAll('.directory-card')];const filter=()=>{let count=0;for(const c of cards){const visible=c.dataset.name.includes(search.value.trim().toLowerCase())&&(!$('directory-category').value||c.dataset.category===$('directory-category').value)&&(!$('directory-status').value||c.dataset.status===$('directory-status').value);c.hidden=!visible;if(visible)count++;}$('directory-count').textContent=count+' research profiles · '+(window.PFMRegion.get()?'Review regional eligibility on each card.':'Select a country for regional eligibility notes.');};[search,$('directory-category'),$('directory-status')].forEach(el=>el.addEventListener('input',filter));window.addEventListener('pfm-country-change',filter);filter();}
+if (search) {
+  const market = $('directory-category');
+  const coverage = $('directory-status');
+  const cards = Array.from(document.querySelectorAll('.directory-card'));
+  const empty = $('directory-empty');
+  const shortlist = document.querySelector('.directory-shortlist');
+  const labels = Array.from(shortlist.parentNode.querySelectorAll('.directory-pick'));
+  const picks = labels.map(label => label.querySelector('input'));
+  const compare = $('directory-compare');
+  const clear = $('directory-compare-clear');
+  const compareUrl = new URL(compare.href);
+  const maxPicks = 3;
+  const initialMarket = new URLSearchParams(location.search).get('market');
+
+  if (Array.from(market.options).some(option => option.value === initialMarket)) {
+    market.value = initialMarket;
+  }
+
+  function filter() {
+    const query = search.value.trim().toLowerCase();
+    let count = 0;
+    for (const card of cards) {
+      const match = card.dataset.name.includes(query)
+        && (!market.value || card.dataset.category === market.value)
+        && (!coverage.value || card.dataset.status === coverage.value);
+      card.hidden = !match;
+      if (match) count++;
+    }
+    $('directory-count').textContent = count === 1 ? '1 firm found' : count + ' firms found';
+    empty.hidden = count > 0;
+  }
+
+  function updateShortlist() {
+    const selected = picks.filter(pick => pick.checked);
+    const full = selected.length >= maxPicks;
+    const url = new URL(compareUrl);
+    selected.forEach(pick => url.searchParams.append('firm', pick.value));
+    compare.href = url.href;
+    clear.hidden = selected.length === 0;
+    $('directory-compare-status').textContent = selected.length
+      ? selected.map(pick => pick.value).join(', ') + ' · ' + selected.length + ' of ' + maxPicks + ' selected'
+      : 'Choose up to three firms.';
+    picks.forEach(pick => { pick.disabled = full && !pick.checked; });
+  }
+
+  [search, market, coverage].forEach(input => input.addEventListener('input', filter));
+  $('directory-reset').addEventListener('click', () => {
+    [search, market, coverage].forEach(input => { input.value = ''; });
+    filter();
+    search.focus();
+  });
+  clear.addEventListener('click', () => {
+    picks.forEach(pick => { pick.checked = false; });
+    updateShortlist();
+    compare.focus();
+  });
+  picks.forEach(pick => pick.addEventListener('change', updateShortlist));
+  labels.forEach(label => { label.hidden = false; });
+  shortlist.hidden = false;
+  filter();
+  updateShortlist();
+}
 const form=$('workspace-form');if(!form)return;
 let result=null;const out=$('workspace-result'),chart=$('workspace-chart'),exp=$('workspace-export');
 const fmt=v=>new Intl.NumberFormat(undefined,{maximumFractionDigits:2,minimumFractionDigits:2}).format(v);
