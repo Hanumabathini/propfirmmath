@@ -17,3 +17,5 @@ assert.equal(J.journal([{pnl:100,fee:10}],{target:3000,pct:40,days:3,basis:"gros
 console.log("Regression checks passed");
 require("./tests/workspace.cjs");
 require("./tests/eligibility.cjs");
+require("./tests/cost.cjs");
+require("./tests/plan-compare.cjs");

@@ -58,6 +58,8 @@ def build_site_pages(h, page, url, ROOT, DIST, CHECKED):
     M = load_matrix(ROOT)
     byname = {r["name"]: r for r in directory}
     shutil.copy(ROOT / "src/country-finder.js", DIST / "country-finder.js")
+    shutil.copy(ROOT / "src/cost.js", DIST / "cost.js")
+    shutil.copy(ROOT / "src/cost-ui.js", DIST / "cost-ui.js")
 
     legend = "".join(f'<li><span class="badge s-{k}"><i aria-hidden="true">{g}</i>{e(l)}</span><span>{e(m)}</span></li>' for k, (l, g, m) in STATUS.items())
 
@@ -137,4 +139,19 @@ def build_site_pages(h, page, url, ROOT, DIST, CHECKED):
 <section class="band"><h2>How promo codes work</h2><ul class="plain"><li>A prop firm gives approved partners a link or a code. When you buy through it, the firm pays the partner a commission, and the price you see is the firm's price for that offer.</li><li>Codes change and end without notice. Always confirm the final price at checkout before you pay.</li><li>Links marked <span class="badge s-ad">Paid link</span> may pay us a commission. A deal never changes how we rank or describe a firm.</li><li>If you see a code elsewhere that we have not listed, it may be expired or unofficial. We do not list codes we cannot verify.</li></ul></section>"""
     page("deals/", "Verified prop firm deals and promo codes | PropFirmMath", "Prop firm discount codes and offers, listed only when they come from an approved partner programme or the firm itself, with the date we checked them.", body,
          crumbs=[("Home", ""), ("Deals", "deals/")])
+    fld = lambda k, lab, ph, step="any", extra="": f'<div><label for="c-{k}">{lab}</label><input id="c-{k}" name="{k}" type="number" min="0" step="{step}" inputmode="decimal" placeholder="{ph}" {extra}></div>'
+    body = f"""<h1>Lifetime account cost calculator</h1><p class="lede">Add up what an evaluation really costs: the first payment, renewals, activation, resets and tools. Then see how much cash you must receive to break even.</p>
+<section class="calc"><form class="card" id="cost-form" novalidate><h2 style="margin-top:0">Your costs</h2><div class="fields">
+{fld("firstPrice","First payment (USD)","Enter the price shown")}{fld("renewalPrice","Renewal price per month (USD)","Blank = same as first")}
+{fld("months","Months paid, including the first","1","1")}{fld("activation","Activation fee (USD)","0")}
+{fld("resets","Number of resets","0","1")}{fld("resetFee","Fee per reset (USD)","0")}
+{fld("platformMonthly","Platform cost per month","0")}{fld("dataMonthly","Data cost per month","0")}
+{fld("taxPct","Tax, % (if you pay it)","0")}{fld("splitPct","Your profit split, %","Optional")}
+</div><p class="note">Use the prices on the firm's checkout. An introductory price and a renewal price are often different, so enter both.</p></form>
+<div class="card" aria-live="polite"><h2 style="margin-top:0">Result</h2><div id="cost-out"></div></div></section>
+<div class="warn">Planning estimate from the numbers you enter. We do not look up firm prices here, and firms change fees without notice. Break even means the cash you must receive from payouts to cover these costs. It is not a prediction that you will be paid.</div>
+<h2>How it is worked out</h2><ul class="plain"><li>Evaluation fees = first payment + (months - 1) × renewal price. If you leave the renewal price blank, renewals use the first price.</li><li>Resets = number of resets × fee per reset. Platform and data costs are charged for each month paid.</li><li>Tax is applied to the subtotal at the rate you enter. This is not tax advice.</li><li>Gross payout needed = break-even cash ÷ your profit split, before any fees on the payout itself.</li></ul>
+<script defer src="{url('cost.js')}"></script><script defer src="{url('cost-ui.js')}"></script>"""
+    page("lifetime-cost-calculator/", "Prop firm lifetime cost calculator: fees, resets and break even | PropFirmMath", "Add up the first payment, renewals, activation, resets and tools for a prop firm account, and see the cash you need to break even.", body,
+         crumbs=[("Home", ""), ("Calculators", "prop-firm-calculator/"), ("Lifetime cost", "lifetime-cost-calculator/")])
     return {"countries": len(made), "deals": len(live)}

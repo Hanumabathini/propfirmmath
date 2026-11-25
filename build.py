@@ -34,7 +34,7 @@ LIVE_DEALS, _DEAL_PROBLEMS = validate_deals(json.loads((ROOT / "data/deals.json"
 
 def page(path, title, desc, body, schema=None, crumbs=None):
     nav_sections = [("global-traders/","Global trackers"),("prop-firm-comparison/","Compare firms"),("prop-firm-calculator/","Calculators"),("plan-compare/","Plan analysis"),("directory/","Directory"),("workspace/","Workspace"),("account/","My account"),("membership/","Membership")]
-    groups = [("Prop firms",[("directory/","Firm directory"),("country-finder/","Country finder"),("prop-firm-comparison/","Compare firms")]),("Tools",[("prop-firm-calculator/","All calculators"),("plan-compare/","Plan analysis"),("workspace/","Payout scenarios"),("global-traders/","Global payout tracker")])]
+    groups = [("Prop firms",[("directory/","Firm directory"),("country-finder/","Country finder"),("prop-firm-comparison/","Compare firms")]),("Tools",[("prop-firm-calculator/","All calculators"),("lifetime-cost-calculator/","Lifetime cost"),("plan-compare/","Plan analysis"),("workspace/","Payout scenarios"),("global-traders/","Global payout tracker")])]
     nav_html = "".join(f'<details class="nav-group"><summary>{esc(label)}</summary><div class="nav-dropdown">'+"".join(f'<a href="{url(p)}"{(" aria-current=page" if path==p else "")}>{esc(n)}</a>' for p,n in items)+'</div></details>' for label,items in groups)
     if LIVE_DEALS: nav_html += f'<a href="{url("deals/")}">Deals</a>'
     nav_html += f'<a href="{url("membership/")}">Membership</a><a class="nav-account" href="{url("account/")}">My dashboard</a>'
