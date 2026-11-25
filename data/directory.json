@@ -9,7 +9,62 @@
     "name": "Apex Trader Funding",
     "category": "Futures",
     "path": null,
-    "status": "research-needed"
+    "status": "partial-source",
+    "source": "https://apextraderfunding.com/help-center/eod-trailing-drawdown-accounts/eod-evaluations/",
+    "checked": "2026-11-25",
+    "summary": "EOD evaluations: 30-day access, no consistency requirement, one-day pass possible. Activation within seven days. Pricing not verified.",
+    "account_plans": [
+      {
+        "label": "EOD 25K",
+        "target": "$1,500",
+        "dd": "$1,000",
+        "dll": "$500",
+        "contracts": "4",
+        "days": "No minimum; one-day pass possible",
+        "consistency": "None in evaluation",
+        "dd_type": "End-of-day trailing; threshold enforced intraday",
+        "price": "Not verified"
+      },
+      {
+        "label": "EOD 50K",
+        "target": "$3,000",
+        "dd": "$2,000",
+        "dll": "$1,000",
+        "contracts": "6",
+        "days": "No minimum; one-day pass possible",
+        "consistency": "None in evaluation",
+        "dd_type": "End-of-day trailing; threshold enforced intraday",
+        "price": "Not verified"
+      },
+      {
+        "label": "EOD 100K",
+        "target": "$6,000",
+        "dd": "$3,000",
+        "dll": "$1,500",
+        "contracts": "8",
+        "days": "No minimum; one-day pass possible",
+        "consistency": "None in evaluation",
+        "dd_type": "End-of-day trailing; threshold enforced intraday",
+        "price": "Not verified"
+      },
+      {
+        "label": "EOD 150K",
+        "target": "$9,000",
+        "dd": "$4,000",
+        "dll": "$2,000",
+        "contracts": "12",
+        "days": "No minimum; one-day pass possible",
+        "consistency": "None in evaluation",
+        "dd_type": "End-of-day trailing; threshold enforced intraday",
+        "price": "Not verified"
+      }
+    ],
+    "pricing_sources": [
+      [
+        "https://apextraderfunding.com/help-center/getting-started/restricted-countries/",
+        "Regional restrictions"
+      ]
+    ]
   },
   {
     "name": "Tradeify",
@@ -141,7 +196,221 @@
         5
       ]
     ],
-    "checked": "2026-11-25"
+    "checked": "2026-11-25",
+    "account_plans": [
+      {
+        "label": "Stellar 1-Step 6K",
+        "price": "$65.99 one time",
+        "regional_prices": {
+          "US": "$55.99 one time"
+        },
+        "target": "10%",
+        "dd": "6%",
+        "dll": "3%",
+        "days": "2"
+      },
+      {
+        "label": "Stellar 1-Step 15K",
+        "price": "Not verified outside US",
+        "regional_prices": {
+          "US": "$119.99 one time"
+        },
+        "target": "10%",
+        "dd": "6%",
+        "dll": "3%",
+        "days": "2"
+      },
+      {
+        "label": "Stellar 1-Step 25K",
+        "price": "Not verified outside US",
+        "regional_prices": {
+          "US": "$199.99 one time"
+        },
+        "target": "10%",
+        "dd": "6%",
+        "dll": "3%",
+        "days": "2"
+      },
+      {
+        "label": "Stellar 1-Step 50K",
+        "price": "Not verified outside US",
+        "regional_prices": {
+          "US": "$309.99 one time"
+        },
+        "target": "10%",
+        "dd": "6%",
+        "dll": "3%",
+        "days": "2"
+      },
+      {
+        "label": "Stellar 1-Step 100K",
+        "price": "Not verified outside US",
+        "regional_prices": {
+          "US": "$549.99 one time"
+        },
+        "target": "10%",
+        "dd": "6%",
+        "dll": "3%",
+        "days": "2"
+      },
+      {
+        "label": "Stellar 1-Step 200K",
+        "price": "Not verified outside US",
+        "regional_prices": {
+          "US": "$1049.99 one time"
+        },
+        "target": "10%",
+        "dd": "6%",
+        "dll": "3%",
+        "days": "2"
+      },
+      {
+        "label": "Stellar 2-Step 6K",
+        "price": "$59.99 one time",
+        "regional_prices": {
+          "US": "$49.99 one time"
+        },
+        "target": "8% phase 1 / 5% phase 2",
+        "dd": "10%",
+        "dll": "5%",
+        "days": "5 per phase"
+      },
+      {
+        "label": "Stellar 2-Step 15K",
+        "price": "Not verified outside US",
+        "regional_prices": {
+          "US": "$109.99 one time"
+        },
+        "target": "8% phase 1 / 5% phase 2",
+        "dd": "10%",
+        "dll": "5%",
+        "days": "5 per phase"
+      },
+      {
+        "label": "Stellar 2-Step 25K",
+        "price": "Not verified outside US",
+        "regional_prices": {
+          "US": "$189.99 one time"
+        },
+        "target": "8% phase 1 / 5% phase 2",
+        "dd": "10%",
+        "dll": "5%",
+        "days": "5 per phase"
+      },
+      {
+        "label": "Stellar 2-Step 50K",
+        "price": "Not verified outside US",
+        "regional_prices": {
+          "US": "$269.99 one time"
+        },
+        "target": "8% phase 1 / 5% phase 2",
+        "dd": "10%",
+        "dll": "5%",
+        "days": "5 per phase"
+      },
+      {
+        "label": "Stellar 2-Step 100K",
+        "price": "Not verified outside US",
+        "regional_prices": {
+          "US": "$529.99 one time"
+        },
+        "target": "8% phase 1 / 5% phase 2",
+        "dd": "10%",
+        "dll": "5%",
+        "days": "5 per phase"
+      },
+      {
+        "label": "Stellar 2-Step 200K",
+        "price": "Not verified outside US",
+        "regional_prices": {
+          "US": "$1049.99 one time"
+        },
+        "target": "8% phase 1 / 5% phase 2",
+        "dd": "10%",
+        "dll": "5%",
+        "days": "5 per phase"
+      },
+      {
+        "label": "Stellar Lite 5K",
+        "price": "$32.99 one time",
+        "regional_prices": {
+          "US": "$32.99 one time"
+        },
+        "target": "Not verified",
+        "dd": "Not verified",
+        "dll": "Not verified",
+        "days": "Not verified"
+      },
+      {
+        "label": "Stellar Lite 10K",
+        "price": "Not verified outside US",
+        "regional_prices": {
+          "US": "$59.99 one time"
+        },
+        "target": "Not verified",
+        "dd": "Not verified",
+        "dll": "Not verified",
+        "days": "Not verified"
+      },
+      {
+        "label": "Stellar Lite 25K",
+        "price": "Not verified outside US",
+        "regional_prices": {
+          "US": "$139.99 one time"
+        },
+        "target": "Not verified",
+        "dd": "Not verified",
+        "dll": "Not verified",
+        "days": "Not verified"
+      },
+      {
+        "label": "Stellar Lite 50K",
+        "price": "Not verified outside US",
+        "regional_prices": {
+          "US": "$229.99 one time"
+        },
+        "target": "Not verified",
+        "dd": "Not verified",
+        "dll": "Not verified",
+        "days": "Not verified"
+      },
+      {
+        "label": "Stellar Lite 100K",
+        "price": "Not verified outside US",
+        "regional_prices": {
+          "US": "$399.99 one time"
+        },
+        "target": "Not verified",
+        "dd": "Not verified",
+        "dll": "Not verified",
+        "days": "Not verified"
+      },
+      {
+        "label": "Stellar Lite 200K",
+        "price": "Not verified outside US",
+        "regional_prices": {
+          "US": "$798.99 one time"
+        },
+        "target": "Not verified",
+        "dd": "Not verified",
+        "dll": "Not verified",
+        "days": "Not verified"
+      }
+    ],
+    "pricing_sources": [
+      [
+        "https://help.fundednext.com/en/articles/12673271-usa-client-guide-at-fundednext-cfd-accounts-platforms-rewards",
+        "US pricing and platform"
+      ],
+      [
+        "https://help.fundednext.com/en/articles/17833708-what-is-the-fundednext-stellar-november-kickoff-offer",
+        "Global vs US published base prices (expired promotion excluded)"
+      ],
+      [
+        "https://help.fundednext.com/en/articles/17252927-stellar-1-step-account",
+        "1-Step rules"
+      ]
+    ]
   },
   {
     "name": "E8 Markets",
