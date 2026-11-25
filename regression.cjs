@@ -8,4 +8,10 @@ assert.equal(P.targetPlan({target:3000,current:4000,rulePct:50,bestDay:1000,days
 assert.throws(()=>P.positionSize({symbol:"INVALID"}));
 assert.deepEqual(P.parseDays("$1,000\n-250\n500"),[1000,-250,500]);
 assert.equal(P.drawdown({start:50000,amount:2000,peak:53000,balance:51000,type:"eod",lockAt:50000}).room,1000);
+const J=require("./src/plan-compare.js");
+const rr=J.rules({name:"Tradeify"},{label:"Growth 50K",target:3000,consistency:"None in the evaluation, 35% for payouts",days:1});assert.equal(rr.pct,0);
+const rr2=J.rules({name:"Topstep"},{label:"50K",target:3000,consistency:"Best day at most 55% of profit",days:2});assert.equal(rr2.pct,55);
+const result=J.journal([{pnl:600,fee:0},{pnl:-300,fee:0},{pnl:null,fee:0},{pnl:1200,fee:0}],rr2);assert.equal(result[2],null);assert.equal(result[3].total,1500);assert.equal(result[3].count,3);assert.equal(result[3].ratio,80);assert.equal(result[3].remaining,1500);
+assert.equal(J.rules({name:"Tradeify"},{label:"Lightning 50K",target:0,consistency:"20%, 25%, then 30% for payouts"}).pct,null);
+assert.equal(J.journal([{pnl:100,fee:10}],{target:3000,pct:40,days:3,basis:"gross"})[0].ratio,100);
 console.log("Regression checks passed");
