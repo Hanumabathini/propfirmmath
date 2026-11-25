@@ -13,11 +13,12 @@ def build_firm_compare(page,url,ROOT,DIST,D,CHK,WARN):
         plans=[]
         for p in f.get("plans",[]):
             plans.append({"label":p.get("label",str(p.get("size",""))),"price":p.get("price",missing),"target":f'${p["target"]:,}' if p.get("target") is not None else missing,"dd":f'${p["dd"]:,}' if p.get("dd") is not None else missing,"dd_type":p.get("dd_type",missing),"dll":p.get("dll",missing),"contracts":p.get("contracts",missing),"days":str(p["min_days"]) if p.get("min_days") is not None else missing,"consistency":p.get("consistency",missing)})
-        for phase,target,daily,dd,days in r.get("plans",[]):
+        plans.extend(r.get("account_plans",[]))
+        for phase,target,daily,dd,days in ([] if r.get("account_plans") else r.get("plans",[])):
             plans.append({"label":"2-Step · "+phase,"target":str(target)+"%","dd":str(dd)+"%","dll":str(daily)+"%","days":str(days)})
         if not plans:
             plans=[{"label":"Research profile","consistency":r.get("summary",missing) if r.get("consistency") else missing}]
-        data.append({"name":r["name"],"category":r["category"],"status":r["status"],"profile":url(firm_path(r)),"plans":plans,"payout":f.get("payout",[]),"sources":f.get("sources",[]) or ([[r["source"],"Official rules"]] if r.get("source") else []),"checked":r.get("checked",CHK if f.get("verified") else missing)})
+        data.append({"name":r["name"],"category":r["category"],"status":r["status"],"profile":url(firm_path(r)),"plans":plans,"payout":f.get("payout",[]),"sources":(f.get("sources",[]) or ([[r["source"],"Official rules"]] if r.get("source") else []))+r.get("pricing_sources",[]),"checked":r.get("checked",CHK if f.get("verified") else missing)})
     options='<option value="">Choose firm</option>'+"".join(f'<option value="{i}">{e(f["name"])}</option>' for i,f in enumerate(data))
     defaults=[next(i for i,f in enumerate(data) if f["name"]==n) for n in ["Topstep","Tradeify"]]
     slots=[]
