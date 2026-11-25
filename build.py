@@ -29,11 +29,14 @@ esc = html.escape
 url = lambda p: f"{BASE}/{p}"
 abs_url = lambda p: f"{SITE_URL}{BASE}/{p}"
 SITEMAP = []
+from site_pages import validate_deals
+LIVE_DEALS, _DEAL_PROBLEMS = validate_deals(json.loads((ROOT / "data/deals.json").read_text()))
 
 def page(path, title, desc, body, schema=None, crumbs=None):
     nav_sections = [("global-traders/","Global trackers"),("prop-firm-comparison/","Compare firms"),("prop-firm-calculator/","Calculators"),("plan-compare/","Plan analysis"),("directory/","Directory"),("workspace/","Workspace"),("account/","My account"),("membership/","Membership")]
-    groups = [("Prop firms",[("directory/","Firm directory"),("global-traders/","Country & eligibility"),("prop-firm-comparison/","Compare firms")]),("Tools",[("prop-firm-calculator/","All calculators"),("plan-compare/","Plan analysis"),("workspace/","Payout scenarios")])]
+    groups = [("Prop firms",[("directory/","Firm directory"),("country-finder/","Country finder"),("prop-firm-comparison/","Compare firms")]),("Tools",[("prop-firm-calculator/","All calculators"),("plan-compare/","Plan analysis"),("workspace/","Payout scenarios"),("global-traders/","Global payout tracker")])]
     nav_html = "".join(f'<details class="nav-group"><summary>{esc(label)}</summary><div class="nav-dropdown">'+"".join(f'<a href="{url(p)}"{(" aria-current=page" if path==p else "")}>{esc(n)}</a>' for p,n in items)+'</div></details>' for label,items in groups)
+    if LIVE_DEALS: nav_html += f'<a href="{url("deals/")}">Deals</a>'
     nav_html += f'<a href="{url("membership/")}">Membership</a><a class="nav-account" href="{url("account/")}">My dashboard →</a>'
     canon = abs_url(path)
     blocks = list(schema or [])
@@ -65,14 +68,14 @@ def page(path, title, desc, body, schema=None, crumbs=None):
 {'<meta name="robots" content="noindex,follow">' if PREVIEW else ""}
 {ld}</head><body>
 <header class="site"><div class="wrap"><a class="logo" href="{url('')}">PropFirm<span>Math</span></a>
-<nav class="top" aria-label="Main navigation">{nav_html}</nav></div><div class="wrap region-bar"><label for="site-country">Country of residence</label><select id="site-country"><option value="">Choose your country</option></select><span id="site-region-status" role="status" class="note">Optional for browsing; select for regional tools.</span></div></header><script src="{url('region.js')}"></script>
+<nav class="top" aria-label="Main navigation">{nav_html}</nav></div><div class="wrap region-bar"><label for="site-country">Country of residence</label><select id="site-country"><option value="">Choose your country</option></select><span id="site-region-status" role="status" class="note">Optional for browsing; select for regional tools.</span></div></header><script src="{url('eligibility.js')}"></script><script src="{url('country-policies.js')}"></script><script src="{url('region.js')}"></script>
 {crumb_html}
 <main class="wrap" id="main-content">
 {body}
 </main>
 <footer class="site"><div class="wrap">
 <p><b>{BRAND}</b> is a free set of calculators for futures traders in prop firm evaluations and funded accounts. Firm rules read {CHECKED} from each firm's own pages. Every result is an estimate: your firm's dashboard is the final word. Nothing here is trading or financial advice.</p>
-<p><a href="{url('site-map/')}">Site map</a> · <a href="{url('about/')}">About</a> · <a href="{url('privacy/')}">Privacy</a></p>
+<p><a href="{url('country-finder/')}">Country finder</a> · <a href="{url('deals/')}">Deals &amp; disclosure</a> · <a href="{url('site-map/')}">Site map</a> · <a href="{url('about/')}">About</a> · <a href="{url('privacy/')}">Privacy</a></p>
 <p class="note">{BRAND} isn't affiliated with any prop firm. Some links may be affiliate links: if you buy through them we may earn a commission at no cost to you.</p>
 </div></footer>
 <noscript><div class="wrap warn">Enable JavaScript to choose your country and use calculators.</div></noscript><script defer src="{url('motion.js')}"></script>
@@ -102,7 +105,10 @@ def build():
     shutil.copy(ROOT / "src/style.css", DIST / "style.css")
     shutil.copy(ROOT / "src/discovery.css", DIST / "discovery.css")
     shutil.copy(ROOT / "src/motion.js", DIST / "motion.js")
+    shutil.copy(ROOT / "src/home-finder.js", DIST / "home-finder.js")
     shutil.copy(ROOT / "src/region.js", DIST / "region.js")
+    shutil.copy(ROOT / "src/eligibility.js", DIST / "eligibility.js")
+    (DIST / "country-policies.js").write_text("window.PFM_POLICIES=" + json.dumps({"firms": json.loads((ROOT / "data/country-policies.json").read_text())["firms"]}, separators=(",", ":")) + ";")
     (DIST / "favicon.svg").write_text('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="8" fill="#2457c5"/><text x="16" y="22" font-size="18" text-anchor="middle" fill="#fff" font-family="sans-serif" font-weight="700">%</text></svg>')
     from prop_pages import build_prop
     build_prop({"page": page, "esc": esc, "url": url, "abs_url": abs_url, "ROOT": ROOT, "DIST": DIST, "aff": AFF,
@@ -135,6 +141,8 @@ def build():
 
     from membership import build_membership
     build_membership(page, url, ROOT, DIST)
+    from site_pages import build_site_pages
+    print("Country finder and deals:", build_site_pages({}, page, url, ROOT, DIST, CHECKED))
 
     links = []
     for canon in sorted(set(SITEMAP)):

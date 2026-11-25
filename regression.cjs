@@ -16,3 +16,4 @@ assert.equal(J.rules({name:"Tradeify"},{label:"Lightning 50K",target:0,consisten
 assert.equal(J.journal([{pnl:100,fee:10}],{target:3000,pct:40,days:3,basis:"gross"})[0].ratio,100);
 console.log("Regression checks passed");
 require("./tests/workspace.cjs");
+require("./tests/eligibility.cjs");

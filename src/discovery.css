@@ -24,3 +24,12 @@ header.site .top{align-items:center;gap:16px;overflow:visible}header.site .nav-g
 @media(max-width:850px){.discover-hero{grid-template-columns:1fr;gap:22px}.discover-preview{max-width:500px;width:100%;box-sizing:border-box}.discover-workspace{grid-template-columns:1fr}.discover-tools{grid-template-columns:repeat(2,minmax(0,1fr))}.discover-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.discover-stats>div:nth-child(2){border-right:0}.discover-stats>div:nth-child(-n+2){border-bottom:1px solid var(--line)}header.site .top{gap:12px;flex-wrap:wrap}}
 @media(max-width:480px){.discovery-home{padding-top:5px}.discover-hero{border-radius:16px;padding:22px 17px}.discover-intro h1{font-size:35px}.discover-intro p{font-size:14px}.discover-preview{padding:13px}.discover-actions{gap:8px}.discover-primary,.discover-secondary{padding:10px 12px;font-size:12px}.discover-stats>div{padding:13px}.discover-stats strong{font-size:23px}.discover-tools{grid-template-columns:1fr}.discover-heading{align-items:start;gap:8px}.discover-section{margin:28px 0}header.site .top{font-size:12px;gap:10px}header.site .nav-group summary{font-size:12px}header.site .nav-account{padding:8px 10px}header.site .nav-dropdown{left:0;min-width:160px}}
 @media(prefers-reduced-motion:reduce){.discover-market:hover,.discover-tool:hover{transform:none}}
+/* Light header + home finder widget */
+header.site .nav-group summary{color:var(--ink);padding:9px 12px;border-radius:9px}header.site .nav-group summary:hover,header.site .nav-group[open] summary{background:var(--accent-soft)}
+header.site .nav-account{background:var(--navy);color:#fff!important}header.site .nav-account:hover{background:var(--accent)}
+.discover-finder{background:#ffffff12;border:1px solid #ffffff2b;border-radius:18px;padding:22px;color:#fff;min-width:0}
+.discover-finder h2{font:700 1.5rem/1.2 var(--serif);color:#fff;margin:6px 0 14px}.discover-finder label{color:#fff}.discover-finder select{min-height:50px}
+.hf-res{margin:16px 0;display:grid;gap:8px;font-size:.92rem}.hf-res .row{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:9px 12px;border-radius:10px;background:#ffffff12}
+.hf-res .row b{font-variant-numeric:tabular-nums}.hf-res .sep{font-size:.78rem;color:#bcc5e3}
+.discover-finder .btn{width:100%;background:var(--lav);color:#1b1550}
+.discover-finder .eyebrow{color:var(--lav)}
