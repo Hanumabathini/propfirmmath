@@ -1,4 +1,4 @@
-/* PayoutMath funded-trader engine. Pure functions, used by the live pages and by build.py. */
+/* PropFirmMath funded-trader engine. Pure functions, used by the live pages and build.py. */
 (function (root, factory) {
   if (typeof module === "object" && module.exports) module.exports = factory();
   else root.PROP = factory();
@@ -40,7 +40,8 @@
     if (x.maxPct > 0) capped = Math.min(capped, Math.max(0, balance) * num(x.maxPct) / 100);
     var request = x.request > 0 ? Math.min(num(x.request), capped) : capped;
     var minOk = !(x.minPayout > 0) || request >= num(x.minPayout);
-    var split = x.split > 0 ? num(x.split) : 100;
+    // Reject impossible (>100%) firm splits rather than displaying a negative firm share.
+    var split = x.split > 0 ? Math.min(100, num(x.split)) : 100;
     var gross = minOk ? request : 0;
     return {
       floor: r2(floor), available: r2(available), capped: r2(capped), request: r2(request),
