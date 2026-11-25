@@ -12,10 +12,12 @@ const head=table.tHead,body=table.tBodies[0];head.replaceChildren();body.replace
 const h=head.insertRow();cell(h,"th","Comparison");picks.forEach(({f,p})=>cell(h,"th",f.name+" · "+p.label));
 const rows=[["Category","category"],["Data status","status"],["Account / plan","label"],["Published price / fees","price"],["Profit target","target"],["Maximum drawdown","dd"],["Drawdown type","dd_type"],["Daily loss limit","dll"],["Contract limits","contracts"],["Minimum trading days","days"],["Consistency rule","consistency"],["Source date","checked"]];
 const statusNames={"sourced-preset":"Sourced plan data","partial-source":"Partial source data","research-needed":"Research pending"};
-rows.forEach(([label,key])=>{const r=body.insertRow();cell(r,"th",label);picks.forEach(({f,p})=>cell(r,"td",key==="status"?statusNames[f.status]:p[key]??f[key]??"Not verified"));});
+rows.forEach(([label,key])=>{const r=body.insertRow();cell(r,"th",label);const values=picks.map(({f,p})=>key==="status"?statusNames[f.status]:p[key]??f[key]??"Not verified");values.forEach(v=>cell(r,"td",v));if(values.length===2&&values[0]!==values[1]&&values.every(v=>v!=="Not verified")&&["price","target","dd","dll","contracts","days","consistency","dd_type"].includes(key))r.classList.add("compare-difference");});
 let r=body.insertRow();cell(r,"th","Funded payout notes (firm-wide; check plan)");picks.forEach(({f})=>{const c=cell(r,"td","");if(!f.payout.length){c.textContent="Not verified";return;}const ul=document.createElement("ul");f.payout.forEach(t=>{const li=document.createElement("li");li.textContent=t;ul.append(li);});c.append(ul);});
 r=body.insertRow();cell(r,"th","Firm profile and sources");picks.forEach(({f})=>{const c=cell(r,"td","");link(c,f.profile,"View firm profile");if(f.sources.length){const ul=document.createElement("ul");f.sources.forEach(([u,t])=>{const li=document.createElement("li");link(li,u,t);ul.append(li);});c.append(ul);}});
 status.textContent=picks.length+" selections. "+(picks.length<2?"Choose at least two plans for a comparison.":"Compare costs and rules within the same account stage; prices are not live quotes.");
 }
+const defaults=firm.map(el=>el.value);
+document.getElementById("fc-reset").addEventListener("click",()=>{firm.forEach((el,i)=>{el.value=defaults[i];options(i);});render();});
 firm.forEach((el,i)=>{options(i);el.addEventListener("change",()=>{options(i);render();});plan[i].addEventListener("change",render);});render();
 })();
