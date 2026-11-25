@@ -57,7 +57,7 @@ def page(path, title, desc, body, schema=None, crumbs=None):
 {gsc}
 {ld}</head><body>
 <header class="site"><div class="wrap"><a class="logo" href="{url('')}">PropFirm<span>Math</span></a>
-<nav class="top"><a href="{url('')}">Calculators</a><a href="{url('prop-firm-comparison/')}">Compare firms</a><a href="{url('topstep-rules/')}">Topstep</a><a href="{url('tradeify-rules/')}">Tradeify</a><a href="{url('myfundedfutures-rules/')}">MFFU</a></nav></div></header>
+<nav class="top"><a href="{url('')}">Calculators</a><a href="{url('prop-firm-comparison/')}">Compare firms</a><a href="{url('global-traders/')}">Global traders</a><a href="{url('topstep-rules/')}">Topstep</a><a href="{url('tradeify-rules/')}">Tradeify</a><a href="{url('myfundedfutures-rules/')}">MFFU</a></nav></div></header>
 {crumb_html}
 <main class="wrap">
 {body}
@@ -111,6 +111,9 @@ def build():
     nf = re.sub(r"<title>.*?</title>", f"<title>Page not found | {BRAND}</title>", nf, count=1)
     nf = re.sub(r'<link rel="canonical"[^>]*>', '<meta name="robots" content="noindex">', nf, count=1)
     (DIST / "404.html").write_text(nf)
+
+    from global_traders import build_global_traders
+    build_global_traders(page, url, ROOT, DIST, CHECKED)
 
     today = datetime.date.today().isoformat()
     (DIST / "sitemap.xml").write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
