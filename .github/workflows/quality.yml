@@ -1,0 +1,25 @@
+name: Calculator quality
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Test calculators
+        run: python3 -m unittest discover -s tests -p 'test_*.py' -v
+      - name: Build website
+        run: python3 build.py
+      - name: Validate output
+        run: |
+          test -s dist/index.html
+          test -s dist/sitemap.xml
+          test -s dist/style.css
