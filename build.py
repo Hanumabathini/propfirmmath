@@ -20,6 +20,7 @@ DATA = json.loads((ROOT / "data/prop.json").read_text())
 SITE_URL = (os.environ.get("SITE_URL") or "https://hanumabathini.github.io").rstrip("/")
 BASE = (os.environ.get("BASE_PATH") or "/propfirmmath").rstrip("/")
 GSC = os.environ.get("GSC_TOKEN", "")
+PREVIEW = os.environ.get("VERCEL_ENV") == "preview" or os.environ.get("PREVIEW") == "1"
 CF = os.environ.get("CF_ANALYTICS_TOKEN", "")  # Cloudflare Web Analytics: free, no cookies
 AFF = {k: os.environ.get(v, "") for k, v in (("topstep", "TOPSTEP_URL"), ("tradeify", "TRADEIFY_URL"), ("mffu", "MFFU_URL"))}
 BRAND = "PropFirmMath"
@@ -55,16 +56,17 @@ def page(path, title, desc, body, schema=None, crumbs=None):
 <link rel="icon" href="{url('favicon.svg')}" type="image/svg+xml">
 <link rel="stylesheet" href="{url('style.css')}">
 {gsc}
+{'<meta name="robots" content="noindex,follow">' if PREVIEW else ""}
 {ld}</head><body>
 <header class="site"><div class="wrap"><a class="logo" href="{url('')}">PropFirm<span>Math</span></a>
-<nav class="top"><a href="{url('')}">Calculators</a><a href="{url('prop-firm-comparison/')}">Compare firms</a><a href="{url('global-traders/')}">Global traders</a><a href="{url('plan-compare/')}">Plan analysis</a><a href="{url('topstep-rules/')}">Topstep</a><a href="{url('tradeify-rules/')}">Tradeify</a><a href="{url('myfundedfutures-rules/')}">MFFU</a><a href="{url('directory/')}">Directory</a><a href="{url('workspace/')}">Workspace</a></nav></div></header>
+<nav class="top" aria-label="Main navigation"><a href="{url('')}">Calculators</a><a href="{url('prop-firm-comparison/')}">Compare firms</a><a href="{url('global-traders/')}">Global traders</a><a href="{url('plan-compare/')}">Plan analysis</a><a href="{url('topstep-rules/')}">Topstep</a><a href="{url('tradeify-rules/')}">Tradeify</a><a href="{url('myfundedfutures-rules/')}">MFFU</a><a href="{url('directory/')}">Directory</a><a href="{url('workspace/')}">Workspace</a></nav></div></header>
 {crumb_html}
-<main class="wrap">
+<main class="wrap" id="main-content">
 {body}
 </main>
 <footer class="site"><div class="wrap">
 <p><b>{BRAND}</b> is a free set of calculators for futures traders in prop firm evaluations and funded accounts. Firm rules read {CHECKED} from each firm's own pages. Every result is an estimate: your firm's dashboard is the final word. Nothing here is trading or financial advice.</p>
-<p><a href="{url('about/')}">About</a> · <a href="{url('privacy/')}">Privacy</a> · <a href="{url('prop-firm-comparison/')}">Rule sources</a></p>
+<p><a href="{url('directory/')}">Firm directory</a> · <a href="{url('workspace/')}">Workspace</a> · <a href="{url('site-map/')}">Site map</a> · <a href="{url('about/')}">About</a> · <a href="{url('privacy/')}">Privacy</a> · <a href="{url('prop-firm-comparison/')}">Rule sources</a></p>
 <p class="note">{BRAND} isn't affiliated with any prop firm. Some links may be affiliate links: if you buy through them we may earn a commission at no cost to you.</p>
 </div></footer>
 <script defer src="{url('motion.js')}"></script>
@@ -122,10 +124,16 @@ def build():
     from expanded import build_expanded
     build_expanded(page, url, ROOT, DIST, CHECKED)
 
+    links = []
+    for canon in sorted(set(SITEMAP)):
+        relative = canon.removeprefix(SITE_URL + BASE + "/")
+        label = "Home" if not relative else relative.strip("/").replace("/", " / ").replace("-", " ").title()
+        links.append(f'<li><a href="{url(relative)}">{esc(label)}</a></li>')
+    page("site-map/", "PropFirmMath site map", "Find all firm profiles, calculators and guides.", "<h1>Site map</h1><ul class=grid-links>" + "".join(links) + "</ul>")
     today = datetime.date.today().isoformat()
     (DIST / "sitemap.xml").write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
         "".join(f"<url><loc>{u}</loc><lastmod>{today}</lastmod></url>\n" for u in SITEMAP) + "</urlset>\n")
-    (DIST / "robots.txt").write_text(f"User-agent: *\nAllow: /\n\nSitemap: {abs_url('sitemap.xml')}\n")
+    (DIST / "robots.txt").write_text(("User-agent: *\nDisallow: /\n" if PREVIEW else f"User-agent: *\nAllow: /\n\nSitemap: {abs_url('sitemap.xml')}\n"))
     print(f"Built {len(SITEMAP)} pages into {DIST}")
 
 if __name__ == "__main__":
