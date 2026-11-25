@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """PropFirmMath static site generator.
 
-Free calculators for futures traders in prop firm evaluations and funded accounts.
+Free calculators for traders in prop firm evaluations and funded accounts.
 Reads data/prop.json and writes a complete static site to dist/. Needs Python 3 and Node.
 
 Config through environment variables:
@@ -31,6 +31,8 @@ abs_url = lambda p: f"{SITE_URL}{BASE}/{p}"
 SITEMAP = []
 
 def page(path, title, desc, body, schema=None, crumbs=None):
+    nav_sections = [("prop-firm-calculator/","Calculators"),("prop-firm-comparison/","Compare firms"),("global-traders/","Global trackers"),("plan-compare/","Plan analysis"),("directory/","Directory"),("workspace/","Workspace")]
+    nav_html = "".join(f'<a href="{url(p)}"' + (' aria-current="page"' if path == p else "") + f'>{esc(n)}</a>' for p,n in nav_sections)
     canon = abs_url(path)
     blocks = list(schema or [])
     if crumbs:
@@ -59,14 +61,14 @@ def page(path, title, desc, body, schema=None, crumbs=None):
 {'<meta name="robots" content="noindex,follow">' if PREVIEW else ""}
 {ld}</head><body>
 <header class="site"><div class="wrap"><a class="logo" href="{url('')}">PropFirm<span>Math</span></a>
-<nav class="top" aria-label="Main navigation"><a href="{url('')}">Home</a><a href="{url('directory/')}">Prop firms</a><a href="{url('')}#calculators">Calculators</a><a href="{url('prop-firm-comparison/')}">Compare</a><a href="{url('workspace/')}">Workspace</a></nav></div></header>
+<nav class="top" aria-label="Main navigation">{nav_html}</nav></div></header>
 {crumb_html}
 <main class="wrap" id="main-content">
 {body}
 </main>
 <footer class="site"><div class="wrap">
 <p><b>{BRAND}</b> is a free set of calculators for futures traders in prop firm evaluations and funded accounts. Firm rules read {CHECKED} from each firm's own pages. Every result is an estimate: your firm's dashboard is the final word. Nothing here is trading or financial advice.</p>
-<p><a href="{url('global-traders/')}">International payouts</a> · <a href="{url('plan-compare/')}">Consistency comparison</a> · <a href="{url('directory/')}">Firm directory</a> · <a href="{url('workspace/')}">Workspace</a> · <a href="{url('site-map/')}">Site map</a> · <a href="{url('about/')}">About</a> · <a href="{url('privacy/')}">Privacy</a> · <a href="{url('prop-firm-comparison/')}">Rule sources</a></p>
+<p><a href="{url('site-map/')}">Site map</a> · <a href="{url('about/')}">About</a> · <a href="{url('privacy/')}">Privacy</a></p>
 <p class="note">{BRAND} isn't affiliated with any prop firm. Some links may be affiliate links: if you buy through them we may earn a commission at no cost to you.</p>
 </div></footer>
 <script defer src="{url('motion.js')}"></script>
