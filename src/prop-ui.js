@@ -76,7 +76,18 @@
 
   document.querySelectorAll("section[data-prop]").forEach(function (sec) {
     var mode = sec.getAttribute("data-prop"), out = $(".result", sec);
-    var go = function () { out.innerHTML = RENDER[mode](read(sec)) + WARN; };
+    var go = function () {
+      var x=read(sec), invalid=false;
+      sec.querySelectorAll("input[type=number]").forEach(function(el){
+        var k=el.getAttribute("data-k"), n=Number(el.value);
+        if(el.value==="" || !Number.isFinite(n) || (["rulePct","split","maxPct"].includes(k) && (n<0||n>100)) || (["buffer","minPayout","maxPayout","request","amount","target","days","bestDay","minDays","tradedDays","stop","risk","maxContracts"].includes(k)&&n<0) || (["days","minDays","tradedDays","maxContracts"].includes(k)&&!Number.isInteger(n))) invalid=true;
+      });
+      if(mode==="consistency" && x.rulePct<=0) invalid=true;
+      if(mode==="size" && x.stop<=0) invalid=true;
+      if(mode==="drawdown" && x.amount<=0) invalid=true;
+      if(invalid){out.innerHTML="<p class=warn>Enter valid values. Percentages must be within 0–100; consistency must be positive; counts must be whole numbers and risk distances positive.</p>";return;}
+      try{out.innerHTML=RENDER[mode](x)+WARN;}catch(e){out.innerHTML="<p class=warn>Unable to calculate with these inputs.</p>";}
+    };
     var preset = $("select.preset", sec);
     if (preset) preset.addEventListener("change", function () {
       var opt = preset.options[preset.selectedIndex], vals = opt && opt.getAttribute("data-v");
