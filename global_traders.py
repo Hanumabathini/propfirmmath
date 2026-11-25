@@ -9,7 +9,8 @@ def build_global_traders(page,url,ROOT,DIST,checked):
     for r in records:
         f=firms.get(r["name"],{})
         plans=[{"label":p.get("label",str(p.get("size",""))),"price":p.get("price","Not verified"),"target":p.get("target"),"dd":p.get("dd")} for p in f.get("plans",[])]
-        plans += [{"label":"2-Step · "+p[0],"price":"Not verified","target":str(p[1])+"%","dd":str(p[3])+"%"} for p in r.get("plans",[])]
+        plans.extend(r.get("account_plans",[]))
+        plans += [{"label":"2-Step · "+p[0],"price":"Not verified","target":str(p[1])+"%","dd":str(p[3])+"%"} for p in ([] if r.get("account_plans") else r.get("plans",[]))]
         entries.append({"name":r["name"],"category":r["category"],"status":r["status"],"profile":url(firm_path(r)),"plans":plans or [{"label":"Custom / not verified","price":"Not verified"}]})
     payload=json.dumps(entries,ensure_ascii=True).replace("<","\\u003c")
     body=f"""<h1>Global trackers</h1><p class="lede">Choose your country, browse firm accounts and estimate your payout in your local currency. Regional approval and live checkout pricing are not implied.</p>
