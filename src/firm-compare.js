@@ -19,6 +19,7 @@ status.textContent=picks.length+" selections. "+(picks.length<2?"Choose at least
 }
 const defaults=firm.map(el=>el.value);
 document.getElementById("fc-reset").addEventListener("click",()=>{firm.forEach((el,i)=>{el.value=defaults[i];if(el.selectedOptions[0]?.disabled)el.value="";options(i);});render();});
-window.addEventListener("pfm-country-change",()=>{firm.forEach(el=>{Array.from(el.options).forEach(o=>{if(o.value==="")return;const f=data[Number(o.value)],r=window.PFMRegion.region(f.name,window.PFMRegion.get());o.disabled=r.blocked;o.textContent=f.name+(r.blocked?" — restricted":r.label==="Regional eligibility unverified"?" — unverified":"");});if(el.selectedOptions[0]?.disabled){el.value="";options(firm.indexOf(el));}});render();});
-firm.forEach((el,i)=>{options(i);el.addEventListener("change",()=>{options(i);render();});plan[i].addEventListener("change",render);});render();
+function syncCountry(){firm.forEach((el,i)=>{const previous=el.value;el.replaceChildren(new Option("Choose available firm",""));data.forEach((f,j)=>{if(window.PFMRegion.available(f.name))el.add(new Option(f.name,String(j)));});el.value=Array.from(el.options).some(o=>o.value===previous)?previous:"";options(i);});render();}
+window.addEventListener("pfm-country-change",syncCountry);
+firm.forEach((el,i)=>{options(i);el.addEventListener("change",()=>{options(i);render();});plan[i].addEventListener("change",render);});syncCountry();
 })();
