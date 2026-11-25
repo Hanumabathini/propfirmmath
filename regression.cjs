@@ -1,0 +1,11 @@
+const assert=require("node:assert/strict");const P=require("./src/prop.js");
+assert.equal(P.payout({balance:1000,start:0,buffer:0,split:0}).receive,0);
+assert.equal(P.payout({balance:1000,start:0,buffer:0,split:90,maxPayout:125.009}).gross,125);
+assert.equal(P.consistency([100,100,100],30).moreProfit,33.34);
+assert.equal(P.positionSize({symbol:"MES",unit:"points",stop:.26,risk:10}).ticks,2);
+assert.equal(P.positionSize({symbol:"MES",unit:"points",stop:10,risk:100}).contracts,2);
+assert.equal(P.targetPlan({target:3000,current:4000,rulePct:50,bestDay:1000,days:1}).dayCap,2000);
+assert.throws(()=>P.positionSize({symbol:"INVALID"}));
+assert.deepEqual(P.parseDays("$1,000\n-250\n500"),[1000,-250,500]);
+assert.equal(P.drawdown({start:50000,amount:2000,peak:53000,balance:51000,type:"eod",lockAt:50000}).room,1000);
+console.log("Regression checks passed");
