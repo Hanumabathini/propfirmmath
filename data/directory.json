@@ -248,7 +248,125 @@
     "name": "Take Profit Trader",
     "category": "Futures",
     "path": null,
-    "status": "research-needed"
+    "status": "partial-source",
+    "checked": "2026-11-25",
+    "source": "https://takeprofittraderhelp.zendesk.com/hc/en-us/articles/40866438124957-Classic-Plan-Overview-Specifications",
+    "summary": "New plans effective November 23, 2026; legacy accounts retain previous terms. PRO share 80%, PRO+ 90%; daily withdrawals subject to applicable buffer.",
+    "pricing_sources": [
+      [
+        "https://takeprofittraderhelp.zendesk.com/hc/en-us/articles/40866438043037-EOD-Plan-Overview-Specifications",
+        "EOD specifications"
+      ],
+      [
+        "https://takeprofittraderhelp.zendesk.com/hc/en-us/articles/40866422052125-Intraday-Plan-Overview-Specifications",
+        "Intraday specifications"
+      ],
+      [
+        "https://takeprofittraderhelp.zendesk.com/hc/en-us/articles/22447557656477-Restricted-Countries",
+        "Country restrictions"
+      ]
+    ],
+    "account_plans": [
+      {
+        "label": "Classic 25K",
+        "price": "$150 monthly; $130 activation; $79 test reset; $449 PRO reset",
+        "target": "$1500",
+        "dd": "$1000",
+        "dd_type": "EOD Test and PRO+; intraday PRO",
+        "dll": "None",
+        "contracts": "3 minis / 30 micros",
+        "days": "3",
+        "consistency": "50% Test only"
+      },
+      {
+        "label": "Classic 50K",
+        "price": "$170 monthly; $130 activation; $99 test reset; $649 PRO reset",
+        "target": "$3000",
+        "dd": "$2000",
+        "dd_type": "EOD Test and PRO+; intraday PRO",
+        "dll": "None",
+        "contracts": "6 minis / 60 micros",
+        "days": "3",
+        "consistency": "50% Test only"
+      },
+      {
+        "label": "Classic 150K",
+        "price": "$465 monthly; $130 activation; $249 test reset; $1499 PRO reset",
+        "target": "$9000",
+        "dd": "$4500",
+        "dd_type": "EOD Test and PRO+; intraday PRO",
+        "dll": "None",
+        "contracts": "12 minis / 120 micros",
+        "days": "3",
+        "consistency": "50% Test only"
+      },
+      {
+        "label": "EOD 25K",
+        "price": "$160 monthly; $130 activation; $89 test reset; $579 PRO reset",
+        "target": "$1500",
+        "dd": "$1000",
+        "dd_type": "EOD all stages",
+        "dll": "$500",
+        "contracts": "3 minis / 30 micros",
+        "days": "3",
+        "consistency": "50% Test only"
+      },
+      {
+        "label": "EOD 50K",
+        "price": "$209 monthly; $130 activation; $109 test reset; $759 PRO reset",
+        "target": "$3000",
+        "dd": "$2000",
+        "dd_type": "EOD all stages",
+        "dll": "$1000",
+        "contracts": "6 minis / 60 micros",
+        "days": "3",
+        "consistency": "50% Test only"
+      },
+      {
+        "label": "EOD 150K",
+        "price": "$499 monthly; $130 activation; $269 test reset; $1699 PRO reset",
+        "target": "$9000",
+        "dd": "$4500",
+        "dd_type": "EOD all stages",
+        "dll": "$2500",
+        "contracts": "12 minis / 120 micros",
+        "days": "3",
+        "consistency": "50% Test only"
+      },
+      {
+        "label": "Intraday 25K",
+        "price": "$110 monthly; $130 activation; $59 test reset; $449 PRO reset",
+        "target": "$1500",
+        "dd": "$1000",
+        "dd_type": "Intraday all stages",
+        "dll": "None",
+        "contracts": "3 minis / 30 micros",
+        "days": "3",
+        "consistency": "50% Test only"
+      },
+      {
+        "label": "Intraday 50K",
+        "price": "$150 monthly; $130 activation; $89 test reset; $649 PRO reset",
+        "target": "$3000",
+        "dd": "$2000",
+        "dd_type": "Intraday all stages",
+        "dll": "None",
+        "contracts": "6 minis / 60 micros",
+        "days": "3",
+        "consistency": "50% Test only"
+      },
+      {
+        "label": "Intraday 150K",
+        "price": "$360 monthly; $130 activation; $199 test reset; $1499 PRO reset",
+        "target": "$9000",
+        "dd": "$4500",
+        "dd_type": "Intraday all stages",
+        "dll": "None",
+        "contracts": "12 minis / 120 micros",
+        "days": "3",
+        "consistency": "50% Test only"
+      }
+    ]
   },
   {
     "name": "Earn2Trade",
@@ -264,19 +382,28 @@
     "name": "Bulenox",
     "category": "Futures",
     "path": null,
-    "status": "research-needed"
+    "status": "partial-source",
+    "source": "https://bulenox.com/help-center/fast-track",
+    "summary": "Fast Track skips qualification; one-time fee, no activation or subscription.",
+    "checked": "2026-11-25"
   },
   {
     "name": "OneUp Trader",
     "category": "Futures",
     "path": null,
-    "status": "research-needed"
+    "status": "partial-source",
+    "source": "https://help.oneuptrader.com/article/363-is-there-a-geographical-restriction",
+    "summary": "Signup country/state determines eligibility; funding partners impose additional conditions.",
+    "checked": "2026-11-25"
   },
   {
     "name": "UProfit",
     "category": "Futures",
     "path": null,
-    "status": "research-needed"
+    "status": "partial-source",
+    "source": "https://help.uprofittrader.com/hc/en-us/articles/38280308499604-Trading-Best-Practices-Guide",
+    "summary": "OFAC restrictions apply; notify compliance before travel.",
+    "checked": "2026-11-25"
   },
   {
     "name": "TickTickTrader",
@@ -288,13 +415,90 @@
     "name": "FundedNext Futures",
     "category": "Futures",
     "path": null,
-    "status": "research-needed"
+    "status": "partial-source",
+    "checked": "2026-11-25",
+    "source": "https://helpfutures.fundednext.com/en/articles/15053874-what-are-the-available-account-sizes-and-their-prices-in-fundednext-futures",
+    "summary": "Rapid Pro/Daily, Flex and Legacy published prices; old Rapid and Bolt discontinued for new purchases July 10, 2026.",
+    "pricing_sources": [
+      [
+        "https://helpfutures.fundednext.com/en/articles/17228971-are-any-countries-restricted-on-fundednext-futures",
+        "Regional restrictions"
+      ]
+    ],
+    "account_plans": [
+      {
+        "label": "Rapid Pro / Daily 25K",
+        "price": "$159.98 published base price",
+        "dd_type": "End-of-day trailing",
+        "days": "One-day pass possible",
+        "consistency": "Not verified"
+      },
+      {
+        "label": "Rapid Pro / Daily 50K",
+        "price": "$299.98 published base price",
+        "dd_type": "End-of-day trailing",
+        "days": "One-day pass possible",
+        "consistency": "Not verified"
+      },
+      {
+        "label": "Rapid Pro / Daily 100K",
+        "price": "$499.98 published base price",
+        "dd_type": "End-of-day trailing",
+        "days": "One-day pass possible",
+        "consistency": "Not verified"
+      },
+      {
+        "label": "Flex 50K",
+        "price": "$133.99 published base price",
+        "dd_type": "Not verified",
+        "days": "Not verified",
+        "consistency": "Not verified"
+      },
+      {
+        "label": "Flex 100K",
+        "price": "$264.99 published base price",
+        "dd_type": "Not verified",
+        "days": "Not verified",
+        "consistency": "Not verified"
+      },
+      {
+        "label": "Flex 150K",
+        "price": "$483.99 published base price",
+        "dd_type": "Not verified",
+        "days": "Not verified",
+        "consistency": "Not verified"
+      },
+      {
+        "label": "Legacy 25K",
+        "price": "$79.99 published base price",
+        "dd_type": "Not verified",
+        "days": "Not verified",
+        "consistency": "Applies in challenge; threshold not verified"
+      },
+      {
+        "label": "Legacy 50K",
+        "price": "$199.99 published base price",
+        "dd_type": "Not verified",
+        "days": "Not verified",
+        "consistency": "Applies in challenge; threshold not verified"
+      },
+      {
+        "label": "Legacy 100K",
+        "price": "$239.99 published base price",
+        "dd_type": "Not verified",
+        "days": "Not verified",
+        "consistency": "Applies in challenge; threshold not verified"
+      }
+    ]
   },
   {
     "name": "TradeDay",
     "category": "Futures",
     "path": null,
-    "status": "research-needed"
+    "status": "partial-source",
+    "source": "https://tradeday.freshdesk.com/en/support/solutions/articles/103000123294-prohibited-countries",
+    "summary": "Citizenship and residence restrictions apply.",
+    "checked": "2026-11-25"
   },
   {
     "name": "Elite Trader Funding",
@@ -306,7 +510,10 @@
     "name": "The Trading Pit",
     "category": "Futures",
     "path": null,
-    "status": "research-needed"
+    "status": "partial-source",
+    "source": "https://www.thetradingpit.com/risk-disclosure",
+    "summary": "Regional restrictions apply; consult product-specific FAQ.",
+    "checked": "2026-11-25"
   },
   {
     "name": "FTMO",
@@ -582,19 +789,28 @@
     "name": "E8 Markets",
     "category": "Forex and CFD",
     "path": null,
-    "status": "research-needed"
+    "status": "partial-source",
+    "source": "https://help.e8markets.com/en/articles/5514278-accepted-countries",
+    "summary": "Separate Classic/Perpetuals and Futures restrictions; payout processor restrictions also apply.",
+    "checked": "2026-11-25"
   },
   {
     "name": "FundingPips",
     "category": "Forex and CFD",
     "path": null,
-    "status": "research-needed"
+    "status": "partial-source",
+    "source": "https://help.fundingpips.com/hc/en-us",
+    "summary": "UAE and Vietnam restricted; FATF and EU/UN sanctions restrictions also apply.",
+    "checked": "2026-11-25"
   },
   {
     "name": "Alpha Capital Group",
     "category": "Forex and CFD",
     "path": null,
-    "status": "research-needed"
+    "status": "partial-source",
+    "source": "https://alphacapitalgroup.uk/resources/alpha-capital-country-availability-2026",
+    "summary": "Published account pricing in USD; new US traders use DXtrade or TradeLocker.",
+    "checked": "2026-11-25"
   },
   {
     "name": "FXIFY",
@@ -612,13 +828,19 @@
     "name": "Audacity Capital",
     "category": "Forex and CFD",
     "path": null,
-    "status": "research-needed"
+    "status": "partial-source",
+    "source": "https://audacity.capital/en/funded-trader-program/",
+    "summary": "Ability Challenge, Ability One and FTP programs; regional eligibility applies.",
+    "checked": "2026-11-25"
   },
   {
     "name": "Blue Guardian",
     "category": "Forex and CFD",
     "path": null,
-    "status": "research-needed"
+    "status": "partial-source",
+    "source": "https://help.blueguardian.com/en/articles/18426607-who-can-sign-up-age-and-restricted-countries",
+    "summary": "Citizenship and residence rules vary by product.",
+    "checked": "2026-11-25"
   },
   {
     "name": "Funded Trading Plus",
@@ -630,13 +852,19 @@
     "name": "FunderPro",
     "category": "Forex and CFD",
     "path": null,
-    "status": "research-needed"
+    "status": "partial-source",
+    "source": "https://support.funderpro.com/en/articles/376945-sign-up-age-limits-and-country-restrictions",
+    "summary": "Country and age restrictions apply; review exact rules before buying.",
+    "checked": "2026-11-25"
   },
   {
     "name": "Goat Funded Trader",
     "category": "Forex and CFD",
     "path": null,
-    "status": "research-needed"
+    "status": "partial-source",
+    "source": "https://help.goatfundedtrader.com/en/articles/10742187-which-countries-are-restricted-at-goat-funded-trader",
+    "summary": "Published restricted-country policy applies to signup and trading.",
+    "checked": "2026-11-25"
   },
   {
     "name": "DNA Funded",
