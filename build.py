@@ -61,9 +61,9 @@ def page(path, title, desc, body, schema=None, crumbs=None):
 {'<meta name="robots" content="noindex,follow">' if PREVIEW else ""}
 {ld}</head><body>
 <header class="site"><div class="wrap"><a class="logo" href="{url('')}">PropFirm<span>Math</span></a>
-<nav class="top" aria-label="Main navigation">{nav_html}</nav></div></header>
+<nav class="top" aria-label="Main navigation">{nav_html}</nav></div><div class="wrap region-bar"><label for="site-country">Country of residence</label><select id="site-country"><option value="">Choose your country</option></select><span id="site-region-status" role="status" class="note">Choose your residence first.</span></div></header><script src="{url('region.js')}"></script>
 {crumb_html}
-<main class="wrap" id="main-content">
+<main class="wrap" id="main-content" data-country-required hidden>
 {body}
 </main>
 <footer class="site"><div class="wrap">
@@ -71,7 +71,7 @@ def page(path, title, desc, body, schema=None, crumbs=None):
 <p><a href="{url('site-map/')}">Site map</a> · <a href="{url('about/')}">About</a> · <a href="{url('privacy/')}">Privacy</a></p>
 <p class="note">{BRAND} isn't affiliated with any prop firm. Some links may be affiliate links: if you buy through them we may earn a commission at no cost to you.</p>
 </div></footer>
-<script defer src="{url('motion.js')}"></script>
+<noscript><div class="wrap warn">Enable JavaScript to choose your country and use calculators.</div></noscript><script defer src="{url('motion.js')}"></script>
 </body></html>"""
     out = DIST / path / "index.html" if path else DIST / "index.html"
     out.parent.mkdir(parents=True, exist_ok=True)
@@ -97,6 +97,7 @@ def build():
     DIST.mkdir()
     shutil.copy(ROOT / "src/style.css", DIST / "style.css")
     shutil.copy(ROOT / "src/motion.js", DIST / "motion.js")
+    shutil.copy(ROOT / "src/region.js", DIST / "region.js")
     (DIST / "favicon.svg").write_text('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="8" fill="#2457c5"/><text x="16" y="22" font-size="18" text-anchor="middle" fill="#fff" font-family="sans-serif" font-weight="700">%</text></svg>')
     from prop_pages import build_prop
     build_prop({"page": page, "esc": esc, "url": url, "abs_url": abs_url, "ROOT": ROOT, "DIST": DIST, "aff": AFF,
