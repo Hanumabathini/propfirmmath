@@ -32,7 +32,7 @@ SITEMAP = []
 
 def page(path, title, desc, body, schema=None, crumbs=None):
     nav_sections = [("global-traders/","Global trackers"),("prop-firm-comparison/","Compare firms"),("prop-firm-calculator/","Calculators"),("plan-compare/","Plan analysis"),("directory/","Directory"),("workspace/","Workspace"),("account/","My account"),("membership/","Membership")]
-    groups = [("Prop firms",[("directory/","Firm directory"),("global-traders/","Country & eligibility"),("prop-firm-comparison/","Compare firms")]),("Tools",[("prop-firm-calculator/","All calculators"),("plan-compare/","Plan analysis"),("workspace/","Payout scenarios")])]
+    groups = [("Prop firms",[("directory/","Firm directory"),("global-traders/","Country & eligibility"),("prop-firm-comparison/","Compare firms"),("best-for/","Plans by rule")]),("Tools",[("plan-finder/","Plan finder"),("prop-firm-calculator/","All calculators"),("plan-compare/","Plan analysis"),("workspace/","Payout scenarios")])]
     nav_html = "".join(f'<details class="nav-group"><summary>{esc(label)}</summary><div class="nav-dropdown">'+"".join(f'<a href="{url(p)}"{(" aria-current=page" if path==p else "")}>{esc(n)}</a>' for p,n in items)+'</div></details>' for label,items in groups)
     nav_html += f'<a href="{url("membership/")}">Membership</a><a class="nav-account" href="{url("account/")}">My dashboard →</a>'
     canon = abs_url(path)
@@ -72,7 +72,7 @@ def page(path, title, desc, body, schema=None, crumbs=None):
 </main>
 <footer class="site"><div class="wrap">
 <p><b>{BRAND}</b> is a free set of calculators for futures traders in prop firm evaluations and funded accounts. Firm rules read {CHECKED} from each firm's own pages. Every result is an estimate: your firm's dashboard is the final word. Nothing here is trading or financial advice.</p>
-<p><a href="{url('site-map/')}">Site map</a> · <a href="{url('about/')}">About</a> · <a href="{url('privacy/')}">Privacy</a></p>
+<p><a href="{url('plan-finder/')}">Plan finder</a> · <a href="{url('best-for/')}">Plans by rule</a> · <a href="{url('prop-firm-glossary/')}">Glossary</a> · <a href="{url('site-map/')}">Site map</a> · <a href="{url('about/')}">About</a> · <a href="{url('privacy/')}">Privacy</a></p>
 <p class="note">{BRAND} isn't affiliated with any prop firm. Some links may be affiliate links: if you buy through them we may earn a commission at no cost to you.</p>
 </div></footer>
 <noscript><div class="wrap warn">Enable JavaScript to choose your country and use calculators.</div></noscript><script defer src="{url('motion.js')}"></script>
@@ -143,6 +143,9 @@ def build():
 
     from membership import build_membership
     build_membership(page, url, ROOT, DIST)
+
+    from insights import build_insights
+    build_insights(page, url, esc, ROOT, DIST, CHECKED, AFF, faq_html, faq_schema, app_schema)
 
     links = []
     for canon in sorted(set(SITEMAP)):
