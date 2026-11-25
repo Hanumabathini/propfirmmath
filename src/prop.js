@@ -6,10 +6,12 @@
   "use strict";
   var r2 = function (n) { return Math.round((n + Number.EPSILON) * 100) / 100; };
   var num = function (v) { var n = Number(v); return isFinite(n) ? n : 0; };
+  var ceilCent = function(n){ return Math.ceil(n*100-1e-8)/100; };
+  var floorCent = function(n){ return Math.floor(n*100+1e-8)/100; };
 
   // Parse "350, -120\n 400" into numbers. Ignores $, spaces and empty entries.
   function parseDays(text) {
-    return String(text || "").split(/[\s,;]+/).map(function (s) { return s.replace(/[$]/g, ""); })
+    return String(text || "").replace(/\$(?=\d)/g,"").replace(/(\d),(?=\d{3}(?:\D|$))/g,"$1").split(/[\s,;]+/).map(function (s) { return s.replace(/[$]/g, ""); })
       .filter(function (s) { return s !== "" && isFinite(Number(s)); }).map(Number);
   }
 
@@ -26,7 +28,7 @@
       pct: pct === null ? null : r2(pct), rulePct: rulePct,
       pass: total > 0 && best > 0 && pct <= rulePct + 1e-9,
       maxBestDay: r2(limit),
-      moreProfit: r2(Math.max(0, needTotal - total))
+      moreProfit: ceilCent(Math.max(0, needTotal - total))
     };
   }
 
@@ -38,14 +40,14 @@
     var capped = x.maxPayout > 0 ? Math.min(available, num(x.maxPayout)) : available;
     // Some firms also cap one request at a share of the balance (e.g. 50%).
     if (x.maxPct > 0) capped = Math.min(capped, Math.max(0, balance) * num(x.maxPct) / 100);
-    var request = x.request > 0 ? Math.min(num(x.request), capped) : capped;
+    var request = floorCent(x.request > 0 ? Math.min(num(x.request), capped) : capped);
     var minOk = !(x.minPayout > 0) || request >= num(x.minPayout);
     // Reject impossible (>100%) firm splits rather than displaying a negative firm share.
-    var split = x.split > 0 ? Math.min(100, num(x.split)) : 100;
+    var split = Math.max(0, Math.min(100, num(x.split)));
     var gross = minOk ? request : 0;
     return {
       floor: r2(floor), available: r2(available), capped: r2(capped), request: r2(request),
-      minOk: minOk, gross: r2(gross), firmShare: r2(gross * (100 - split) / 100),
+      minOk: minOk, gross: r2(gross), firmShare: r2(gross - r2(gross * split / 100)),
       receive: r2(gross * split / 100), after: r2(balance - gross)
     };
   }
@@ -74,14 +76,14 @@
     var left = Math.max(0, target - have);
     var rule = num(x.rulePct), best = Math.max(0, num(x.bestDay));
     // With a consistency rule the finished total must be at least best/rule.
-    var finishAt = rule > 0 ? Math.max(target, best / (rule / 100)) : target;
+    var finishAt = rule > 0 ? Math.max(target, have, ceilCent(best / (rule / 100))) : Math.max(target, have);
     var leftRule = Math.max(0, finishAt - have);
-    var dayCap = rule > 0 ? finishAt * rule / 100 : null;
+    var dayCap = rule > 0 ? floorCent(finishAt * rule / 100) : null;
     var minDays = dayCap ? Math.ceil(leftRule / dayCap - 1e-9) : (leftRule > 0 ? 1 : 0);
     if (x.minDays > 0) minDays = Math.max(minDays, num(x.minDays) - Math.max(0, Math.floor(num(x.tradedDays))));
     return {
       left: r2(left), finishAt: r2(finishAt), leftRule: r2(leftRule),
-      perDay: days > 0 ? r2(leftRule / days) : null, dayCap: dayCap === null ? null : r2(dayCap),
+      perDay: days > 0 ? ceilCent(leftRule / days) : null, dayCap: dayCap === null ? null : r2(dayCap),
       minDays: Math.max(0, minDays), fits: days > 0 ? days >= minDays : null
     };
   }
@@ -98,11 +100,12 @@
   var own = function (o, k) { return Object.prototype.hasOwnProperty.call(o, k) ? o[k] : undefined; };
 
   function positionSize(x) {
-    var c = own(CONTRACTS, x.symbol) || CONTRACTS.ES;
+    var c = own(CONTRACTS, x.symbol);
+    if (!c) throw new Error("Unknown contract");
     var ticks = x.unit === "ticks" ? num(x.stop) : num(x.stop) / c[1];
-    ticks = Math.round(ticks * 1e6) / 1e6;
+    ticks = Math.ceil(ticks - 1e-9);
     var perContract = ticks * c[2];
-    var n = perContract > 0 ? Math.floor(num(x.risk) / perContract + 1e-9) : 0;
+    var n = perContract > 0 ? Math.max(0, Math.floor(num(x.risk) / perContract + 1e-9)) : 0;
     if (x.maxContracts > 0) n = Math.min(n, Math.floor(num(x.maxContracts)));
     return {
       name: c[0], tickSize: c[1], tickValue: c[2], pointValue: r2(c[2] / c[1]), ticks: r2(ticks),
