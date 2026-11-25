@@ -1,7 +1,12 @@
 (()=>{'use strict';
 const $=id=>document.getElementById(id);
 const search=$('directory-search');
-if(search){const cards=[...document.querySelectorAll('.directory-card')];const filter=()=>{let count=0;for(const c of cards){const visible=window.PFMRegion.available(c.querySelector('h3')?.textContent||'')&&c.dataset.name.includes(search.value.trim().toLowerCase())&&(!$('directory-category').value||c.dataset.category===$('directory-category').value)&&(!$('directory-status').value||c.dataset.status===$('directory-status').value);c.hidden=!visible;if(visible)count++;}$('directory-count').textContent=count+' available matches for '+window.PFMRegion.name(window.PFMRegion.get());};[search,$('directory-category'),$('directory-status')].forEach(el=>el.addEventListener('input',filter));window.addEventListener('pfm-country-change',filter);filter();}
+if(search){const R=window.PFMRegion,cards=[...document.querySelectorAll('.directory-card')];
+// Every listed firm stays visible. A country only labels firms; it hides one only when the visitor asks
+// and the firm's own published restriction list names that country.
+const filter=()=>{const c=R.get(),hide=$('directory-availability')?.value==='hide-restricted';let count=0,restricted=0;for(const card of cards){const st=R.region(card.querySelector('h3')?.textContent||'',c);if(st.blocked)restricted++;card.classList.toggle('is-restricted',!!st.blocked);const visible=!(hide&&st.blocked)&&card.dataset.name.includes(search.value.trim().toLowerCase())&&(!$('directory-category').value||card.dataset.category===$('directory-category').value)&&(!$('directory-status').value||card.dataset.status===$('directory-status').value);card.hidden=!visible;if(visible)count++;}
+$('directory-count').textContent='Showing '+count+' of '+cards.length+' firms'+(c?' · '+restricted+' list '+R.name(c)+' as restricted for new accounts':' · choose your country to see eligibility notes');};
+[search,$('directory-category'),$('directory-status'),$('directory-availability')].filter(Boolean).forEach(el=>el.addEventListener('input',filter));window.addEventListener('pfm-country-change',filter);filter();}
 const form=$('workspace-form');if(!form)return;
 let result=null;const out=$('workspace-result'),chart=$('workspace-chart'),exp=$('workspace-export');
 const fmt=v=>new Intl.NumberFormat(undefined,{maximumFractionDigits:2,minimumFractionDigits:2}).format(v);

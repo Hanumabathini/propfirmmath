@@ -9,10 +9,29 @@
   var ceilCent = function(n){ return Math.ceil(n*100-1e-8)/100; };
   var floorCent = function(n){ return Math.floor(n*100+1e-8)/100; };
 
-  // Parse "350, -120\n 400" into numbers. Ignores $, spaces and empty entries.
+  // Parse daily P/L into numbers. Ignores $, spaces and empty entries.
+  // Entries may be separated by new lines, spaces, semicolons or commas.
+  // "350,400,500" (commas only, on one line) is three days, never 350400500.
+  // Thousands separators ("1,000" or Indian "1,00,000") are read as part of one
+  // number only when entries are separated by new lines, spaces or semicolons,
+  // or when the whole input is one $-prefixed or decimal amount ("$1,000").
+  var GROUPED = /^[-+]?\$?(?:\d{1,3}(?:,\d{3})+|\d{1,2}(?:,\d{2})+,\d{3})(?:\.\d+)?$/;
+  function toNum(s) { s = s.replace(/\$/g, ""); return s !== "" && isFinite(Number(s)) ? Number(s) : null; }
   function parseDays(text) {
-    return String(text || "").replace(/\$(?=\d)/g,"").replace(/(\d),(?=\d{3}(?:\D|$))/g,"$1").split(/[\s,;]+/).map(function (s) { return s.replace(/[$]/g, ""); })
-      .filter(function (s) { return s !== "" && isFinite(Number(s)); }).map(Number);
+    var t = String(text || "").trim(), out = [];
+    if (t === "") return out;
+    var commaOnly = !/[\s;]/.test(t);
+    if (commaOnly && !(GROUPED.test(t) && /\$|\./.test(t))) {
+      t.split(",").forEach(function (s) { var n = toNum(s); if (n !== null) out.push(n); });
+      return out;
+    }
+    t.split(/[\s;]+/).forEach(function (tok) {
+      tok = tok.replace(/^,+|,+$/g, "");
+      if (tok === "") return;
+      if (GROUPED.test(tok)) { var g = toNum(tok.replace(/,/g, "")); if (g !== null) out.push(g); return; }
+      tok.split(",").forEach(function (s) { var n = toNum(s); if (n !== null) out.push(n); });
+    });
+    return out;
   }
 
   // Consistency rule: the best day may be at most rulePct % of total profit.

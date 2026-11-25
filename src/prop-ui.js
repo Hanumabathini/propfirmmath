@@ -23,16 +23,17 @@
 
   var RENDER = {
     consistency: function (x) {
-      var r = P.consistency(P.parseDays(x.days), x.rulePct);
+      var parsed = P.parseDays(x.days), r = P.consistency(parsed, x.rulePct);
       if (!r.days) return "<p>Add your daily profit and loss, one number per day.</p>";
-      if (r.total <= 0) return "<p class=big>No profit yet</p><p>Your days add up to " + money(r.total) + ". The rule only matters once you're in profit.</p>";
+      var read = "<p class=note data-read>Read as " + parsed.length + (parsed.length === 1 ? " day" : " days") + " totalling " + money(r.total) + ". Check this matches what you entered.</p>";
+      if (r.total <= 0) return read + "<p class=big>No profit yet</p><p>Your days add up to " + money(r.total) + ". The rule only matters once you're in profit.</p>";
       var head = r.pass
         ? "<p class=note>Within the selected " + r.rulePct + "% ratio</p><p class='big pos'>Ratio met</p>"
         : "<p class=note>Over the selected " + r.rulePct + "% ratio</p><p class='big neg'>More profit needed</p>";
       var tail = r.pass
         ? "<p>Your best day is " + r.pct + "% of your profit. At this total, any single day up to " + money(r.maxBestDay) + " keeps you inside the rule.</p>"
         : "<p>Your best day (day " + r.bestDay + ") is " + r.pct + "% of your profit. Make <b>" + money(r.moreProfit) + "</b> more, without a day bigger than " + money(r.best) + ", to get back inside the rule.</p>";
-      return head + "<div class=kpis>" + kpi("Total profit", money(r.total)) + kpi("Best day", money(r.best)) + kpi("Best day share", r.pct + "%") + "</div>" + tail;
+      return read + head + "<div class=kpis>" + kpi("Total profit", money(r.total)) + kpi("Best day", money(r.best)) + kpi("Best day share", r.pct + "%") + "</div>" + tail;
     },
     payout: function (x) {
       var r = P.payout(x);

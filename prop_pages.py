@@ -22,7 +22,7 @@ def build_prop(h):
     m = lambda n: f"${n:,.0f}"
 
     FIELDS = {
-        "consistency": [("days", "Daily profit and loss, one day per line", "textarea", "450\n300\n-150\n600\n250"),
+        "consistency": [("days", "Daily profit and loss, one day per line or separated by commas", "textarea", "450\n300\n-150\n600\n250"),
                         ("rulePct", "Best-day limit, % of total profit", "number", 50)],
         "payout": [("balance", "Account balance now", "number", 53500), ("start", "Starting balance", "number", 50000),
                    ("buffer", "Buffer that must stay above it", "number", 0), ("split", "Your profit split %", "number", 90),
