@@ -226,7 +226,13 @@ def build_prop(h):
               ("split", "Profit split"), ("min_payout", "Minimum payout"), ("payout_cap", "Payout cap")]
     body_rows = "".join(f"<tr><th>{esc(lab)}</th>" + "".join(f"<td>{esc(F[k]['compare'].get(key, 'Not published'))}</td>" for k in keys) + "</tr>"
                         for key, lab in labels)
-    links = "<tr><th>Full rules</th>" + "".join(f"<td><a href='{url(F[k]['slug'] + '/')}'>{esc(F[k]['name'])} rules</a></td>" for k in keys) + "</tr>"
+    AFFK = {"topstep": "topstep", "tradeify": "tradeify", "mffu": "mffu"}
+    go = ""
+    if any(AFF.get(AFFK.get(k, "")) for k in keys):
+        go = "<tr><th>Start</th>" + "".join(
+            f"<td><a class=btn href='{esc(AFF[AFFK[k]])}' rel='sponsored noopener' target=_blank>Visit {esc(F[k]['name'])}</a></td>" if AFF.get(AFFK.get(k, "")) else "<td></td>"
+            for k in keys) + "</tr>"
+    links = go + "<tr><th>Full rules</th>" + "".join(f"<td><a href='{url(F[k]['slug'] + '/')}'>{esc(F[k]['name'])} rules</a></td>" for k in keys) + "</tr>"
     missing = [F[k] for k in F if not F[k].get("verified")]
     miss = "".join(f"<p><b>{esc(x['name'])}:</b> {esc(x['summary'])} <a href='{esc(x['sources'][0][0])}' rel='nofollow noopener' target=_blank>Check their rules</a>.</p>" for x in missing)
     srcs = "".join(f"<li>{esc(F[k]['name'])}: " + ", ".join(f"<a href='{esc(u)}' rel='nofollow noopener' target=_blank>{esc(t)}</a>" for u, t in F[k]["sources"]) + "</li>" for k in keys)
@@ -237,7 +243,7 @@ def build_prop(h):
          desc, f"""<h1>Futures prop firm comparison, {YEAR}</h1>
 <p class=lede>The main rules for a 50K evaluation and funded account, side by side, from each firm's own pages read {CHK}.</p>{WARN}
 <div class=table-scroll><table class=compare><thead><tr><th></th>{head}</tr></thead><tbody>{body_rows}{links}</tbody></table></div>
-{miss}<h2>Sources</h2><ul>{srcs}</ul>{faq_html(qa)}{more_tools('prop-firm-comparison/')}""",
+{miss}{"<p class=note>Visit buttons are affiliate links: if you buy through them we may earn a commission at no cost to you. It doesn't change what we show.</p>" if go else ""}<h2>Sources</h2><ul>{srcs}</ul>{faq_html(qa)}{more_tools('prop-firm-comparison/')}""",
          [faq_schema(qa)], crumbs=[("Home", ""), ("Prop firm comparison", "prop-firm-comparison/")])
 
     return TOOLS, [(F[k]["slug"] + "/", F[k]["name"] + " rules") for k in OK]

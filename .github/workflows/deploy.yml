@@ -29,6 +29,7 @@ jobs:
           TRADEIFY_URL: ${{ vars.TRADEIFY_URL }}
           MFFU_URL: ${{ vars.MFFU_URL }}
           GSC_TOKEN: ${{ vars.GSC_TOKEN }}
+          CF_ANALYTICS_TOKEN: ${{ vars.CF_ANALYTICS_TOKEN }}
         run: python3 build.py
       - uses: actions/upload-pages-artifact@v3
         with:

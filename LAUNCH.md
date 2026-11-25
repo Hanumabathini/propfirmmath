@@ -28,6 +28,12 @@ When you have a link, add it as a repository variable (**Settings > Secrets and 
 3. Submit `sitemap.xml` under **Sitemaps**.
 4. In Bing Webmaster Tools, choose **Import from Google Search Console**.
 
+## Optional. Count visitors without cookies (Cloudflare Web Analytics, free)
+
+1. Create a free Cloudflare account, open **Web Analytics**, and add the site `hanumabathini.github.io/propfirmmath` (choose the JavaScript snippet option, no DNS change needed).
+2. Copy only the token from the snippet (the value after `"token": `) and save it as a repository variable named `CF_ANALYTICS_TOKEN`, then run **Deploy site**.
+3. Visits show up in your Cloudflare dashboard. Without the variable the site loads no analytics at all.
+
 ## Keeping it right
 
 Prop firms change rules often. Every rule on the site was read from the firm's own pages on November 25, 2026. Ask me to re-check them about once a month. Apex shows no numbers because its pages refused every automated read.

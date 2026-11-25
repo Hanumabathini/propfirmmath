@@ -8,6 +8,7 @@ Config through environment variables:
   SITE_URL      site origin, no trailing slash (default https://hanumabathini.github.io)
   BASE_PATH     path prefix (default /propfirmmath; set to / on your own domain)
   GSC_TOKEN     Google Search Console verification token (optional)
+  CF_ANALYTICS_TOKEN  Cloudflare Web Analytics token: free, cookie-free visitor counts (optional)
   TOPSTEP_URL, TRADEIFY_URL, MFFU_URL   affiliate links, once you have them (optional)
 """
 import html, json, os, shutil, datetime, re
@@ -19,6 +20,7 @@ DATA = json.loads((ROOT / "data/prop.json").read_text())
 SITE_URL = (os.environ.get("SITE_URL") or "https://hanumabathini.github.io").rstrip("/")
 BASE = (os.environ.get("BASE_PATH") or "/propfirmmath").rstrip("/")
 GSC = os.environ.get("GSC_TOKEN", "")
+CF = os.environ.get("CF_ANALYTICS_TOKEN", "")  # Cloudflare Web Analytics: free, no cookies
 AFF = {k: os.environ.get(v, "") for k, v in (("topstep", "TOPSTEP_URL"), ("tradeify", "TRADEIFY_URL"), ("mffu", "MFFU_URL"))}
 BRAND = "PropFirmMath"
 CHECKED = datetime.date.fromisoformat(DATA["checked"]).strftime("%B %-d, %Y")
@@ -39,6 +41,8 @@ def page(path, title, desc, body, schema=None, crumbs=None):
         crumb_html = '<div class="crumbs wrap">' + " / ".join(
             f'<a href="{url(p)}">{esc(n)}</a>' for n, p in crumbs[:-1]) + f" / {esc(crumbs[-1][0])}</div>"
     gsc = f'<meta name="google-site-verification" content="{esc(GSC)}">' if GSC else ""
+    if CF:
+        gsc += f"""<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{{"token": "{esc(CF)}"}}'></script>"""
     doc = f"""<!doctype html>
 <html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
@@ -99,7 +103,7 @@ def build():
     page("privacy/", f"Privacy policy | {BRAND}", f"How {BRAND} handles your data: the calculators run in your browser, nothing you type is stored, and some links may be affiliate links.",
          f"""<h1>Privacy policy</h1><p>Last updated {CHECKED}.</p>
 <p>The calculators run entirely in your browser. The numbers you enter aren't sent to us or stored on a server.</p>
-<p>We may use privacy-friendly analytics to count page views. If we ever add advertising or other cookies, this page will be updated first.</p>
+<p>We may use Cloudflare Web Analytics, which counts page views without cookies and without tracking you across sites. If we ever add advertising or other cookies, this page will be updated first.</p>
 <p>Some links may be affiliate links. If you buy through them we may earn a commission; the firm may set its own cookie to record the referral.</p>""",
          crumbs=[("Home", ""), ("Privacy", "privacy/")])
     nf = (DIST / "about/index.html").read_text().replace(
