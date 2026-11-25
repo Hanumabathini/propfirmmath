@@ -33,11 +33,12 @@ from site_pages import validate_deals
 LIVE_DEALS, _DEAL_PROBLEMS = validate_deals(json.loads((ROOT / "data/deals.json").read_text()))
 
 def page(path, title, desc, body, schema=None, crumbs=None):
-    nav_sections = [("global-traders/","Global trackers"),("prop-firm-comparison/","Compare firms"),("prop-firm-calculator/","Calculators"),("plan-compare/","Plan analysis"),("directory/","Directory"),("workspace/","Workspace"),("account/","My account"),("membership/","Membership")]
     groups = [("Prop firms",[("directory/","Firm directory"),("country-finder/","Country finder"),("prop-firm-comparison/","Compare firms")]),("Tools",[("prop-firm-calculator/","All calculators"),("lifetime-cost-calculator/","Lifetime cost"),("plan-compare/","Plan analysis"),("workspace/","Payout scenarios"),("global-traders/","Global payout tracker")])]
     nav_html = "".join(f'<details class="nav-group"><summary>{esc(label)}</summary><div class="nav-dropdown">'+"".join(f'<a href="{url(p)}"{(" aria-current=page" if path==p else "")}>{esc(n)}</a>' for p,n in items)+'</div></details>' for label,items in groups)
     if LIVE_DEALS: nav_html += f'<a href="{url("deals/")}">Deals</a>'
     nav_html += f'<a href="{url("membership/")}">Membership</a><a class="nav-account" href="{url("account/")}">My dashboard</a>'
+    home_class = ' class="site-home"' if not path else ""
+    hero_preload = f'<link rel="preload" as="image" href="{url("assets/market-night.webp")}">' if not path else ""
     canon = abs_url(path)
     blocks = list(schema or [])
     if crumbs:
@@ -64,9 +65,11 @@ def page(path, title, desc, body, schema=None, crumbs=None):
 <link rel="stylesheet" href="{url('style.css')}">
 <link rel="stylesheet" href="{url('membership.css')}">
 <link rel="stylesheet" href="{url('discovery.css')}">
+{hero_preload}
 {gsc}
 {'<meta name="robots" content="noindex,follow">' if PREVIEW else ""}
-{ld}</head><body>
+{ld}</head><body{home_class}>
+<a class="skip-link" href="#main-content">Skip to content</a>
 <header class="site"><div class="wrap"><a class="logo" href="{url('')}">PropFirm<span>Math</span></a>
 <nav class="top" aria-label="Main navigation">{nav_html}</nav></div><div class="wrap region-bar"><label for="site-country">Country of residence</label><select id="site-country"><option value="">Choose your country</option></select><span id="site-region-status" role="status" class="note">Optional for browsing; select for regional tools.</span></div></header><script src="{url('eligibility.js')}"></script><script src="{url('country-policies.js')}"></script><script src="{url('region.js')}"></script>
 {crumb_html}
@@ -104,6 +107,7 @@ def build():
     DIST.mkdir()
     shutil.copy(ROOT / "src/style.css", DIST / "style.css")
     shutil.copy(ROOT / "src/discovery.css", DIST / "discovery.css")
+    shutil.copytree(ROOT / "src/assets", DIST / "assets")
     shutil.copy(ROOT / "src/motion.js", DIST / "motion.js")
     shutil.copy(ROOT / "src/home-finder.js", DIST / "home-finder.js")
     shutil.copy(ROOT / "src/region.js", DIST / "region.js")
