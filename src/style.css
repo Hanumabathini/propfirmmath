@@ -1,0 +1,44 @@
+:root{--bg:#f7f7f4;--card:#fff;--ink:#16181d;--muted:#5b6170;--line:#e3e3dd;--accent:#2457c5;--accent-ink:#fff;--warn:#9a5b00;--good:#0f7b5f;--bad:#b3261e;--radius:14px}
+@media (prefers-color-scheme:dark){:root{--bg:#121417;--card:#1b1e23;--ink:#eceef1;--muted:#a3a9b5;--line:#2c3038;--accent:#7ea6ff;--accent-ink:#0b1a3a;--warn:#e0a84a;--good:#3cc49b;--bad:#ff8a80}}
+*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+a{color:var(--accent)}
+.wrap{max-width:960px;margin:0 auto;padding:0 16px}
+header.site{border-bottom:1px solid var(--line);background:var(--card)}
+header.site .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-top:12px;padding-bottom:12px;flex-wrap:wrap}
+.logo{font-weight:800;font-size:1.15rem;text-decoration:none;color:var(--ink)}.logo span{color:var(--accent)}
+nav.top a{margin-left:14px;text-decoration:none;color:var(--muted);font-size:.92rem}nav.top a:hover{color:var(--ink)}
+h1{font-size:clamp(1.6rem,4vw,2.3rem);line-height:1.15;margin:28px 0 8px}
+h2{font-size:1.35rem;margin:36px 0 10px}h3{font-size:1.05rem;margin:22px 0 6px}
+.lede{color:var(--muted);font-size:1.08rem;margin:0 0 20px;max-width:680px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px}
+.calc{display:grid;grid-template-columns:1fr 1fr;gap:18px}@media(max-width:760px){.calc{grid-template-columns:1fr}}
+.fields{display:grid;grid-template-columns:1fr 1fr;gap:12px}@media(max-width:420px){.fields{grid-template-columns:1fr}}
+label{display:block;font-size:.85rem;color:var(--muted);margin-bottom:4px}
+input[type=number],select{width:100%;padding:10px 12px;font-size:1rem;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink)}
+input:focus,select:focus{outline:2px solid var(--accent);outline-offset:1px}
+.check{display:flex;align-items:center;gap:8px;font-size:.92rem;color:var(--ink);margin-top:4px}
+.full{grid-column:1/-1}
+.big{font-size:2.2rem;font-weight:800;line-height:1.1;margin:4px 0}
+.pos{color:var(--good)}.neg{color:var(--bad)}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:12px 0}
+.kpi{background:var(--bg);border-radius:10px;padding:8px 10px}.kpi b{display:block;font-size:1.1rem}.kpi small{color:var(--muted)}
+table{width:100%;border-collapse:collapse;font-size:.95rem}th,td{padding:8px 6px;border-bottom:1px solid var(--line);text-align:left}td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+.table-scroll{overflow-x:auto}
+.rank1 td{font-weight:700}
+.pill{display:inline-block;background:var(--accent);color:var(--accent-ink);border-radius:999px;padding:1px 8px;font-size:.75rem;font-weight:700;margin-left:6px}
+.grid-links{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;padding:0;list-style:none}
+.grid-links a{display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;text-decoration:none;color:var(--ink);font-weight:600}
+.grid-links a:hover{border-color:var(--accent)}
+.note{font-size:.85rem;color:var(--muted)}
+.cta{border:1px dashed var(--accent);border-radius:var(--radius);padding:16px;margin:28px 0;background:var(--card)}
+.btn{display:inline-block;background:var(--accent);color:var(--accent-ink);padding:10px 16px;border-radius:10px;text-decoration:none;font-weight:700}
+details{border-bottom:1px solid var(--line);padding:10px 0}summary{cursor:pointer;font-weight:600}
+footer.site{margin-top:48px;border-top:1px solid var(--line);padding:24px 0;color:var(--muted);font-size:.88rem}
+footer.site a{color:var(--muted)}
+.crumbs{font-size:.85rem;color:var(--muted);margin-top:16px}.crumbs a{color:var(--muted)}
+.warn{border-left:4px solid var(--warn);background:var(--card);padding:10px 14px;border-radius:8px;margin:18px 0;font-size:.92rem}
+textarea{width:100%;padding:10px 12px;font:1rem/1.4 ui-monospace,monospace;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink)}
+.grid-links a small{display:block;font-weight:400;color:var(--muted);font-size:.82rem;margin-top:4px}
+.grid-links.two{grid-template-columns:repeat(auto-fill,minmax(260px,1fr))}
+table.compare th{vertical-align:top;font-size:.9rem}table.compare td{vertical-align:top}
