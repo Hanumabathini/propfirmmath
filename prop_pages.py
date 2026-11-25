@@ -235,31 +235,7 @@ def build_prop(h):
                  crumbs=[("Home", ""), (f"{n} rules", f['slug'] + '/'), ("Consistency rule", path)])
 
     # ---- comparison
-    keys = [k for k in F if F[k].get("compare")]
-    head = "".join(f"<th>{esc(F[k]['name'])}</th>" for k in keys)
-    labels = [("plan", "Plan compared"), ("price", "Price"), ("target", "Profit target"), ("dd", "Drawdown"), ("dll", "Daily loss limit"),
-              ("eval_consistency", "Consistency, evaluation"), ("payout_consistency", "Consistency, payouts"),
-              ("split", "Profit split"), ("min_payout", "Minimum payout"), ("payout_cap", "Payout cap")]
-    body_rows = "".join(f"<tr><th>{esc(lab)}</th>" + "".join(f"<td>{esc(F[k]['compare'].get(key, 'Not published'))}</td>" for k in keys) + "</tr>"
-                        for key, lab in labels)
-    AFFK = {"topstep": "topstep", "tradeify": "tradeify", "mffu": "mffu"}
-    go = ""
-    if any(AFF.get(AFFK.get(k, "")) for k in keys):
-        go = "<tr><th>Start</th>" + "".join(
-            f"<td><a class=btn href='{esc(AFF[AFFK[k]])}' rel='sponsored noopener' target=_blank>Visit {esc(F[k]['name'])}</a></td>" if AFF.get(AFFK.get(k, "")) else "<td></td>"
-            for k in keys) + "</tr>"
-    links = go + "<tr><th>Full rules</th>" + "".join(f"<td><a href='{url(F[k]['slug'] + '/')}'>{esc(F[k]['name'])} rules</a></td>" for k in keys) + "</tr>"
-    missing = [F[k] for k in F if not F[k].get("verified")]
-    miss = "".join(f"<p><b>{esc(x['name'])}:</b> {esc(x['summary'])} <a href='{esc(x['sources'][0][0])}' rel='nofollow noopener' target=_blank>Check their rules</a>.</p>" for x in missing)
-    srcs = "".join(f"<li>{esc(F[k]['name'])}: " + ", ".join(f"<a href='{esc(u)}' rel='nofollow noopener' target=_blank>{esc(t)}</a>" for u, t in F[k]["sources"]) + "</li>" for k in keys)
-    desc = f"Futures prop firm comparison for {YEAR}: Topstep vs Tradeify vs MyFundedFutures on price, profit target, drawdown, consistency rules, split and payouts, for a 50K account."
-    qa = [("Which prop firm is best?", "It depends on how you trade. Firms with end-of-day drawdown and no daily loss limit suit traders who hold through swings; a strict consistency rule hurts traders who make most of their money on a few big days."),
-          ("Why is Apex missing numbers?", "Apex's own rule pages couldn't be read when we checked, and we only show numbers from a firm's own pages.")]
-    page("prop-firm-comparison/", f"Prop Firm Comparison {YEAR}: Topstep vs Tradeify vs MyFundedFutures",
-         desc, f"""<h1>Futures prop firm comparison, {YEAR}</h1>
-<p class=lede>The main rules for a 50K evaluation and funded account, side by side, from each firm's own pages read {CHK}.</p>{WARN}
-<div class=table-scroll><table class=compare><thead><tr><th></th>{head}</tr></thead><tbody>{body_rows}{links}</tbody></table></div>
-{miss}{"<p class=note>Visit buttons are affiliate links: if you buy through them we may earn a commission at no cost to you. It doesn't change what we show.</p>" if go else ""}<h2>Sources</h2><ul>{srcs}</ul>{faq_html(qa)}{more_tools('prop-firm-comparison/')}""",
-         [faq_schema(qa)], crumbs=[("Home", ""), ("Prop firm comparison", "prop-firm-comparison/")])
+    from firm_compare import build_firm_compare
+    build_firm_compare(page,url,ROOT,DIST,D,CHK,WARN)
 
     return TOOLS, [(F[k]["slug"] + "/", F[k]["name"] + " rules") for k in OK]
