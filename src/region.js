@@ -5,6 +5,12 @@ const mapping={};Object.entries(groups).forEach(([cur,codes])=>codes.split(" ").
 const names=new Intl.DisplayNames(['en'],{type:'region'});
 const select=document.getElementById('site-country'),status=document.getElementById('site-region-status');
 const policies={
+"Take Profit Trader":{blocked:"AF AL DZ AD AO BB BY BZ BJ BA BW BG BF BI KH CM CV TD CX CC KM CG CK HR CU CD DJ DM TL GQ ER ET FK FJ GA GM GH GN GW GY HT HM IR IQ CI JM JO KZ KE KI XK KG LA LB LS LR LY MO MW ML MT MR MU YT FM MC MN ME MS MA MZ MM NA NR NP NI NE NG KP MK MP PK PS PA PG PE QA RO RU RW VC ST SN RS SC SL SI SO ZA SS GS LK SD SR SJ SY TJ TZ TG TT TN TR TM TV UG UA UZ VE VN EH YE ZM ZW",source:"https://takeprofittraderhelp.zendesk.com/hc/en-us/articles/22447557656477-Restricted-Countries"},
+"FundedNext Futures":{blocked:"AF AL AQ AG BD BY BZ BV BF BI CV TD KM CG CK CI CU CD DJ ER FJ GW GD IR IQ JO KP LA LB LS LY MW MY ML MM PS RW RU SL SO SS LK SD SY TJ TL TV UA VE VN YE",source:"https://helpfutures.fundednext.com/en/articles/17228971-are-any-countries-restricted-on-fundednext-futures",partial:true},
+"FundingPips":{blocked:"AE VN",source:"https://help.fundingpips.com/hc/en-us",partial:true},
+"Alpha Capital Group":{blocked:"AF BY BI CF TD CU CD CG ER IR IQ LY MM KP RU SO SS SD SY VE VN YE",source:"https://alphacapitalgroup.uk/resources/alpha-capital-country-availability-2026",partial:true},
+"Goat Funded Trader":{blocked:"AF BY BO BA CF CL CU CD HK IR IL IQ JO LA LB LY ML MM KP PG RU SN SG SO KR SS SD SY TG UA VE YE ZW",source:"https://help.goatfundedtrader.com/en/articles/10742187-which-countries-are-restricted-at-goat-funded-trader"},
+
 "FTMO":{blocked:"IR SY MM KP",source:"https://ftmo.com/en/faq/who-can-join-ftmo/",partial:true},
 "Apex Trader Funding":{blocked:"AF DZ AZ BH BD BY BJ BN BF BI CM CF TD CN CI CU CY CD EG ER GA GD GN GW HT IR IQ JE JO KZ KE XK KW LV LB LS LR LY MG MV MR MU MN MA MZ MM NA NP NC NI NE NG KP OM PK PS PG QA MD RE RU RW PM SA SN RS SO ZA SS LK SD SY TZ TG TT TN TR UG UA UZ VU VE VN EH YE ZM ZW",source:"https://apextraderfunding.com/help-center/getting-started/restricted-countries/"},
 "FundedNext":{blocked:"BD MM BY KP SY GD TD MY BZ AG CV TV VN BV BI CK ER KM LK FJ",source:"https://help.fundednext.com/en/articles/8020080-are-any-countries-restricted-on-fundednext-cfds"},
