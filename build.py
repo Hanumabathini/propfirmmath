@@ -37,7 +37,7 @@ def page(path, title, desc, body, schema=None, crumbs=None):
     groups = [("Prop firms",[("directory/","Firm directory"),("country-finder/","Country finder"),("prop-firm-comparison/","Compare firms")]),("Tools",[("prop-firm-calculator/","All calculators"),("plan-compare/","Plan analysis"),("workspace/","Payout scenarios"),("global-traders/","Global payout tracker")])]
     nav_html = "".join(f'<details class="nav-group"><summary>{esc(label)}</summary><div class="nav-dropdown">'+"".join(f'<a href="{url(p)}"{(" aria-current=page" if path==p else "")}>{esc(n)}</a>' for p,n in items)+'</div></details>' for label,items in groups)
     if LIVE_DEALS: nav_html += f'<a href="{url("deals/")}">Deals</a>'
-    nav_html += f'<a href="{url("membership/")}">Membership</a><a class="nav-account" href="{url("account/")}">My dashboard →</a>'
+    nav_html += f'<a href="{url("membership/")}">Membership</a><a class="nav-account" href="{url("account/")}">My dashboard</a>'
     canon = abs_url(path)
     blocks = list(schema or [])
     if crumbs:
@@ -75,7 +75,7 @@ def page(path, title, desc, body, schema=None, crumbs=None):
 </main>
 <footer class="site"><div class="wrap">
 <p><b>{BRAND}</b> is a free set of calculators for futures traders in prop firm evaluations and funded accounts. Firm rules read {CHECKED} from each firm's own pages. Every result is an estimate: your firm's dashboard is the final word. Nothing here is trading or financial advice.</p>
-<p><a href="{url('country-finder/')}">Country finder</a> · <a href="{url('deals/')}">Deals &amp; disclosure</a> · <a href="{url('site-map/')}">Site map</a> · <a href="{url('about/')}">About</a> · <a href="{url('privacy/')}">Privacy</a></p>
+<p class="foot-links"><a href="{url('country-finder/')}">Country finder</a><a href="{url('deals/')}">Deals &amp; disclosure</a><a href="{url('site-map/')}">Site map</a><a href="{url('about/')}">About</a><a href="{url('privacy/')}">Privacy</a></p>
 <p class="note">{BRAND} isn't affiliated with any prop firm. Some links may be affiliate links: if you buy through them we may earn a commission at no cost to you.</p>
 </div></footer>
 <noscript><div class="wrap warn">Enable JavaScript to choose your country and use calculators.</div></noscript><script defer src="{url('motion.js')}"></script>

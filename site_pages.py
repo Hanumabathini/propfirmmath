@@ -83,7 +83,7 @@ def build_site_pages(h, page, url, ROOT, DIST, CHECKED):
             groups += f'<section class="grp"><h2><span class="badge s-{st}"><i aria-hidden="true">{g}</i>{e(l)}</span> <small>{len(items)} firm{"s" if len(items) != 1 else ""}</small></h2><p class="note">{e(m)}</p>' + "".join(firm_card(n, st, c["firms"][n][1], (pol.get(n) or {}).get("source")) for n in items) + "</section>"
         n_all = len(c["firms"])
         summary = f'{counts["restricted"]} of {n_all} firms we track list {e(c["name"])} as restricted. {counts["reviewed"] + counts["limited"]} are not restricted for new accounts on the lists we reviewed, {counts["review"]} need confirmation, and {counts["unverified"]} have no country policy reviewed yet.'
-        body = f"""<section class="hero hero-sm"><p class="eyebrow">Country finder</p><h1>Prop firms for traders in {e(c["name"])}</h1><p class="lede">{summary}</p>
+        body = f"""<section class="hero hero-sm"><h1>Prop firms for traders in {e(c["name"])}</h1><p class="lede">{summary}</p>
 <p><a class="btn" href="{url('country-finder/')}?country={code}">Filter and compare interactively</a></p></section>
 <div class="warn">Eligibility depends on citizenship, residence, KYC and the exact plan. This page reflects each firm's published restriction list as we read it ({e(CHECKED)}). Confirm with the firm before you pay.</div>
 {groups}<p class="note">Not listed? <a href="{url('directory/')}">Browse every firm profile</a> or <a href="{url('country-finder/')}">choose another country</a>.</p>"""
@@ -99,11 +99,11 @@ def build_site_pages(h, page, url, ROOT, DIST, CHECKED):
         p = pol.get(r["name"])
         n = f'{len(p["blocked"])} countries listed' if p else "Not reviewed yet"
         flag = " (list may be incomplete)" if p and p.get("partial") else ""
-        src = f'<a href="{e(p["source"])}" rel="noopener noreferrer">Official country page</a>' if p else "—"
+        src = f'<a href="{e(p["source"])}" rel="noopener noreferrer">Official country page</a>' if p else "None"
         firm_rows += f'<tr><td><a href="{url(firm_path(r))}">{e(r["name"])}</a></td><td>{e(r["category"])}</td><td>{e(n + flag)}</td><td>{src}</td></tr>'
     firms_json = json.dumps([{"name": r["name"], "category": r["category"], "path": url(firm_path(r))} for r in directory]).replace("<", "\\u003c")
     reviewed_n = len(pol)
-    body = f"""<section class="hero"><p class="eyebrow">Country finder</p><h1>Which prop firms accept traders from your country?</h1>
+    body = f"""<section class="hero"><h1>Which prop firms accept traders from your country?</h1>
 <p class="lede">Pick where you live. See every firm we track, sorted by what the firm's own country policy says, with the source one click away.</p>
 <div class="finder-box"><label for="cf-country">Country of residence</label><select id="cf-country"><option value="">Choose your country</option></select>
 <div class="chips" aria-label="Popular countries">{pop}</div></div>
@@ -132,7 +132,7 @@ def build_site_pages(h, page, url, ROOT, DIST, CHECKED):
                   f'<a class="btn" href="{e(d["url"])}" rel="sponsored noopener noreferrer">Go to {e(d["firm"])}</a></article>')
     state = (f'<div class="deal-grid">{cards}</div>' if live else
              '<div class="card empty"><h2>No verified offers right now</h2><p>We list a deal only when it comes from a firm-approved partner programme or from the firm\'s own page, and we check it again within 45 days. Nothing here is guessed, and nothing counts down to create pressure.</p><p><a class="btn" href="' + url("prop-firm-comparison/") + '">Compare firms instead</a></p></div>')
-    body = f"""<section class="hero hero-sm"><p class="eyebrow">Deals</p><h1>Prop firm deals we have checked</h1><p class="lede">Only codes and links that come from an approved partner programme or the firm's own page. Each shows when we last checked it.</p></section>
+    body = f"""<section class="hero hero-sm"><h1>Prop firm deals we have checked</h1><p class="lede">Only codes and links that come from an approved partner programme or the firm's own page. Each shows when we last checked it.</p></section>
 {state}
 <section class="band"><h2>How promo codes work</h2><ul class="plain"><li>A prop firm gives approved partners a link or a code. When you buy through it, the firm pays the partner a commission, and the price you see is the firm's price for that offer.</li><li>Codes change and end without notice. Always confirm the final price at checkout before you pay.</li><li>Links marked <span class="badge s-ad">Paid link</span> may pay us a commission. A deal never changes how we rank or describe a firm.</li><li>If you see a code elsewhere that we have not listed, it may be expired or unofficial. We do not list codes we cannot verify.</li></ul></section>"""
     page("deals/", "Verified prop firm deals and promo codes | PropFirmMath", "Prop firm discount codes and offers, listed only when they come from an approved partner programme or the firm itself, with the date we checked them.", body,

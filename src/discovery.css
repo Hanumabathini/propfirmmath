@@ -33,3 +33,4 @@ header.site .nav-account{background:var(--navy);color:#fff!important}header.site
 .hf-res .row b{font-variant-numeric:tabular-nums}.hf-res .sep{font-size:.78rem;color:#bcc5e3}
 .discover-finder .btn{width:100%;background:var(--lav);color:#1b1550}
 .discover-finder .eyebrow{color:var(--lav)}
+.hf-note{color:var(--c-bcc5e3);margin:0}
