@@ -409,7 +409,12 @@
     "name": "TickTickTrader",
     "category": "Futures",
     "path": null,
-    "status": "research-needed"
+    "status": "partial-source",
+    "source": "https://app.tickticktrader.com/signup",
+    "summary": "Official signup and terms found, but current sale availability, pricing and regional policy are not confirmed.",
+    "checked": "2026-11-25",
+    "account_plans": [],
+    "pricing_sources": []
   },
   {
     "name": "FundedNext Futures",
@@ -504,7 +509,12 @@
     "name": "Elite Trader Funding",
     "category": "Futures",
     "path": null,
-    "status": "research-needed"
+    "status": "partial-source",
+    "source": "https://elitetraderfunding.app/help/countries-restricted-and-supported",
+    "summary": "Residence plus Rise and Stripe support determine eligibility; live accounts have additional restrictions.",
+    "checked": "2026-11-25",
+    "account_plans": [],
+    "pricing_sources": []
   },
   {
     "name": "The Trading Pit",
@@ -544,7 +554,30 @@
     "name": "The5ers",
     "category": "Forex and CFD",
     "path": null,
-    "status": "research-needed"
+    "status": "partial-source",
+    "source": "https://www.the5ers.com/high-stakes/",
+    "summary": "High Stakes 2-step; 3 profitable days per phase; initial funded share 80%, scales to 100%. Other program pricing requires checkout verification.",
+    "checked": "2026-11-25",
+    "account_plans": [
+      {
+        "label": "High Stakes 2.5K (displayed plan)",
+        "price": "$19 published cost",
+        "target": "10% / 5%",
+        "dd": "10%",
+        "dll": "5%",
+        "days": "3 profitable days per phase"
+      }
+    ],
+    "pricing_sources": [
+      [
+        "https://the5ers.com/terms-and-conditions/",
+        "Forbidden territories"
+      ],
+      [
+        "https://the5ers.com/faqs/how-much-is-the-profit-split-in-the5ers/",
+        "Profit splits"
+      ]
+    ]
   },
   {
     "name": "FundedNext",
@@ -816,13 +849,47 @@
     "name": "FXIFY",
     "category": "Forex and CFD",
     "path": null,
-    "status": "research-needed"
+    "status": "partial-source",
+    "source": "https://fxify.com/faqs/all-faqs/what-countries-are-accepted/",
+    "summary": "Country FAQ and website footer differ on US eligibility. Contact firm before buying; plan prices not verified.",
+    "checked": "2026-11-25",
+    "account_plans": [],
+    "pricing_sources": [
+      [
+        "https://fxify.com/",
+        "Website restrictions"
+      ]
+    ]
   },
   {
     "name": "City Traders Imperium",
     "category": "Forex and CFD",
     "path": null,
-    "status": "research-needed"
+    "status": "partial-source",
+    "source": "https://citytradersimperium.com/1-step-challenge/",
+    "summary": "Offers one-step, two-step, instant and direct models; restrictions apply to nationals and residents of specified countries.",
+    "checked": "2026-11-25",
+    "account_plans": [
+      {
+        "label": "1-Step",
+        "target": "8%",
+        "price": "Not verified"
+      }
+    ],
+    "pricing_sources": [
+      [
+        "https://citytradersimperium.com/2-step-challenge/",
+        "Two-step"
+      ],
+      [
+        "https://citytradersimperium.com/instant-funding/",
+        "Instant funding"
+      ],
+      [
+        "https://citytradersimperium.com/direct-funding",
+        "Direct funding"
+      ]
+    ]
   },
   {
     "name": "Audacity Capital",
@@ -846,7 +913,52 @@
     "name": "Funded Trading Plus",
     "category": "Forex and CFD",
     "path": null,
-    "status": "research-needed"
+    "status": "partial-source",
+    "source": "https://help.fundedtradingplus.com/activation-accounts-pricing-and-fees/",
+    "summary": "Activation accounts require separate post-pass activation payment; published challenge rules and country restrictions.",
+    "checked": "2026-11-25",
+    "account_plans": [
+      {
+        "label": "Activation 25K",
+        "price": "$4 challenge; $179 activation after passing",
+        "target": "2%",
+        "dd": "6%",
+        "dd_type": "Static",
+        "dll": "4%",
+        "days": "No minimum",
+        "consistency": "None in challenge"
+      },
+      {
+        "label": "Activation 50K",
+        "price": "$4 challenge; $299 activation after passing",
+        "target": "2%",
+        "dd": "6%",
+        "dd_type": "Static",
+        "dll": "4%",
+        "days": "No minimum",
+        "consistency": "None in challenge"
+      },
+      {
+        "label": "Activation 100K",
+        "price": "$4 challenge; $489 activation after passing",
+        "target": "2%",
+        "dd": "6%",
+        "dd_type": "Static",
+        "dll": "4%",
+        "days": "No minimum",
+        "consistency": "None in challenge"
+      }
+    ],
+    "pricing_sources": [
+      [
+        "https://help.fundedtradingplus.com/activation-accounts-common-questions/",
+        "Challenge rules"
+      ],
+      [
+        "https://help.fundedtradingplus.com/prohibited-countries/",
+        "Restricted countries"
+      ]
+    ]
   },
   {
     "name": "FunderPro",
@@ -870,6 +982,92 @@
     "name": "DNA Funded",
     "category": "Forex and CFD",
     "path": null,
-    "status": "research-needed"
+    "status": "partial-source",
+    "source": "https://dnafunded.com/wp-content/uploads/2026/03/DNA-Funded-Ltd-Rules-and-Conditions-V.2.pdf",
+    "summary": "March 31 2026 rulebook lists USD access fees; current checkout and regional eligibility need confirmation.",
+    "checked": "2026-11-25",
+    "account_plans": [
+      {
+        "label": "1 Phase 5K",
+        "price": "$59 access fee (March 2026 rulebook; excludes taxes/add-ons)"
+      },
+      {
+        "label": "1 Phase 10K",
+        "price": "$89 access fee (March 2026 rulebook; excludes taxes/add-ons)"
+      },
+      {
+        "label": "1 Phase 25K",
+        "price": "$179 access fee (March 2026 rulebook; excludes taxes/add-ons)"
+      },
+      {
+        "label": "1 Phase 50K",
+        "price": "$319 access fee (March 2026 rulebook; excludes taxes/add-ons)"
+      },
+      {
+        "label": "1 Phase 100K",
+        "price": "$619 access fee (March 2026 rulebook; excludes taxes/add-ons)"
+      },
+      {
+        "label": "1 Phase 200K",
+        "price": "$1209 access fee (March 2026 rulebook; excludes taxes/add-ons)"
+      },
+      {
+        "label": "2 Phase 5K",
+        "price": "$49 access fee (March 2026 rulebook; excludes taxes/add-ons)"
+      },
+      {
+        "label": "2 Phase 10K",
+        "price": "$79 access fee (March 2026 rulebook; excludes taxes/add-ons)"
+      },
+      {
+        "label": "2 Phase 25K",
+        "price": "$159 access fee (March 2026 rulebook; excludes taxes/add-ons)"
+      },
+      {
+        "label": "2 Phase 50K",
+        "price": "$289 access fee (March 2026 rulebook; excludes taxes/add-ons)"
+      },
+      {
+        "label": "2 Phase 100K",
+        "price": "$549 access fee (March 2026 rulebook; excludes taxes/add-ons)"
+      },
+      {
+        "label": "2 Phase 200K",
+        "price": "$1079 access fee (March 2026 rulebook; excludes taxes/add-ons)"
+      },
+      {
+        "label": "Rapid 10K",
+        "price": "$99 access fee (March 2026 rulebook; excludes taxes/add-ons)"
+      },
+      {
+        "label": "Rapid 25K",
+        "price": "$189 access fee (March 2026 rulebook; excludes taxes/add-ons)"
+      },
+      {
+        "label": "Rapid 50K",
+        "price": "$329 access fee (March 2026 rulebook; excludes taxes/add-ons)"
+      },
+      {
+        "label": "Rapid 100K",
+        "price": "$549 access fee (March 2026 rulebook; excludes taxes/add-ons)"
+      },
+      {
+        "label": "Instant Funding 5K",
+        "price": "$199 access fee (March 2026 rulebook; excludes taxes/add-ons)"
+      },
+      {
+        "label": "Instant Funding 10K",
+        "price": "$309 access fee (March 2026 rulebook; excludes taxes/add-ons)"
+      },
+      {
+        "label": "Instant Funding 25K",
+        "price": "$559 access fee (March 2026 rulebook; excludes taxes/add-ons)"
+      },
+      {
+        "label": "Instant Funding 50K",
+        "price": "$979 access fee (March 2026 rulebook; excludes taxes/add-ons)"
+      }
+    ],
+    "pricing_sources": []
   }
 ]
