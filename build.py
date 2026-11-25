@@ -31,7 +31,7 @@ abs_url = lambda p: f"{SITE_URL}{BASE}/{p}"
 SITEMAP = []
 
 def page(path, title, desc, body, schema=None, crumbs=None):
-    nav_sections = [("global-traders/","Global trackers"),("prop-firm-comparison/","Compare firms"),("prop-firm-calculator/","Calculators"),("plan-compare/","Plan analysis"),("directory/","Directory"),("workspace/","Workspace")]
+    nav_sections = [("global-traders/","Global trackers"),("prop-firm-comparison/","Compare firms"),("prop-firm-calculator/","Calculators"),("plan-compare/","Plan analysis"),("directory/","Directory"),("workspace/","Workspace"),("account/","My account"),("membership/","Membership")]
     nav_html = "".join(f'<a href="{url(p)}"' + (' aria-current="page"' if path == p else "") + f'>{esc(n)}</a>' for p,n in nav_sections)
     canon = abs_url(path)
     blocks = list(schema or [])
@@ -57,6 +57,7 @@ def page(path, title, desc, body, schema=None, crumbs=None):
 <meta name="twitter:card" content="summary">
 <link rel="icon" href="{url('favicon.svg')}" type="image/svg+xml">
 <link rel="stylesheet" href="{url('style.css')}">
+<link rel="stylesheet" href="{url('membership.css')}">
 {gsc}
 {'<meta name="robots" content="noindex,follow">' if PREVIEW else ""}
 {ld}</head><body>
@@ -126,6 +127,9 @@ def build():
 
     from expanded import build_expanded
     build_expanded(page, url, ROOT, DIST, CHECKED)
+
+    from membership import build_membership
+    build_membership(page, url, ROOT, DIST)
 
     links = []
     for canon in sorted(set(SITEMAP)):
