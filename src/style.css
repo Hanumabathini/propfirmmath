@@ -184,3 +184,13 @@ details{border:1px solid var(--line);border-radius:14px;margin:9px 0;padding:14p
 
 /* Consolidated navigation and anchor accessibility */
 #calculators{scroll-margin-top:115px} nav.top a{padding-inline:14px}.directory-card h3{min-height:2.6em}.directory-card .note{flex:1}.directory-card .btn{width:100%}.grid-links.tools li{min-width:0}@media(max-width:560px){nav.top a{padding-inline:8px}#calculators{scroll-margin-top:20px}}
+
+/* Six-section product navigation and compact landing dashboard */
+nav.top a[aria-current=page]{background:#c9b6ff20;color:#f2eaff;box-shadow:inset 0 0 0 1px #c9b6ff55}
+.section-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-bottom:24px}
+.section-grid a{min-height:166px;gap:5px;padding:22px 40px 22px 22px}
+.section-grid strong{font-size:1.2rem;letter-spacing:-.025em}
+.section-number{font-size:.73rem;font-weight:800;letter-spacing:.12em;color:var(--accent)}
+.home-disclosure{margin:20px 0 12px}
+@media(max-width:850px){.section-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:480px){.section-grid{grid-template-columns:1fr}.section-grid a{min-height:120px}}
