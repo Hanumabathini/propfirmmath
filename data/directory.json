@@ -33,7 +33,11 @@
     "name": "Earn2Trade",
     "category": "Futures",
     "path": null,
-    "status": "research-needed"
+    "status": "partial-source",
+    "source": "https://help.earn2trade.com/en/articles/3849975-what-is-the-maintain-consistency-rule",
+    "summary": "Trader Career Path and Gauntlet Mini evaluations use a 30% consistency benchmark. See official wording for boundary conditions.",
+    "consistency": 30,
+    "checked": "2026-11-25"
   },
   {
     "name": "Bulenox",
@@ -87,7 +91,26 @@
     "name": "FTMO",
     "category": "Forex and CFD",
     "path": null,
-    "status": "research-needed"
+    "status": "partial-source",
+    "source": "https://ftmo.com/en/trading-objectives/",
+    "summary": "2-Step: 10% first target, 5% verification target, 5% daily loss, 10% maximum loss, four minimum trading days per phase.",
+    "plans": [
+      [
+        "Challenge",
+        10,
+        5,
+        10,
+        4
+      ],
+      [
+        "Verification",
+        5,
+        5,
+        10,
+        4
+      ]
+    ],
+    "checked": "2026-11-25"
   },
   {
     "name": "The5ers",
@@ -99,7 +122,26 @@
     "name": "FundedNext",
     "category": "Forex and CFD",
     "path": null,
-    "status": "research-needed"
+    "status": "partial-source",
+    "source": "https://help.fundednext.com/en/articles/17255124-stellar-2-step-challenge",
+    "summary": "Stellar 2-Step: 8% first target, 5% second target, 5% daily loss, 10% maximum loss, five minimum trading days per phase.",
+    "plans": [
+      [
+        "Phase 1",
+        8,
+        5,
+        10,
+        5
+      ],
+      [
+        "Phase 2",
+        5,
+        5,
+        10,
+        5
+      ]
+    ],
+    "checked": "2026-11-25"
   },
   {
     "name": "E8 Markets",
