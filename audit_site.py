@@ -65,6 +65,13 @@ for v in locs:
     if not res or res[0] not in docs:errors.append(f"Invalid sitemap URL {v}")
     elif docs[res[0]].canon!=[v]:errors.append(f"Canonical mismatch {v}")
 if len(locs)!=len(docs)-int("404.html" in docs):errors.append("Sitemap page count mismatch")
+# Phase 0 checks: public pages are never gated behind a country, and Elite features that do not exist yet are labelled planned.
+for f in root.rglob("*.html"):
+    t=f.read_text(encoding="utf-8")
+    if "data-country-required" in t:errors.append(f"{f.relative_to(root)}: content hidden until a country is chosen")
+mem=(root/"membership/index.html").read_text(encoding="utf-8")
+for need in ("Consolidated reporting \u2014 planned","Advanced portfolio risk \u2014 planned"):
+    if need not in mem:errors.append("Membership page must label unbuilt Elite features as planned: "+need)
 print(f"Audit: {len(docs)} HTML files, {count} internal references, {len(locs)} sitemap URLs, {len(external)} external URLs (not fetched)")
 if errors:
     print("\n".join(errors));sys.exit(1)

@@ -15,3 +15,4 @@ const result=J.journal([{pnl:600,fee:0},{pnl:-300,fee:0},{pnl:null,fee:0},{pnl:1
 assert.equal(J.rules({name:"Tradeify"},{label:"Lightning 50K",target:0,consistency:"20%, 25%, then 30% for payouts"}).pct,null);
 assert.equal(J.journal([{pnl:100,fee:10}],{target:3000,pct:40,days:3,basis:"gross"})[0].ratio,100);
 console.log("Regression checks passed");
+require("./tests/workspace.cjs");
