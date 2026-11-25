@@ -489,3 +489,18 @@ header.site :focus-visible, footer.site :focus-visible, .site-home :focus-visibl
 @media (forced-colors: active) {
   header.site nav.top > .nav-account, .discover-primary { border-color: LinkText; }
 }
+
+.compare-selectors {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 225px), 1fr));
+  gap: 12px;
+}
+
+.compare-slot h3 { margin-top: 0; }
+.compare-slot select + label { margin-top: 12px; }
+.interactive-compare { min-width: 540px; }
+.interactive-compare th, .interactive-compare td { vertical-align: top; }
+.interactive-compare th { min-width: 135px; }
+.interactive-compare ul { margin: 0; padding-left: 1.2em; }
+.interactive-compare thead th { background: var(--night-panel); color: var(--night-ink); }
+.interactive-compare thead th:not(:first-child) { color: var(--mint); }

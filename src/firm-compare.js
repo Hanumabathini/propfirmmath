@@ -1,25 +1,143 @@
 (() => {
-"use strict";
-const data=JSON.parse(document.getElementById("fc-data").textContent);
-const firm=Array.from(document.querySelectorAll("[data-firm]")),plan=Array.from(document.querySelectorAll("[data-plan]"));
-const table=document.getElementById("fc-table"),status=document.getElementById("fc-status");
-const selected=i=>firm[i].value===""?null:data[Number(firm[i].value)];
-function options(i){const f=selected(i);plan[i].replaceChildren();if(!f){plan[i].disabled=true;return;}plan[i].disabled=false;f.plans.forEach((p,j)=>{const o=document.createElement("option");o.value=j;o.textContent=p.label;plan[i].append(o);});}
-function cell(row,tag,value){const c=document.createElement(tag);c.textContent=value;row.append(c);return c;}
-function link(c,href,label){const a=document.createElement("a");a.href=href;a.textContent=label;c.append(a);}
-function render(){const picks=firm.map((_,i)=>{const f=selected(i);return f?{f,p:f.plans[Number(plan[i].value)||0]}:null;}).filter(Boolean);
-const head=table.tHead,body=table.tBodies[0];head.replaceChildren();body.replaceChildren();
-const h=head.insertRow();cell(h,"th","Comparison");picks.forEach(({f,p})=>cell(h,"th",f.name+" · "+p.label));
-const rows=[["Regional eligibility","region"],["Category","category"],["Data status","status"],["Account / plan","label"],["Published regional price / fees","price"],["Local currency estimate","localPrice"],["Profit target","target"],["Maximum drawdown","dd"],["Drawdown type","dd_type"],["Daily loss limit","dll"],["Contract limits","contracts"],["Minimum trading days","days"],["Consistency rule","consistency"],["Source date","checked"]];
-const statusNames={"sourced-preset":"Sourced plan data","partial-source":"Partial source data","research-needed":"Research pending"};
-rows.forEach(([label,key])=>{const r=body.insertRow();cell(r,"th",label);const values=picks.map(({f,p})=>key==="localPrice"?window.PFMRegion.localPrice(p):key==="price"?window.PFMRegion.price(p):key==="region"?window.PFMRegion.region(f.name,window.PFMRegion.get()).label:key==="status"?statusNames[f.status]:p[key]??f[key]??"Not verified");values.forEach(v=>cell(r,"td",v));if(values.length===2&&values[0]!==values[1]&&values.every(v=>v!=="Not verified")&&["price","target","dd","dll","contracts","days","consistency","dd_type"].includes(key))r.classList.add("compare-difference");});
-let r=body.insertRow();cell(r,"th","Funded payout notes (firm-wide; check plan)");picks.forEach(({f})=>{const c=cell(r,"td","");if(!f.payout.length){c.textContent="Not verified";return;}const ul=document.createElement("ul");f.payout.forEach(t=>{const li=document.createElement("li");li.textContent=t;ul.append(li);});c.append(ul);});
-r=body.insertRow();cell(r,"th","Firm profile and sources");picks.forEach(({f})=>{const c=cell(r,"td","");link(c,f.profile,"View firm profile");if(f.sources.length){const ul=document.createElement("ul");f.sources.forEach(([u,t])=>{const li=document.createElement("li");link(li,u,t);ul.append(li);});c.append(ul);}});
-status.textContent=picks.length+" selections. "+(picks.length<2?"Choose at least two plans for a comparison.":"Compare costs and rules within the same account stage; prices are not live quotes.");
-}
-const defaults=firm.map(el=>el.value);
-document.getElementById("fc-reset").addEventListener("click",()=>{firm.forEach((el,i)=>{el.value=defaults[i];if(el.selectedOptions[0]?.disabled)el.value="";options(i);});render();});
-function syncCountry(){firm.forEach((el,i)=>{const previous=el.value;el.replaceChildren(new Option("Choose available firm",""));data.forEach((f,j)=>{if(window.PFMRegion.available(f.name))el.add(new Option(f.name,String(j)));});el.value=Array.from(el.options).some(o=>o.value===previous)?previous:"";options(i);});render();}
-window.addEventListener("pfm-country-change",syncCountry);
-firm.forEach((el,i)=>{options(i);el.addEventListener("change",()=>{options(i);render();});plan[i].addEventListener("change",render);});syncCountry();
+  "use strict";
+  const data = JSON.parse(document.getElementById("fc-data").textContent);
+  const firms = Array.from(document.querySelectorAll("[data-firm]"));
+  const plans = Array.from(document.querySelectorAll("[data-plan]"));
+  const defaults = firms.map(select => select.value);
+  const table = document.getElementById("fc-table");
+  const results = document.getElementById("fc-results");
+  const status = document.getElementById("fc-status");
+  const region = window.PFMRegion;
+  const missing = "Not verified";
+
+  const rows = [
+    ["Regional eligibility", "region"], ["Category", "category"], ["Data status", "status"],
+    ["Account / plan", "label"], ["Published regional price / fees", "price"],
+    ["Local currency estimate", "localPrice"], ["Profit target", "target"],
+    ["Maximum drawdown", "dd"], ["Drawdown type", "dd_type"], ["Daily loss limit", "dll"],
+    ["Contract limits", "contracts"], ["Minimum trading days", "days"],
+    ["Consistency rule", "consistency"], ["Source date", "checked"],
+  ];
+  const statusNames = {
+    "sourced-preset": "Sourced plan data",
+    "partial-source": "Partial source data",
+    "research-needed": "Research pending",
+  };
+  const highlight = new Set(["price", "target", "dd", "dll", "contracts", "days", "consistency", "dd_type"]);
+
+  function selectedFirm(index) {
+    const value = firms[index].value;
+    return value === "" ? null : data[Number(value)];
+  }
+
+  function updatePlans(index) {
+    const firm = selectedFirm(index);
+    const select = plans[index];
+    select.replaceChildren(...(firm ? firm.plans.map((plan, index) => new Option(plan.label, index)) : []));
+    select.disabled = !firm;
+  }
+
+  function cell(row, tag, value, scope) {
+    const element = document.createElement(tag);
+    element.textContent = value;
+    if (scope) element.scope = scope;
+    row.append(element);
+    return element;
+  }
+
+  function link(parent, href, label) {
+    const element = document.createElement("a");
+    element.href = href;
+    element.textContent = label;
+    parent.append(element);
+  }
+
+  function valueFor(firm, plan, key, country) {
+    switch (key) {
+      case "localPrice": return region.localPrice(plan);
+      case "price": return region.price(plan);
+      case "region": return country ? region.region(firm.name, country).label : "Choose a country to check restrictions";
+      case "status": return statusNames[firm.status] ?? missing;
+      default: return plan[key] ?? firm[key] ?? missing;
+    }
+  }
+
+  function render() {
+    const picks = firms.flatMap((_, index) => {
+      const firm = selectedFirm(index);
+      return firm ? [{firm, plan: firm.plans[Number(plans[index].value)]}] : [];
+    });
+    const country = region.get();
+    const head = table.tHead;
+    const body = table.tBodies[0];
+    head.replaceChildren();
+    body.replaceChildren();
+
+    const header = head.insertRow();
+    cell(header, "th", "Comparison", "col");
+    picks.forEach(({firm, plan}) => cell(header, "th", firm.name + " · " + plan.label, "col"));
+
+    rows.forEach(([label, key]) => {
+      const row = body.insertRow();
+      cell(row, "th", label, "row");
+      const values = picks.map(({firm, plan}) => valueFor(firm, plan, key, country));
+      values.forEach(value => cell(row, "td", value));
+      if (highlight.has(key) && values.every(value => value !== missing) && new Set(values).size > 1) {
+        row.classList.add("compare-difference");
+      }
+    });
+
+    const payouts = body.insertRow();
+    cell(payouts, "th", "Funded payout notes (firm-wide; check plan)", "row");
+    const sources = body.insertRow();
+    cell(sources, "th", "Firm profile and sources", "row");
+    picks.forEach(({firm}) => {
+      const payout = cell(payouts, "td", firm.payout.length ? "" : missing);
+      if (firm.payout.length) {
+        const list = document.createElement("ul");
+        firm.payout.forEach(note => {
+          const item = document.createElement("li");
+          item.textContent = note;
+          list.append(item);
+        });
+        payout.append(list);
+      }
+
+      const source = cell(sources, "td", "");
+      link(source, firm.profile, "View firm profile");
+      if (firm.sources.length) {
+        const list = document.createElement("ul");
+        firm.sources.forEach(([href, label]) => {
+          const item = document.createElement("li");
+          link(item, href, label);
+          list.append(item);
+        });
+        source.append(list);
+      }
+    });
+
+    results.hidden = picks.length === 0;
+    status.textContent = picks.length < 2
+      ? "Choose at least two plans for a comparison."
+      : `${picks.length} plans selected. Compare costs and rules within the same account stage. Published prices may change.`;
+  }
+
+  document.getElementById("fc-reset").addEventListener("click", () => {
+    firms.forEach((select, index) => {
+      select.value = defaults[index];
+      updatePlans(index);
+    });
+    render();
+  });
+
+  window.addEventListener("pfm-country-change", render);
+  firms.forEach((select, index) => {
+    updatePlans(index);
+    select.addEventListener("change", () => {
+      updatePlans(index);
+      render();
+    });
+    plans[index].addEventListener("change", render);
+  });
+  render();
 })();
