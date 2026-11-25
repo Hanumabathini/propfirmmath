@@ -8,7 +8,7 @@
     return (n < 0 ? "-$" : "$") + Math.abs(n).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   };
   var kpi = function (label, value) { return "<div class=kpi><small>" + esc(label) + "</small><b>" + value + "</b></div>"; };
-  var WARN = "<p class=note><b>Estimate only.</b> Firms change their rules and apply them in their own way. Check the numbers with your firm before you trade or ask for a payout.</p>";
+  var WARN = "<p class=note><b>Planning estimate only.</b> Your firm's dashboard decides eligibility. Check account type, purchase date, rule version, winning/trading days, balance buffers, payout history and contract restrictions. This calculator cannot verify all of them.</p>";
 
   function read(sec) {
     var x = {};
@@ -27,8 +27,8 @@
       if (!r.days) return "<p>Add your daily profit and loss, one number per day.</p>";
       if (r.total <= 0) return "<p class=big>No profit yet</p><p>Your days add up to " + money(r.total) + ". The rule only matters once you're in profit.</p>";
       var head = r.pass
-        ? "<p class=note>Within the " + r.rulePct + "% rule</p><p class='big pos'>Passing</p>"
-        : "<p class=note>Over the " + r.rulePct + "% rule</p><p class='big neg'>Not yet</p>";
+        ? "<p class=note>Within the selected " + r.rulePct + "% ratio</p><p class='big pos'>Ratio met</p>"
+        : "<p class=note>Over the selected " + r.rulePct + "% ratio</p><p class='big neg'>More profit needed</p>";
       var tail = r.pass
         ? "<p>Your best day is " + r.pct + "% of your profit. At this total, any single day up to " + money(r.maxBestDay) + " keeps you inside the rule.</p>"
         : "<p>Your best day (day " + r.bestDay + ") is " + r.pct + "% of your profit. Make <b>" + money(r.moreProfit) + "</b> more, without a day bigger than " + money(r.best) + ", to get back inside the rule.</p>";

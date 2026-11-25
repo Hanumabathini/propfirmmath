@@ -57,7 +57,7 @@ def page(path, title, desc, body, schema=None, crumbs=None):
 {gsc}
 {ld}</head><body>
 <header class="site"><div class="wrap"><a class="logo" href="{url('')}">PropFirm<span>Math</span></a>
-<nav class="top"><a href="{url('')}">Calculators</a><a href="{url('prop-firm-comparison/')}">Compare firms</a><a href="{url('topstep-rules/')}">Topstep</a><a href="{url('tradeify-rules/')}">Tradeify</a><a href="{url('myfundedfutures-rules/')}">MFFU</a></nav></div></header>
+<nav class="top"><a href="{url('')}">Calculators</a><a href="{url('prop-firm-comparison/')}">Compare firms</a><a href="{url('global-traders/')}">Global traders</a><a href="{url('plan-compare/')}">Plan analysis</a><a href="{url('topstep-rules/')}">Topstep</a><a href="{url('tradeify-rules/')}">Tradeify</a><a href="{url('myfundedfutures-rules/')}">MFFU</a><a href="{url('directory/')}">Directory</a><a href="{url('workspace/')}">Workspace</a></nav></div></header>
 {crumb_html}
 <main class="wrap">
 {body}
@@ -67,6 +67,7 @@ def page(path, title, desc, body, schema=None, crumbs=None):
 <p><a href="{url('about/')}">About</a> · <a href="{url('privacy/')}">Privacy</a> · <a href="{url('prop-firm-comparison/')}">Rule sources</a></p>
 <p class="note">{BRAND} isn't affiliated with any prop firm. Some links may be affiliate links: if you buy through them we may earn a commission at no cost to you.</p>
 </div></footer>
+<script defer src="{url('motion.js')}"></script>
 </body></html>"""
     out = DIST / path / "index.html" if path else DIST / "index.html"
     out.parent.mkdir(parents=True, exist_ok=True)
@@ -91,6 +92,7 @@ def build():
         shutil.rmtree(DIST)
     DIST.mkdir()
     shutil.copy(ROOT / "src/style.css", DIST / "style.css")
+    shutil.copy(ROOT / "src/motion.js", DIST / "motion.js")
     (DIST / "favicon.svg").write_text('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="8" fill="#2457c5"/><text x="16" y="22" font-size="18" text-anchor="middle" fill="#fff" font-family="sans-serif" font-weight="700">%</text></svg>')
     from prop_pages import build_prop
     build_prop({"page": page, "esc": esc, "url": url, "abs_url": abs_url, "ROOT": ROOT, "DIST": DIST, "aff": AFF,
@@ -111,6 +113,14 @@ def build():
     nf = re.sub(r"<title>.*?</title>", f"<title>Page not found | {BRAND}</title>", nf, count=1)
     nf = re.sub(r'<link rel="canonical"[^>]*>', '<meta name="robots" content="noindex">', nf, count=1)
     (DIST / "404.html").write_text(nf)
+
+    from plan_comparison import build_plan_comparison
+    build_plan_comparison(page, url, ROOT, DIST, CHECKED)
+    from global_traders import build_global_traders
+    build_global_traders(page, url, ROOT, DIST, CHECKED)
+
+    from expanded import build_expanded
+    build_expanded(page, url, ROOT, DIST, CHECKED)
 
     today = datetime.date.today().isoformat()
     (DIST / "sitemap.xml").write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +

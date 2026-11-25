@@ -1,8 +1,10 @@
-"""Funded-trader pages for PayoutMath. Called from build.py with its helpers."""
+"""Funded-trader pages for PropFirmMath. Called from build.py with its helpers."""
 import datetime, json, shutil, subprocess
 
-WARN = ("<div class=warn><b>These are estimates.</b> Prop firms change their rules often and apply them in their own way. "
-        "Always check the numbers in your firm's dashboard or help center before you trade or ask for a payout.</div>")
+WARN = ("<div class=warn><b>Planning estimates, not payout eligibility or trading authorization.</b> "
+        "Your firm, account product, activation/purchase date, payout path, winning days, "
+        "contract limits, trailing loss rules and prior withdrawals can change the result. "
+        "Confirm every requirement in your firm's dashboard and official rules before acting.</div>")
 
 def build_prop(h):
     page, url, ROOT, DIST = h["page"], h["url"], h["ROOT"], h["DIST"]
