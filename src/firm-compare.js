@@ -19,7 +19,7 @@ status.textContent=picks.length+" selections. "+(picks.length<2?"Choose at least
 }
 const defaults=firm.map(el=>el.value);
 document.getElementById("fc-reset").addEventListener("click",()=>{firm.forEach((el,i)=>{el.value=defaults[i];if(el.selectedOptions[0]?.disabled)el.value="";options(i);});render();});
-function syncCountry(){firm.forEach((el,i)=>{const previous=el.value;el.replaceChildren(new Option("Choose available firm",""));data.forEach((f,j)=>{if(window.PFMRegion.available(f.name))el.add(new Option(f.name,String(j)));});el.value=Array.from(el.options).some(o=>o.value===previous)?previous:"";options(i);});render();}
+function syncCountry(){firm.forEach((el,i)=>{const previous=el.value;el.replaceChildren(new Option(window.PFMRegion.placeholder(),""));data.forEach((f,j)=>{if(window.PFMRegion.available(f.name))el.add(new Option(f.name,String(j)));});el.value=Array.from(el.options).some(o=>o.value===previous)?previous:"";options(i);});render();}
 window.addEventListener("pfm-country-change",syncCountry);
 firm.forEach((el,i)=>{options(i);el.addEventListener("change",()=>{options(i);render();});plan[i].addEventListener("change",render);});syncCountry();
 })();

@@ -110,12 +110,20 @@ def build():
 
     page("about/", f"About {BRAND}", f"{BRAND} is a free set of prop firm calculators for funded futures traders. Here is where the rules come from and how the math works.",
          f"""<h1>About {BRAND}</h1><p>{BRAND} is a free set of calculators for futures traders in prop firm evaluations and funded accounts: consistency rules, payouts, trailing drawdown, profit targets and position size.</p>
-<p>Every firm rule comes from the firm's own help or plan pages, and each page says where it came from and when it was read. Where a firm's pages couldn't be read, we show no numbers for it. The math runs in your browser; nothing you type is sent anywhere.</p>
+<p>Every firm rule comes from the firm's own help or plan pages, and each page says where it came from and when it was read. Where a firm's pages couldn't be read, we show no numbers for it. The math runs in your browser; nothing you type is sent anywhere. Tools that save your work, like My account, keep it in your own browser's storage; the <a href="{url('privacy/')}">privacy page</a> lists exactly what is saved and how to delete it.</p>
 <p>{BRAND} isn't affiliated with any prop firm, and nothing here is trading or financial advice.</p>""", crumbs=[("Home", ""), ("About", "about/")])
-    page("privacy/", f"Privacy policy | {BRAND}", f"How {BRAND} handles your data: the calculators run in your browser, local demo records stay in your browser, and some links may be affiliate links.",
+    page("privacy/", f"Privacy policy | {BRAND}", f"How {BRAND} handles your data: the calculators run in your browser, what you save stays in your own browser storage, and some links may be affiliate links.",
          f"""<h1>Privacy policy</h1><p>Last updated {CHECKED}.</p>
-<p>The calculators run entirely in your browser. The numbers you enter aren't sent to us or stored on a server.</p>
-<p>The account demonstration stores trading records and the selected demo tier in local browser storage. The country selector and plan-analysis journal use session storage. Clear site data to remove all local records, or use Reset demo data to clear the account demo only. Anyone sharing your browser profile may access these records. Do not enter real financial or personal data.</p>
+<p>The calculators run entirely in your browser. The numbers you enter aren't sent to us or stored on any server.</p>
+<h2>What is stored in your browser</h2>
+<p>Some tools save what you enter in your own browser's storage on this device, so it is still there when you come back. This data never leaves your device, we can't see it, and it isn't shared with anyone.</p>
+<ul>
+<li><b>Country of residence</b> (local storage, kept until you clear it): the country you pick at the top of the page, used to label which firms accept it.</li>
+<li><b>My account workspace</b> (local storage, kept until you clear it): accounts, journal entries, payouts, expenses and the membership tier you preview. Delete it with <b>Reset demo data</b> on the My account page.</li>
+<li><b>Plan analysis journal</b> (session storage, cleared when you close the tab): the daily entries for the firm and plan you selected.</li>
+<li><b>Selected firm, plan and FX quote</b> (session storage, cleared when you close the tab): your last choice on the international payout page and any exchange-rate quote you typed.</li>
+</ul>
+<p>The calculator pages themselves (consistency, payout, drawdown, profit target, position size) don't save what you type. You can remove everything at any time by clearing this site's data in your browser settings.</p>
 <p>We may use Cloudflare Web Analytics, which counts page views without cookies and without tracking you across sites. If we ever add advertising or other cookies, this page will be updated first.</p>
 <p>Some links may be affiliate links. If you buy through them we may earn a commission; the firm may set its own cookie to record the referral.</p>""",
          crumbs=[("Home", ""), ("Privacy", "privacy/")])
