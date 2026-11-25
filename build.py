@@ -31,7 +31,7 @@ abs_url = lambda p: f"{SITE_URL}{BASE}/{p}"
 SITEMAP = []
 
 def page(path, title, desc, body, schema=None, crumbs=None):
-    nav_sections = [("prop-firm-calculator/","Calculators"),("prop-firm-comparison/","Compare firms"),("global-traders/","Global trackers"),("plan-compare/","Plan analysis"),("directory/","Directory"),("workspace/","Workspace")]
+    nav_sections = [("global-traders/","Global trackers"),("prop-firm-comparison/","Compare firms"),("prop-firm-calculator/","Calculators"),("plan-compare/","Plan analysis"),("directory/","Directory"),("workspace/","Workspace")]
     nav_html = "".join(f'<a href="{url(p)}"' + (' aria-current="page"' if path == p else "") + f'>{esc(n)}</a>' for p,n in nav_sections)
     canon = abs_url(path)
     blocks = list(schema or [])
