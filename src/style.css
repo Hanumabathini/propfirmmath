@@ -194,3 +194,5 @@ nav.top a[aria-current=page]{background:#c9b6ff20;color:#f2eaff;box-shadow:inset
 .home-disclosure{margin:20px 0 12px}
 @media(max-width:850px){.section-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:480px){.section-grid{grid-template-columns:1fr}.section-grid a{min-height:120px}}
+
+.compare-selectors{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:20px 0}.compare-slot{padding:16px;display:flex;flex-direction:column;gap:8px}.compare-slot h3{margin:0 0 8px}.compare-slot label{margin:0}.interactive-compare th,.interactive-compare td{min-width:160px;max-width:320px;overflow-wrap:anywhere}.interactive-compare th:first-child{position:sticky;left:0;background:#202640;z-index:1;min-width:140px}.interactive-compare td ul{margin:0;padding-left:18px}.interactive-compare td li{margin:0 0 7px}@media(max-width:1000px){.compare-selectors{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:480px){.compare-selectors{grid-template-columns:1fr}.interactive-compare th:first-child{min-width:105px;max-width:105px}}
