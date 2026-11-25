@@ -32,7 +32,9 @@ SITEMAP = []
 
 def page(path, title, desc, body, schema=None, crumbs=None):
     nav_sections = [("global-traders/","Global trackers"),("prop-firm-comparison/","Compare firms"),("prop-firm-calculator/","Calculators"),("plan-compare/","Plan analysis"),("directory/","Directory"),("workspace/","Workspace"),("account/","My account"),("membership/","Membership")]
-    nav_html = "".join(f'<a href="{url(p)}"' + (' aria-current="page"' if path == p else "") + f'>{esc(n)}</a>' for p,n in nav_sections)
+    groups = [("Prop firms",[("directory/","Firm directory"),("global-traders/","Country & eligibility"),("prop-firm-comparison/","Compare firms")]),("Tools",[("prop-firm-calculator/","All calculators"),("plan-compare/","Plan analysis"),("workspace/","Payout scenarios")])]
+    nav_html = "".join(f'<details class="nav-group"><summary>{esc(label)}</summary><div class="nav-dropdown">'+"".join(f'<a href="{url(p)}"{(" aria-current=page" if path==p else "")}>{esc(n)}</a>' for p,n in items)+'</div></details>' for label,items in groups)
+    nav_html += f'<a href="{url("membership/")}">Membership</a><a class="nav-account" href="{url("account/")}">My dashboard →</a>'
     canon = abs_url(path)
     blocks = list(schema or [])
     if crumbs:
@@ -58,13 +60,14 @@ def page(path, title, desc, body, schema=None, crumbs=None):
 <link rel="icon" href="{url('favicon.svg')}" type="image/svg+xml">
 <link rel="stylesheet" href="{url('style.css')}">
 <link rel="stylesheet" href="{url('membership.css')}">
+<link rel="stylesheet" href="{url('discovery.css')}">
 {gsc}
 {'<meta name="robots" content="noindex,follow">' if PREVIEW else ""}
 {ld}</head><body>
 <header class="site"><div class="wrap"><a class="logo" href="{url('')}">PropFirm<span>Math</span></a>
-<nav class="top" aria-label="Main navigation">{nav_html}</nav></div><div class="wrap region-bar"><label for="site-country">Country of residence</label><select id="site-country"><option value="">Choose your country</option></select><span id="site-region-status" role="status" class="note">Choose your residence first.</span></div></header><script src="{url('region.js')}"></script>
+<nav class="top" aria-label="Main navigation">{nav_html}</nav></div><div class="wrap region-bar"><label for="site-country">Country of residence</label><select id="site-country"><option value="">Choose your country</option></select><span id="site-region-status" role="status" class="note">Optional for browsing; select for regional tools.</span></div></header><script src="{url('region.js')}"></script>
 {crumb_html}
-<main class="wrap" id="main-content" data-country-required hidden>
+<main class="wrap" id="main-content">
 {body}
 </main>
 <footer class="site"><div class="wrap">
@@ -97,6 +100,7 @@ def build():
         shutil.rmtree(DIST)
     DIST.mkdir()
     shutil.copy(ROOT / "src/style.css", DIST / "style.css")
+    shutil.copy(ROOT / "src/discovery.css", DIST / "discovery.css")
     shutil.copy(ROOT / "src/motion.js", DIST / "motion.js")
     shutil.copy(ROOT / "src/region.js", DIST / "region.js")
     (DIST / "favicon.svg").write_text('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="8" fill="#2457c5"/><text x="16" y="22" font-size="18" text-anchor="middle" fill="#fff" font-family="sans-serif" font-weight="700">%</text></svg>')
@@ -108,9 +112,10 @@ def build():
          f"""<h1>About {BRAND}</h1><p>{BRAND} is a free set of calculators for futures traders in prop firm evaluations and funded accounts: consistency rules, payouts, trailing drawdown, profit targets and position size.</p>
 <p>Every firm rule comes from the firm's own help or plan pages, and each page says where it came from and when it was read. Where a firm's pages couldn't be read, we show no numbers for it. The math runs in your browser; nothing you type is sent anywhere.</p>
 <p>{BRAND} isn't affiliated with any prop firm, and nothing here is trading or financial advice.</p>""", crumbs=[("Home", ""), ("About", "about/")])
-    page("privacy/", f"Privacy policy | {BRAND}", f"How {BRAND} handles your data: the calculators run in your browser, nothing you type is stored, and some links may be affiliate links.",
+    page("privacy/", f"Privacy policy | {BRAND}", f"How {BRAND} handles your data: the calculators run in your browser, local demo records stay in your browser, and some links may be affiliate links.",
          f"""<h1>Privacy policy</h1><p>Last updated {CHECKED}.</p>
 <p>The calculators run entirely in your browser. The numbers you enter aren't sent to us or stored on a server.</p>
+<p>The account demonstration stores trading records and the selected demo tier in local browser storage. The country selector and plan-analysis journal use session storage. Clear site data to remove all local records, or use Reset demo data to clear the account demo only. Anyone sharing your browser profile may access these records. Do not enter real financial or personal data.</p>
 <p>We may use Cloudflare Web Analytics, which counts page views without cookies and without tracking you across sites. If we ever add advertising or other cookies, this page will be updated first.</p>
 <p>Some links may be affiliate links. If you buy through them we may earn a commission; the firm may set its own cookie to record the referral.</p>""",
          crumbs=[("Home", ""), ("Privacy", "privacy/")])
