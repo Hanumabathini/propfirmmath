@@ -355,8 +355,8 @@ footer.site .fl a:hover{color:var(--ink)}
         <a href="#/tracker"><span class="ic">💸</span>Payout Tracker</a>
         <a href="#/journal"><span class="ic">📓</span>Trading Journal</a>
         <a href="#/tools"><span class="ic">🧮</span>Calculators</a>
-        <a href="#/giveaways"><span class="ic">🎁</span>Giveaways</a>
-        <a href="#/loyalty"><span class="ic">⭐</span>Loyalty Program</a>
+        
+        
       </div>
       <h4>Pages</h4>
       <div class="menu-list">
@@ -434,8 +434,8 @@ footer.site .fl a:hover{color:var(--ink)}
           <a href="#/methodology">How We Rank</a>
           <a href="#/faq">FAQ</a>
           <a href="#/account">Free Account</a>
-          <a href="#/loyalty">Loyalty Program</a>
-          <a href="#/giveaways">Giveaways</a>
+          
+          
           <a href="#/delisted">Delisted Firms</a>
           <a href="#/list-your-firm">List Your Firm</a>
         </div>
@@ -457,7 +457,7 @@ footer.site .fl a:hover{color:var(--ink)}
     <div class="foot-bottom">
       <span>© 2026 PropFirmMath · Operated by Hanumantha Rao Bathini, Memphis, TN. All rights reserved.</span>
       <span class="links">
-        <a href="#/faq">FAQ</a><a href="#/privacy">Privacy Policy</a><a href="#/terms">Terms &amp; Conditions</a><a href="#/loyalty-policy">Loyalty Points Policy</a><a href="#/disclosure">Affiliate Disclosure</a><a href="#/cookies">Cookie Policy</a><a href="#/delisted">Delisted Firms</a>
+        <a href="#/faq">FAQ</a><a href="#/privacy">Privacy Policy</a><a href="#/terms">Terms &amp; Conditions</a><a href="#/disclosure">Affiliate Disclosure</a><a href="#/cookies">Cookie Policy</a><a href="#/delisted">Delisted Firms</a>
       </span>
     </div>
   </div>
@@ -740,7 +740,7 @@ function renderHome(){
    + "</div></div></section>";
   /* how it works */
   html += '<section><div class="wrap"><div class="sec-head"><span class="eyebrow">How it works</span><h2>Compare. Save. Get rewarded.</h2></div><div class="grid c3">'
-   + [["Compare every firm","Filter "+COUNTS.total+" firms by market, price, rules and payout speed, then check payout evidence on the tracker before you buy.","#/compare","Compare firms"],["Buy with a code","Copy a snapshot code, buy through the firm's own checkout, and the discount applies there. Confirm the price before you pay — snapshot offers expire.","#/deals","See every deal"],["Get points back","At participating firms, purchases made through PropFirmMath links can earn loyalty points toward free accounts. Points are per-firm and some firms opt out.","#/loyalty","How loyalty works"]].map(function(s,i){
+   + [["Compare every firm","Filter "+COUNTS.total+" firms by market, price, rules and payout speed, then check payout evidence on the tracker before you buy.","#/compare","Compare firms"],["Buy with a code","Copy a snapshot code, buy through the firm's own checkout, and the discount applies there. Confirm the price before you pay — snapshot offers expire.","#/deals","See every deal"]].map(function(s,i){
      return '<article class="glass pillar"><div class="step-num">'+(i+1)+'</div><h3>'+s[0]+'</h3><p>'+s[1]+'</p><p style="margin-top:12px"><a href="'+s[2]+'"><strong>'+s[3]+" →</strong></a></p></article>"; }).join("")
    + "</div></div></section>";
   /* mini quiz */
@@ -1058,7 +1058,7 @@ function renderQuiz(){
        : '<div class="empty-note">No firm in the reviewed set fits that combination. Loosen a filter — for example allow all markets — and retake.</div>')
      + '</div><div class="glass" style="padding:18px;border-radius:var(--r-md);margin-top:18px"><h3 style="font-size:1rem">Get your results by email</h3>'
      + '<form id="quizEmailForm" style="display:flex;gap:9px;flex-wrap:wrap;margin-top:12px"><input type="email" id="quizEmail" placeholder="you@example.com" aria-label="Email for quiz results" style="flex:1;min-width:220px" /><button class="btn btn-teal btn-sm" type="submit">Send Results</button></form>'
-     + '<label class="checkline"><input type="checkbox" id="quizConsent" /> <span>Send me new deals and giveaway news (optional).</span></label>'
+     + '<label class="checkline"><input type="checkbox" id="quizConsent" /> <span>Send me new deals (optional).</span></label>'
      + '<p class="form-msg" id="quizEmailMsg"></p>'
      + '<p class="snap-note">Demo notice: this static export has no mail server, so nothing is actually sent or stored. The validation is real; the sending is not.</p></div>'
      + '<div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:16px"><button class="btn btn-ghost" id="qShare">Share Results</button><button class="btn btn-ghost" id="qRetake">Retake Quiz</button></div>';
@@ -1238,8 +1238,8 @@ function renderAccount(){
    + '<div class="field"><label for="regEmail">Email</label><input type="email" id="regEmail" autocomplete="email" /></div>'
    + '<div class="field"><label for="regPass">Password</label><input type="password" id="regPass" autocomplete="new-password" /></div>'
    + '<div class="field"><label for="regPass2">Confirm password</label><input type="password" id="regPass2" autocomplete="new-password" /></div>'
-   + '<label class="checkline"><input type="checkbox" id="regTerms" /> <span>I agree to the <a href="#/terms">Terms</a>, <a href="#/privacy">Privacy Policy</a> and <a href="#/loyalty-policy">Loyalty Points Policy</a>.</span></label>'
-   + '<label class="checkline"><input type="checkbox" id="regNews" /> <span>Send me new deals and giveaway news (optional).</span></label>'
+   + '<label class="checkline"><input type="checkbox" id="regTerms" /> <span>I agree to the <a href="#/terms">Terms</a>, <a href="#/privacy">Privacy Policy</a> and .</span></label>'
+   + '<label class="checkline"><input type="checkbox" id="regNews" /> <span>Send me new deals (optional).</span></label>'
    + '<button class="btn btn-teal" type="submit" style="width:100%">Sign up free — get 300 bonus points</button>'
    + '<p class="form-msg" id="regMsg"></p></form>'
    + '<p style="margin-top:14px;color:var(--ink2);font-size:.93rem">Already a member? <a href="#/login"><strong>Log in</strong></a></p></div>'
@@ -1472,14 +1472,14 @@ function route(){
   else if(parts[0]==="methodology"){ renderMethodology(); }
   else if(parts[0]==="account"){ renderAccount(); }
   else if(parts[0]==="login"){ renderLogin(); }
-  else if(parts[0]==="loyalty"){ renderLoyalty(); }
-  else if(parts[0]==="giveaways"){ renderGiveaways(); }
+  else if(parts[0]==="loyalty"){ location.replace("#/firms"); return; }
+  else if(parts[0]==="giveaways"){ location.replace("#/firms"); return; }
   else if(parts[0]==="journal"){ renderJournal(); }
   else if(parts[0]==="privacy"){ renderPrivacy(); }
   else if(parts[0]==="terms"){ renderTerms(); }
   else if(parts[0]==="disclosure"){ renderDisclosure(); }
   else if(parts[0]==="cookies"){ renderCookies(); }
-  else if(parts[0]==="loyalty-policy"){ renderLoyaltyPolicy(); }
+  else if(parts[0]==="loyalty-policy"){ location.replace("#/terms"); return; }
   else if(parts[0]==="delisted"){ renderDelisted(); }
   else if(parts[0]==="list-your-firm"){ renderListFirm(); }
   else { renderHome(); }
