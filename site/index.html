@@ -336,6 +336,7 @@ footer.site .fl a:hover{color:var(--ink)}
         <a href="#/tracker" data-nav="tracker">Payout Tracker</a>
         <a href="#/compare" data-nav="compare">Compare</a>
         <a href="#/tools" data-nav="tools">Tools</a>
+        <a href="#/calendar" data-nav="calendar">Economic Calendar</a>
         <a href="#/guides" data-nav="guides">Guides</a>
       </nav>
       <a class="deal-pill" id="dealPill" href="#/deals">🏷 <span id="dealPillText">Apex 90% OFF</span></a>
@@ -355,6 +356,7 @@ footer.site .fl a:hover{color:var(--ink)}
         <a href="#/tracker"><span class="ic">💸</span>Payout Tracker</a>
         <a href="#/journal"><span class="ic">📓</span>Trading Journal</a>
         <a href="#/tools"><span class="ic">🧮</span>Calculators</a>
+        <a href="#/calendar"><span class="ic">📅</span>Economic Calendar</a>
         
         
       </div>
@@ -424,6 +426,7 @@ footer.site .fl a:hover{color:var(--ink)}
           <a href="#/tools">Consistency Calculator</a>
           <a href="#/tools">Futures Calculator</a>
           <a href="#/tools">Forex Calculator</a>
+          <a href="#/calendar">Economic Calendar</a>
           <a href="#/journal">Trading Journal</a>
           <a href="#/glossary">Glossary</a>
         </div>
@@ -500,7 +503,7 @@ var FIRMS = [
  {slug:"top-one-futures",name:"Top One Futures",markets:["futures"],rating:4.8,rsrc:"Trustpilot",reviews:null,split:"Up to 90%",splitMax:90,dd:"EOD Intraday",ddTypes:["EOD","Intraday"],payoutDays:1,from:39.00,code:"GUIDE",off:89,consistency:null,platforms:["NinjaTrader","Tradovate"],payMethods:["Rise","Bank transfer"],founded:null,country:null,deal:"89% off Elite Access — flat $39.00 in the snapshot",tracked:false,summary:"Futures firm whose Elite Access was a flat $39.00 in the snapshot — the lowest futures entry price among the top-rated five."},
  {slug:"ment-funding",name:"Ment Funding",markets:["forex"],rating:4.8,rsrc:"Trustpilot",reviews:null,split:"Up to 75%",splitMax:75,dd:"Static",ddTypes:["Static"],payoutDays:1,from:212.50,code:"GUIDE",off:15,consistency:null,platforms:["MT5"],payMethods:["Crypto","Bank transfer"],founded:null,country:null,deal:"15% off with code GUIDE",tracked:false,summary:"Forex firm with a static drawdown and one-day payout cycle in the snapshot; the premium-priced option in the top-rated five."},
  {slug:"tradeify",name:"Tradeify",markets:["futures"],rating:4.6,rsrc:"Trustpilot",reviews:null,split:"Up to 90%",splitMax:90,dd:"EOD",ddTypes:["EOD"],payoutDays:1,from:54.00,code:"TNT",off:null,consistency:null,platforms:["NinjaTrader","Tradovate","TradingView"],payMethods:["Rise"],founded:null,country:null,deal:"Code TNT seen in the snapshot",tracked:true,paid30:53400000,payouts30:34376,largest:400000,summary:"Futures firm that topped the Rise-rail payout leaderboard in the snapshot by a wide margin."},
- {slug:"apex-trader-funding",name:"Apex Trader Funding",markets:["futures"],rating:null,rsrc:null,reviews:null,split:"Up to 100% (first payouts)",splitMax:100,dd:"Intraday trailing",ddTypes:["Intraday"],payoutDays:null,from:159.00,code:"SAVENOW",off:90,consistency:null,platforms:["NinjaTrader","Tradovate","Rithmic"],payMethods:["Bank transfer"],founded:null,country:"United States",deal:"90% off all evaluations with code SAVENOW",tracked:false,programs:{name:"EOD Trail – No Activation",sizes:{"100K":1590,"150K":2490}},summary:"Futures firm known for running several accounts at once. In the snapshot its 100K EOD Trail account listed at $1,590 was $159.00 with code SAVENOW. Apex does not participate in loyalty points in the researched programme."},
+ {slug:"apex-trader-funding",name:"Apex Trader Funding",markets:["futures"],rating:null,rsrc:null,reviews:null,split:"Up to 100% (first payouts)",splitMax:100,dd:"Intraday trailing",ddTypes:["Intraday"],payoutDays:null,from:159.00,code:"SAVENOW",off:90,consistency:null,platforms:["NinjaTrader","Tradovate","Rithmic"],payMethods:["Bank transfer"],founded:null,country:"United States",deal:"90% off all evaluations with code SAVENOW",tracked:false,programs:{name:"EOD Trail – No Activation",sizes:{"100K":1590,"150K":2490}},summary:"Futures firm known for running several accounts at once. In the snapshot its 100K EOD Trail account listed at $1,590 was $159.00 with code SAVENOW. Apex does not participate in firm comparisons in the researched programme."},
  {slug:"bulenox",name:"Bulenox",markets:["futures"],rating:null,rsrc:null,reviews:null,split:"Up to 90%",splitMax:90,dd:"EOD",ddTypes:["EOD"],payoutDays:null,from:null,code:"GUIDE",off:90,consistency:null,platforms:["NinjaTrader","Rithmic"],payMethods:["Rise","Bank transfer"],founded:null,country:null,deal:"90% off Qualification Option 1 with code GUIDE",tracked:false,summary:"Futures firm whose Qualification Option 1 carried the joint-biggest discount in the snapshot at 90% off."},
  {slug:"fundednext",name:"FundedNext",markets:["forex"],rating:null,rsrc:null,reviews:null,split:"Up to 95%",splitMax:95,dd:"Static",ddTypes:["Static"],payoutDays:null,from:null,code:null,off:null,consistency:null,platforms:["MT4","MT5","cTrader"],payMethods:["Rise","Crypto","Bank transfer"],founded:null,country:null,deal:null,tracked:true,paid30:16690000,payouts30:null,largest:null,summary:"Forex firm with a large Rise-rail payout footprint in the snapshot — third on the tracker leaderboard."},
  {slug:"fundingpips",name:"FundingPips",markets:["forex"],rating:null,rsrc:null,reviews:null,split:"Up to 100%",splitMax:100,dd:"Static",ddTypes:["Static"],payoutDays:null,from:null,code:"GUIDE",off:null,consistency:null,platforms:["MT5","Match Trader","cTrader"],payMethods:["Rise","Crypto"],founded:null,country:null,deal:"Code GUIDE accepted in the snapshot",tracked:false,summary:"Forex firm that appears in two researched head-to-head matchups (against FXIFY and FTMO)."},
@@ -725,7 +728,7 @@ function renderHome(){
    + '<div style="text-align:center;margin-top:18px"><a class="btn btn-ghost" href="#/deals">Show more deals</a></div>'
    + "</div></section>";
   /* savings calculator */
-  html += '<section><div class="wrap"><div class="sec-head"><span class="eyebrow">Savings calculator</span><h2>See what you\'d actually pay</h2><p class="sub">Pick a firm and an account; see the price with the snapshot code, how much you save, and whether it earns loyalty points. Prices are the '+SNAPSHOT+' snapshot.</p></div>'
+  html += '<section><div class="wrap"><div class="sec-head"><span class="eyebrow">Savings calculator</span><h2>See what you\'d actually pay</h2><p class="sub">Pick a firm and an account; see the price with the snapshot code, how much you save, and whether it earns firm comparisons. Prices are the '+SNAPSHOT+' snapshot.</p></div>'
    + '<div class="glass pad"><div class="calc-grid"><div>'
    + '<div class="field"><label for="calcFirm">Prop firm</label><select id="calcFirm"><option value="apex-trader-funding">Apex Trader Funding (Futures)</option></select></div>'
    + '<div class="field"><label for="calcProgram">Program</label><select id="calcProgram"><option>EOD Trail – No Activation</option></select></div>'
@@ -758,7 +761,7 @@ function renderHome(){
    + "</div></div></section>";
   /* free account */
   html += '<section><div class="wrap"><div class="sec-head"><span class="eyebrow">Free account</span><h2>Get more out of every firm you buy</h2><p class="sub">Everything below is described as free with an account. This static export has no backend, so sign-up here is a front-end demo — see the notice on the account page.</p></div><div class="grid c2">'
-   + [["⭐","Loyalty points","Submit purchases made through PropFirmMath links at participating firms and redeem points for rewards. 1 point per $1 spent; 300 bonus points at sign-up in the researched programme.","#/loyalty"],["🎁","Giveaways","Enter member giveaways for funded accounts and other prizes. No purchase needed; one entry per person.","#/giveaways"],["📓","Trading journal","Track trades and P&amp;L across funded accounts, with a Rithmic importer in the researched feature set.","#/journal"],["✓","Reviews and verification","Review firms you have traded and earn a Verified Trader badge once you prove you hold an account.","#/methodology"]].map(function(c){
+   + [["⭐","Firm research","Submit purchases made through PropFirmMath links at participating firms and redeem points for rewards. 1 point per $1 spent; 300 bonus points at sign-up in the researched programme.","#/loyalty"],["🎁","Giveaways","Enter member giveaways for funded accounts and other prizes. No purchase needed; one entry per person.","#/giveaways"],["📓","Trading journal","Track trades and P&amp;L across funded accounts, with a Rithmic importer in the researched feature set.","#/journal"],["✓","Reviews and verification","Review firms you have traded and earn a Verified Trader badge once you prove you hold an account.","#/methodology"]].map(function(c){
      return '<article class="glass tool-card"><span class="ic">'+c[0]+'</span><h3>'+c[1]+'</h3><p>'+c[2]+'</p><a href="'+c[3]+'"><strong>Open →</strong></a></article>'; }).join("")
    + '</div><div style="margin-top:18px;display:flex;gap:12px;flex-wrap:wrap;align-items:center"><a class="btn btn-teal" href="#/account">Sign up free</a><a class="btn btn-ghost" href="#/account">Log in</a><span class="snap-note">Takes under a minute. Start earning points on your next purchase (participating firms).</span></div>'
    + "</div></section>";
@@ -815,7 +818,7 @@ function calcRender(){
    + '<p style="margin-top:14px"><span class="youpay">'+money(pay)+'</span> <span style="font-weight:800;color:var(--ink2)">YOU PAY</span></p>'
    + '<p><span class="strike">'+money(list)+'</span> &nbsp;<span class="tag amber">'+f.off+'% OFF</span></p>'
    + '<p class="save" style="margin-top:8px">You save '+money(save)+'</p>'
-   + '<p class="snap-note" style="margin-top:10px">Loyalty: this firm doesn\'t allow loyalty points (researched programme).</p>'
+   + '<p class="snap-note" style="margin-top:10px">Loyalty: this firm doesn\'t allow firm comparisons (researched programme).</p>'
    + '<div style="display:flex;gap:9px;flex-wrap:wrap;margin-top:14px"><button class="code-btn" data-copy="'+f.code+'">'+f.code+' ⧉ copy</button><a class="btn btn-teal btn-sm" href="#/firm/apex-trader-funding">Get this account</a></div>'
    + '<p class="snap-note" style="margin-top:10px">Snapshot price, '+SNAPSHOT+'. Confirm at checkout.</p>';
 }
@@ -1230,7 +1233,7 @@ function renderAccount(){
   var region = locale.indexOf("-")>0 ? locale.split("-")[1].toUpperCase() : "";
   var countryGuess = region==="US" ? "United States" : (region==="GB" ? "United Kingdom" : (region==="IN" ? "India" : (region==="AU" ? "Australia" : "")));
   var html = pageHead('<a href="#/">Home</a> · Account', "Create your free account",
-    "Sign up for the loyalty programme: 300 bonus points the moment you sign up, in the researched programme. Takes under a minute; no card.");
+    "Account registration is a preview only. No account is created or stored until secure authentication is connected.");
   html += '<section style="padding-top:18px"><div class="wrap"><div style="max-width:560px">'
    + demoNotice()
    + '<div class="glass pad"><form id="regForm"><div class="field"><label for="regName">Full name</label><input type="text" id="regName" autocomplete="name" /></div>'
@@ -1281,35 +1284,6 @@ function renderLogin(){
     m.textContent="Password reset needs the live account system, which this static export doesn't include. On the live site a reset link would be emailed to you.";
   });
 }
-function renderLoyalty(){
-  var html = pageHead('<a href="#/">Home</a> · Loyalty Program', "Loyalty points — turn purchases into free accounts",
-    "The researched programme, stated plainly — including the parts that are easy to miss: points are per-firm, and some firms opt out.");
-  html += '<section style="padding-top:18px"><div class="wrap"><div class="prose">'
-   + demoNotice()
-   + "<h2>How it works</h2><p>Buy an account through a PropFirmMath link or code at a participating firm, submit the purchase in your account, and earn <strong>1 point per $1 spent</strong>. Sign-up adds <strong>300 bonus points</strong>. Points have no cash value.</p>"
-   + "<h2>Redemption ladder (researched)</h2><div class='glass tbl-wrap' style='margin:14px 0'><table style='min-width:340px'><thead><tr><th>Reward</th><th>Points</th><th>Implied spend</th></tr></thead><tbody>"
-   + [["$5K account","2,500","$2,500"],["$10K account","5,000","$5,000"],["$25K account","8,750","$8,750"],["$50K account","12,500","$12,500"],["$100K account","20,000","$20,000"]].map(function(r){ return "<tr><td>"+r[0]+"</td><td><strong>"+r[1]+"</strong></td><td>"+r[2]+"</td></tr>"; }).join("")
-   + "</tbody></table></div><p>Yes — the ladder means real spend. We publish it in full rather than hiding it behind a points balance; the researched example dashboard showed 1,860 points with 640 to go to a $5K account.</p>"
-   + "<h2>The catches, up front</h2><ul><li>Participation is per-firm — Apex Trader Funding, for one, doesn't allow loyalty points in the researched programme.</li><li>Points can be reviewed, adjusted or cancelled under the <a href='#/loyalty-policy'>Loyalty Points Policy</a>.</li><li>Accounts can be suspended for breach or suspected fraud.</li></ul>"
-   + '<p><a class="btn btn-teal" href="#/account">Create a free account</a></p>'
-   + "</div></div></section>";
-  $app.innerHTML = html;
-}
-function renderGiveaways(){
-  var html = pageHead('<a href="#/">Home</a> · Giveaways', "Win free trading prizes",
-    "How the researched giveaways work. The researched snapshot had 1 live giveaway; this export lists the past winners it recorded and runs no live draw.");
-  html += '<section style="padding-top:18px"><div class="wrap">'
-   + demoNotice()
-   + '<div class="grid c3" style="margin-bottom:22px">'+[["No purchase needed","Buying never improves your odds."],["One entry per person","Duplicate accounts are disqualified."],["Random draw","Winners are drawn at random when the timer ends and listed publicly."]].map(function(c){ return '<article class="glass pillar"><h3>'+c[0]+'</h3><p>'+c[1]+"</p></article>"; }).join("")+"</div>"
-   + '<h2 style="font-size:1.3rem;margin-bottom:12px">How to enter (researched flow)</h2><div class="glass pad"><p style="color:var(--ink2)">1 · Create a free account and confirm your email with the 6-digit code. 2 · Click Enter Giveaway on a prize — it appears under My Giveaways. 3 · Watch your inbox: winners are drawn at random and contacted by email, and must reply within 5 days or the prize is redrawn. Some giveaways run on X with an Enter on X button. Eligibility: 18+, a confirmed-email account, and living in a country the prize firm accepts. Prizes cannot be exchanged for cash or transferred, and are provided by the firm under its own terms.</p></div>'
-   + '<h2 style="font-size:1.3rem;margin:26px 0 12px">Past giveaways (researched snapshot)</h2><div class="glass tbl-wrap"><table><thead><tr><th>Prize</th><th>Firm</th><th>Value</th><th>Ended</th><th>Winner</th></tr></thead><tbody>'
-   + [["2x $50,000 Turbo 1-Step","Propr","$245.00 each","Nov 23, 2026","Listed by first name + country"],["$10,000 2-Step Account","Core Funded","$106.00","Nov 16, 2026","liam"],["2x $25K Trader Career Path","Earn2Trade","$75.00 each","Nov 15, 2026","Listed by first name + country"],["$5,000 2-Step","Core Funded","$45.00","Nov 9, 2026","Listed by first name + country"],["Tradeify Pack","Tradeify","Up to $99.00","Nov 8, 2026","Prince Wawan"]].map(function(r){ return "<tr><td>"+r[0]+"</td><td>"+r[1]+"</td><td>"+r[2]+"</td><td>"+r[3]+"</td><td>"+r[4]+"</td></tr>"; }).join("")
-   + "</tbody></table></div>"
-   + snapLine("Past-giveaway records as researched on "+SNAPSHOT+". Dates shown are the recorded end dates from that snapshot.")
-   + "</div></section>";
-  $app.innerHTML = html;
-}
-var journalRows = [];
 function renderJournal(){
   var total = journalRows.reduce(function(s,r){ return s+r.pnl; },0);
   var html = pageHead('<a href="#/">Home</a> · Trading Journal', "Trading journal",
@@ -1342,9 +1316,9 @@ function renderPrivacy(){
   html += '<section style="padding-top:14px"><div class="wrap"><div class="prose">'
    + "<h2>Who we are</h2><p>PropFirmMath ('we', 'us') is an independent prop firm review and comparison site operated by Hanumantha Rao Bathini, Memphis, TN, USA. Questions about this policy: hanumabathini9@gmail.com.</p>"
    + "<h2>What this static export collects</h2><p>This export build collects nothing. It has no server, no database, no analytics and no tracking cookies. Forms on this build validate in your browser and store nothing; the cookie notice on this build records your choice only in page memory, and it is forgotten when you close the tab.</p>"
-   + "<h2>What the live service collects</h2><p>On the live PropFirmMath service, we collect: account details you give us (name, country, email, password hash); purchase submissions you make for loyalty points (firm, account size, amount, receipt); giveaway entries; journal entries you save; and basic technical logs (IP address, browser, pages visited) needed to run and secure the site.</p>"
-   + "<h2>How we use it</h2><p>To run your account and the loyalty programme, enter you into giveaways you choose, show your journal back to you, answer support email, prevent fraud and duplicate accounts, and understand which pages are useful. We do not sell your personal data.</p>"
-   + "<h2>Affiliate links</h2><p>When you click an affiliate link or use a code, the firm may set its own cookies and tell us a purchase happened so commission and loyalty points can be credited. The firm's own privacy policy governs data on its site.</p>"
+   + "<h2>What the live service collects</h2><p>On the live PropFirmMath service, we collect: account details you give us (name, country, email, password hash); purchase submissions you make for firm comparisons (firm, account size, amount, receipt); giveaway entries; journal entries you save; and basic technical logs (IP address, browser, pages visited) needed to run and secure the site.</p>"
+   + "<h2>How we use it</h2><p>To run your account and the firm researchme, enter you into giveaways you choose, show your journal back to you, answer support email, prevent fraud and duplicate accounts, and understand which pages are useful. We do not sell your personal data.</p>"
+   + "<h2>Affiliate links</h2><p>When you click an affiliate link or use a code, the firm may set its own cookies and tell us a purchase happened so commission and firm comparisons can be credited. The firm's own privacy policy governs data on its site.</p>"
    + "<h2>Sharing</h2><p>We share data only with the service providers needed to run the site (hosting, email delivery), with a firm where needed to verify a loyalty purchase or award a giveaway prize, and where the law requires it.</p>"
    + "<h2>Retention and your rights</h2><p>Account data is kept while your account is open. You may ask us to access, correct, export or delete your personal data at any time by emailing hanumabathini9@gmail.com; we respond within 30 days. Deleting your account deletes your journal and loyalty balance.</p>"
    + "<h2>Children</h2><p>PropFirmMath is for adults (18+). We do not knowingly collect data from children.</p>"
@@ -1358,8 +1332,8 @@ function renderTerms(){
    + "<h2>1. The service</h2><p>PropFirmMath, operated by Hanumantha Rao Bathini, Memphis, TN, USA, publishes independent reviews, comparisons, discount codes and tools for proprietary trading firms. We are not a broker, not a prop firm, and not a financial advisor. Nothing on this site is investment advice or a recommendation to buy any evaluation or account.</p>"
    + "<h2>2. Accuracy</h2><p>Firms change prices, rules and offers frequently, often without notice. We date every figure we publish, but we cannot guarantee that information is current, complete or error-free. Always confirm price, rules and terms on the firm's own website before buying. Your contract is with the firm, not with us.</p>"
    + "<h2>3. Risk</h2><p>Trading leveraged products carries a high level of risk. Prop firm evaluations and funded accounts are simulated trading programs and most traders do not pass them. Never spend money on an evaluation that you cannot afford to lose.</p>"
-   + "<h2>4. Accounts</h2><p>Free accounts are for one person aged 18 or over. You are responsible for activity under your account. We may suspend or close accounts that breach these terms or are used for fraud, including duplicate accounts created to multiply loyalty points or giveaway entries.</p>"
-   + "<h2>5. Loyalty points and giveaways</h2><p>Points and prizes are governed by the <a href='#/loyalty-policy'>Loyalty Points Policy</a> and the giveaway terms on the <a href='#/giveaways'>Giveaways</a> page. Points have no cash value.</p>"
+   + "<h2>4. Accounts</h2><p>Free accounts are for one person aged 18 or over. You are responsible for activity under your account. We may suspend or close accounts that breach these terms or are used for fraud, including duplicate accounts created to multiply firm comparisons or giveaway entries.</p>"
+   + "<h2>5. Firm research and giveaways</h2><p>Points and prizes are governed by the <a href='#/loyalty-policy'>Loyalty Points Policy</a> and the giveaway terms on the <a href='#/giveaways'>Giveaways</a> page. Points have no cash value.</p>"
    + "<h2>6. Reviews</h2><p>Only traders who prove they hold or held an account may review a firm. Reviews must be honest and your own. We may remove reviews that are fake, abusive or unverifiable.</p>"
    + "<h2>7. Intellectual property</h2><p>Site content is owned by PropFirmMath or its licensors. Firm names and marks belong to their owners and are used to identify the firms reviewed.</p>"
    + "<h2>8. Liability</h2><p>To the fullest extent allowed by law, PropFirmMath is not liable for losses arising from decisions you make using this site, including purchases made at firms we review. Nothing in these terms limits liability that cannot be limited by law.</p>"
@@ -1374,7 +1348,7 @@ function renderDisclosure(){
    + "<h2>How we make money</h2><p>PropFirmMath is free to use because it earns commission from many of the firms it reviews. Many links and discount codes on this site are affiliate links: when you click through and buy an account, the firm may pay PropFirmMath a commission, at no extra cost to you — and the code usually lowers your price. Commission rates differ between firms and can change. We may also be paid for clearly labelled sponsored content or giveaways, and some tools listed on this site pay commission through their links.</p>"
    + "<h2>How we stay independent</h2><ul><li><strong>No paid rankings.</strong> A firm cannot pay to rank higher, score better or be featured.</li><li><strong>No listing fees.</strong> A firm cannot buy a place in the directory.</li><li><strong>Same standards for everyone.</strong> Every review is built from the firm's own published rules, prices and payout terms, checked the same way whether or not we earn commission from that firm.</li><li><strong>Delisting.</strong> Firms that stop treating traders fairly are removed, even if they paid commission — see <a href='#/delisted'>Delisted Firms</a>.</li><li><strong>Sponsored content is labelled</strong> wherever it appears.</li></ul>"
    + "<h2>Ratings you can check</h2><p>Next to any editorial view, reviews show the firm's public rating and its source (Trustpilot, or Trustindex where that is the firm's platform), plus a Verified Trader Score once enough verified traders have reviewed the firm. Quiz results are scored on published rules only — never on commission.</p>"
-   + "<h2>Loyalty points</h2><p>Points are earned on purchases made through our links or codes at participating firms, under the <a href='#/loyalty-policy'>Loyalty Points Policy</a>. Some firms do not participate.</p>"
+   + "<h2>Firm research</h2><p>Points are earned on purchases made through our links or codes at participating firms, under the <a href='#/loyalty-policy'>Loyalty Points Policy</a>. Some firms do not participate.</p>"
    + "<h2>Not financial advice</h2><p>Everything on PropFirmMath is information only. Confirm all details on the firm's own website before buying.</p>"
    + "<h2>FTC disclosure</h2><p>This disclosure is made in line with US Federal Trade Commission guidance on endorsements and testimonials. Where a page contains affiliate links, assume PropFirmMath may earn commission from purchases made through them.</p>"
    + "<h2>Contact</h2><p>PropFirmMath, operated by Hanumantha Rao Bathini, Memphis, TN, USA. Partnership and disclosure questions: hanumabathini9@gmail.com.</p>"
@@ -1388,16 +1362,6 @@ function renderCookies(){
    + "<h2>The live service</h2><p>The live PropFirmMath service uses: (1) strictly necessary cookies to keep you signed in and secure your session; (2) a cookie remembering your cookie-banner choice; (3) affiliate attribution — when you click through to a firm, that firm may set its own cookies under its own policy so a purchase can be credited. We do not run third-party advertising trackers.</p>"
    + "<h2>Your choices</h2><p>Use the banner's Reject All option to refuse everything beyond strictly necessary cookies on the live service, or clear cookies in your browser at any time. Blocking cookies may sign you out and stop loyalty attribution for purchases.</p>"
    + "<h2>Contact</h2><p>hanumabathini9@gmail.com.</p>"
-   + "</div></div></section>";
-  $app.innerHTML = html;
-}
-function renderLoyaltyPolicy(){
-  var html = legalHead("Loyalty Points Policy", "The full rules of the PropFirmMath loyalty programme.");
-  html += '<section style="padding-top:14px"><div class="wrap"><div class="prose">'
-   + "<h2>Earning</h2><p>Members earn 1 point per $1 spent on accounts bought through PropFirmMath links or codes at participating firms, once the purchase is submitted and verified. New accounts receive 300 bonus points. Participation is per-firm; some firms do not participate, and their pages say so.</p>"
-   + "<h2>Redemption</h2><p>Points redeem against account rewards at the published ladder: $5K account 2,500 points; $10K 5,000; $25K 8,750; $50K 12,500; $100K 20,000. Rewards are subject to the issuing firm's own terms and eligibility.</p>"
-   + "<h2>Limits</h2><ul><li>Points have no cash value and cannot be transferred or sold.</li><li>One account per person; duplicate accounts forfeit their points.</li><li>Refunded or charged-back purchases have their points reversed.</li><li>PropFirmMath may review, adjust or cancel points or rewards where fraud or error is suspected, and may suspend accounts for breach.</li><li>Points on accounts closed for breach are forfeited.</li></ul>"
-   + "<h2>Changes</h2><p>We may change earning or redemption rates prospectively; points already earned keep the ladder in force when they were earned. Contact: hanumabathini9@gmail.com.</p>"
    + "</div></div></section>";
   $app.innerHTML = html;
 }
@@ -1429,7 +1393,7 @@ function buildSearchIndex(){
   GUIDES.forEach(function(g){ SEARCH_INDEX.push({t:g.title,k:"Guide",h:"#/guide/"+g.slug,s:(g.title+" "+g.excerpt).toLowerCase()}); });
   FAQS.forEach(function(x,i){ SEARCH_INDEX.push({t:x.q,k:"FAQ",h:"#/faq",s:(x.q+" "+x.a.replace(/<[^>]+>/g," ")).toLowerCase()}); });
   GLOSSARY.forEach(function(g){ SEARCH_INDEX.push({t:g[0]+" — glossary",k:"Glossary",h:"#/glossary",s:(g[0]+" "+g[1]).toLowerCase()}); });
-  [["Compare firms","#/compare","compare side by side"],["Payout tracker","#/tracker","payouts on-chain rise snapshot"],["Find Your Firm quiz","#/quiz","quiz match firms"],["Savings & consistency tools","#/tools","calculator consistency tick pip forex"],["Rules comparison","#/rules","rules drawdown consistency"],["Statistics","#/statistics","statistics numbers"],["Deals hub","#/deals","deals discount codes"],["Loyalty program","#/loyalty","loyalty points rewards"],["Giveaways","#/giveaways","giveaway win prizes"],["Trading journal","#/journal","journal trades pnl"],["How we rank — methodology","#/methodology","methodology ranking formula"],["Privacy Policy","#/privacy","privacy"],["Terms & Conditions","#/terms","terms"],["Affiliate Disclosure","#/disclosure","affiliate disclosure commission"]].forEach(function(p){ SEARCH_INDEX.push({t:p[0],k:"Page",h:p[1],s:p[2]}); });
+  [["Compare firms","#/compare","compare side by side"],["Payout tracker","#/tracker","payouts on-chain rise snapshot"],["Find Your Firm quiz","#/quiz","quiz match firms"],["Savings & consistency tools","#/tools","calculator consistency tick pip forex"],["Rules comparison","#/rules","rules drawdown consistency"],["Statistics","#/statistics","statistics numbers"],["Deals hub","#/deals","deals discount codes"],["Loyalty program","#/loyalty","firm rules and calculators"],["Giveaways","#/giveaways","giveaway win prizes"],["Trading journal","#/journal","journal trades pnl"],["How we rank — methodology","#/methodology","methodology ranking formula"],["Privacy Policy","#/privacy","privacy"],["Terms & Conditions","#/terms","terms"],["Affiliate Disclosure","#/disclosure","affiliate disclosure commission"]].forEach(function(p){ SEARCH_INDEX.push({t:p[0],k:"Page",h:p[1],s:p[2]}); });
 }
 function runSearch(q){
   var box=document.getElementById("searchResults");
@@ -1444,6 +1408,25 @@ function runSearch(q){
 }
 /* ================= router & global bindings ================= */
 function closeSearch(){ document.getElementById("searchOverlay").classList.remove("open"); }
+function renderCalendar(){
+  var html = pageHead('<a href="#/">Home</a> · Economic Calendar', "Economic calendar", "Upcoming economic releases and policy events for futures, forex, gold, crypto and index traders. Times and event data are provided by TradingView; always confirm major releases with official agencies.");
+  html += '<section style="padding-top:18px"><div class="wrap">'
+    + '<div class="glass pad" style="margin-bottom:18px"><div class="grid c3"><div><span class="tag amber">Macro events</span><h3 style="margin-top:10px">Watch high-impact news</h3><p class="sub">CPI, NFP, FOMC, GDP and central bank announcements.</p></div><div><span class="tag">Trading sessions</span><h3 style="margin-top:10px">Check event times</h3><p class="sub">Review the displayed timezone before entering a trade.</p></div><div><span class="tag">Prop firm rules</span><h3 style="margin-top:10px">Confirm news restrictions</h3><p class="sub">Each firm and account program may restrict trading around releases.</p></div></div></div>'
+    + '<div class="glass" style="padding:12px;min-width:0;overflow:hidden"><div id="economicWidget" class="tradingview-widget-container" style="width:100%;min-height:620px"><div class="tradingview-widget-container__widget" style="height:620px;width:100%"></div><div class="tradingview-widget-copyright" style="font-size:12px;padding:8px;color:var(--ink2)">Calendar data provided by <a href="https://www.tradingview.com/" target="_blank" rel="noopener noreferrer">TradingView</a>. Loading events…</div></div></div>'
+    + '<p class="snap-note" style="margin:14px 0 28px">Third-party economic calendar. Availability depends on the provider and your connection. This is not a firm-specific news-trading permission indicator. <a href="https://www.tradingview.com/economic-calendar/" target="_blank" rel="noopener noreferrer">Open the full calendar</a>.</p>'
+    + '</div></section>';
+  $app.innerHTML = html;
+  var host = document.getElementById("economicWidget");
+  if(!host) return;
+  var script = document.createElement("script");
+  script.type = "text/javascript";
+  script.async = true;
+  script.src = "https://s3.tradingview.com/external-embedding/embed-widget-events.js";
+  script.text = JSON.stringify({colorTheme:"dark",isTransparent:true,width:"100%",height:620,locale:"en",importanceFilter:"0,1",countryFilter:"us,eu,gb,ca,au,jp,cn"});
+  script.onerror = function(){var msg=host.querySelector(".tradingview-widget-copyright");if(msg)msg.textContent="Calendar unavailable. Use the full TradingView economic calendar link below.";};
+  host.appendChild(script);
+}
+
 function route(){
   var h = location.hash.replace(/^#\/?/, "");
   var parts = h.split("/").filter(Boolean);
@@ -1461,6 +1444,7 @@ function route(){
   else if(parts[0]==="tracker"){ renderTracker(); }
   else if(parts[0]==="quiz"){ renderQuiz(); }
   else if(parts[0]==="tools"){ renderTools(); }
+  else if(parts[0]==="calendar"){ renderCalendar(); }
   else if(parts[0]==="best-for" && parts[1]){ renderBestFor(parts[1]); }
   else if(parts[0]==="best-for"){ renderBestForHub(); }
   else if(parts[0]==="guides"){ renderGuides(); }
