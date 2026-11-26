@@ -761,7 +761,7 @@ function renderHome(){
    + "</div></div></section>";
   /* free account */
   html += '<section><div class="wrap"><div class="sec-head"><span class="eyebrow">Free account</span><h2>Get more out of every firm you buy</h2><p class="sub">Everything below is described as free with an account. This static export has no backend, so sign-up here is a front-end demo — see the notice on the account page.</p></div><div class="grid c2">'
-   + [["⭐","Firm research","Submit purchases made through PropFirmMath links at participating firms and redeem points for rewards. 1 point per $1 spent; 300 bonus points at sign-up in the researched programme.","#/loyalty"],["🎁","Giveaways","Enter member giveaways for funded accounts and other prizes. No purchase needed; one entry per person.","#/giveaways"],["📓","Trading journal","Track trades and P&amp;L across funded accounts, with a Rithmic importer in the researched feature set.","#/journal"],["✓","Reviews and verification","Review firms you have traded and earn a Verified Trader badge once you prove you hold an account.","#/methodology"]].map(function(c){
+   + [["📓","Trading journal","Track trades and P&amp;L across funded accounts, with a Rithmic importer in the researched feature set.","#/journal"],["✓","Reviews and verification","Review firms you have traded and earn a Verified Trader badge once you prove you hold an account.","#/methodology"]].map(function(c){
      return '<article class="glass tool-card"><span class="ic">'+c[0]+'</span><h3>'+c[1]+'</h3><p>'+c[2]+'</p><a href="'+c[3]+'"><strong>Open →</strong></a></article>'; }).join("")
    + '</div><div style="margin-top:18px;display:flex;gap:12px;flex-wrap:wrap;align-items:center"><a class="btn btn-teal" href="#/account">Sign up free</a><a class="btn btn-ghost" href="#/account">Log in</a><span class="snap-note">Takes under a minute. Start earning points on your next purchase (participating firms).</span></div>'
    + "</div></section>";
@@ -818,7 +818,6 @@ function calcRender(){
    + '<p style="margin-top:14px"><span class="youpay">'+money(pay)+'</span> <span style="font-weight:800;color:var(--ink2)">YOU PAY</span></p>'
    + '<p><span class="strike">'+money(list)+'</span> &nbsp;<span class="tag amber">'+f.off+'% OFF</span></p>'
    + '<p class="save" style="margin-top:8px">You save '+money(save)+'</p>'
-   + '<p class="snap-note" style="margin-top:10px">Loyalty: this firm doesn\'t allow firm comparisons (researched programme).</p>'
    + '<div style="display:flex;gap:9px;flex-wrap:wrap;margin-top:14px"><button class="code-btn" data-copy="'+f.code+'">'+f.code+' ⧉ copy</button><a class="btn btn-teal btn-sm" href="#/firm/apex-trader-funding">Get this account</a></div>'
    + '<p class="snap-note" style="margin-top:10px">Snapshot price, '+SNAPSHOT+'. Confirm at checkout.</p>';
 }
@@ -1256,7 +1255,7 @@ function renderAccount(){
     if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)) return err("That email address doesn't look valid.");
     if(p1.length<8) return err("Password needs at least 8 characters.");
     if(p1!==p2) return err("Passwords don't match.");
-    if(!document.getElementById("regTerms").checked) return err("Please agree to the Terms, Privacy Policy and Loyalty Points Policy.");
+    if(!document.getElementById("regTerms").checked) return err("Please agree to the Terms and Privacy Policy.");
     msg.className="form-msg ok"; msg.textContent="Form valid — but this static export has no backend, so no account was created and nothing was stored. In the live programme this is where your 300 bonus points would land.";
   });
 }
@@ -1316,11 +1315,11 @@ function renderPrivacy(){
   html += '<section style="padding-top:14px"><div class="wrap"><div class="prose">'
    + "<h2>Who we are</h2><p>PropFirmMath ('we', 'us') is an independent prop firm review and comparison site operated by Hanumantha Rao Bathini, Memphis, TN, USA. Questions about this policy: hanumabathini9@gmail.com.</p>"
    + "<h2>What this static export collects</h2><p>This export build collects nothing. It has no server, no database, no analytics and no tracking cookies. Forms on this build validate in your browser and store nothing; the cookie notice on this build records your choice only in page memory, and it is forgotten when you close the tab.</p>"
-   + "<h2>What the live service collects</h2><p>On the live PropFirmMath service, we collect: account details you give us (name, country, email, password hash); purchase submissions you make for firm comparisons (firm, account size, amount, receipt); giveaway entries; journal entries you save; and basic technical logs (IP address, browser, pages visited) needed to run and secure the site.</p>"
-   + "<h2>How we use it</h2><p>To run your account and the firm researchme, enter you into giveaways you choose, show your journal back to you, answer support email, prevent fraud and duplicate accounts, and understand which pages are useful. We do not sell your personal data.</p>"
+    + "<h2>Future account features</h2><p>Account registration and journal persistence are not yet active. This static website does not accept account registrations or save trading records.</p>"
+    + "<h2>Use of information</h2><p>We use information voluntarily submitted through future enabled services only as disclosed when those services launch. We do not sell personal data.</p>"
    + "<h2>Affiliate links</h2><p>When you click an affiliate link or use a code, the firm may set its own cookies and tell us a purchase happened so commission and firm comparisons can be credited. The firm's own privacy policy governs data on its site.</p>"
-   + "<h2>Sharing</h2><p>We share data only with the service providers needed to run the site (hosting, email delivery), with a firm where needed to verify a loyalty purchase or award a giveaway prize, and where the law requires it.</p>"
-   + "<h2>Retention and your rights</h2><p>Account data is kept while your account is open. You may ask us to access, correct, export or delete your personal data at any time by emailing hanumabathini9@gmail.com; we respond within 30 days. Deleting your account deletes your journal and loyalty balance.</p>"
+    + "<h2>Sharing</h2><p>Any future data-sharing arrangements will be disclosed before data collection begins.</p>"
+    + "<h2>Retention and your rights</h2><p>Contact the support email listed above with privacy requests.</p>"
    + "<h2>Children</h2><p>PropFirmMath is for adults (18+). We do not knowingly collect data from children.</p>"
    + "<h2>Changes</h2><p>Material changes to this policy will be posted on this page with a new effective date.</p>"
    + "</div></div></section>";
@@ -1332,8 +1331,8 @@ function renderTerms(){
    + "<h2>1. The service</h2><p>PropFirmMath, operated by Hanumantha Rao Bathini, Memphis, TN, USA, publishes independent reviews, comparisons, discount codes and tools for proprietary trading firms. We are not a broker, not a prop firm, and not a financial advisor. Nothing on this site is investment advice or a recommendation to buy any evaluation or account.</p>"
    + "<h2>2. Accuracy</h2><p>Firms change prices, rules and offers frequently, often without notice. We date every figure we publish, but we cannot guarantee that information is current, complete or error-free. Always confirm price, rules and terms on the firm's own website before buying. Your contract is with the firm, not with us.</p>"
    + "<h2>3. Risk</h2><p>Trading leveraged products carries a high level of risk. Prop firm evaluations and funded accounts are simulated trading programs and most traders do not pass them. Never spend money on an evaluation that you cannot afford to lose.</p>"
-   + "<h2>4. Accounts</h2><p>Free accounts are for one person aged 18 or over. You are responsible for activity under your account. We may suspend or close accounts that breach these terms or are used for fraud, including duplicate accounts created to multiply firm comparisons or giveaway entries.</p>"
-   + "<h2>5. Firm research and giveaways</h2><p>Points and prizes are governed by the <a href='#/loyalty-policy'>Loyalty Points Policy</a> and the giveaway terms on the <a href='#/giveaways'>Giveaways</a> page. Points have no cash value.</p>"
+    + "<h2>4. Accounts</h2><p>Account creation is not available in this static preview. Do not submit sensitive personal information.</p>"
+    + "<h2>5. Firm research</h2><p>Firm data is a dated research snapshot and should be confirmed against official firm terms before purchasing.</p>"
    + "<h2>6. Reviews</h2><p>Only traders who prove they hold or held an account may review a firm. Reviews must be honest and your own. We may remove reviews that are fake, abusive or unverifiable.</p>"
    + "<h2>7. Intellectual property</h2><p>Site content is owned by PropFirmMath or its licensors. Firm names and marks belong to their owners and are used to identify the firms reviewed.</p>"
    + "<h2>8. Liability</h2><p>To the fullest extent allowed by law, PropFirmMath is not liable for losses arising from decisions you make using this site, including purchases made at firms we review. Nothing in these terms limits liability that cannot be limited by law.</p>"
@@ -1348,7 +1347,7 @@ function renderDisclosure(){
    + "<h2>How we make money</h2><p>PropFirmMath is free to use because it earns commission from many of the firms it reviews. Many links and discount codes on this site are affiliate links: when you click through and buy an account, the firm may pay PropFirmMath a commission, at no extra cost to you — and the code usually lowers your price. Commission rates differ between firms and can change. We may also be paid for clearly labelled sponsored content or giveaways, and some tools listed on this site pay commission through their links.</p>"
    + "<h2>How we stay independent</h2><ul><li><strong>No paid rankings.</strong> A firm cannot pay to rank higher, score better or be featured.</li><li><strong>No listing fees.</strong> A firm cannot buy a place in the directory.</li><li><strong>Same standards for everyone.</strong> Every review is built from the firm's own published rules, prices and payout terms, checked the same way whether or not we earn commission from that firm.</li><li><strong>Delisting.</strong> Firms that stop treating traders fairly are removed, even if they paid commission — see <a href='#/delisted'>Delisted Firms</a>.</li><li><strong>Sponsored content is labelled</strong> wherever it appears.</li></ul>"
    + "<h2>Ratings you can check</h2><p>Next to any editorial view, reviews show the firm's public rating and its source (Trustpilot, or Trustindex where that is the firm's platform), plus a Verified Trader Score once enough verified traders have reviewed the firm. Quiz results are scored on published rules only — never on commission.</p>"
-   + "<h2>Firm research</h2><p>Points are earned on purchases made through our links or codes at participating firms, under the <a href='#/loyalty-policy'>Loyalty Points Policy</a>. Some firms do not participate.</p>"
+    + "<h2>Affiliate links</h2><p>Some firm links may earn a commission. There is no points or rewards program.</p>"
    + "<h2>Not financial advice</h2><p>Everything on PropFirmMath is information only. Confirm all details on the firm's own website before buying.</p>"
    + "<h2>FTC disclosure</h2><p>This disclosure is made in line with US Federal Trade Commission guidance on endorsements and testimonials. Where a page contains affiliate links, assume PropFirmMath may earn commission from purchases made through them.</p>"
    + "<h2>Contact</h2><p>PropFirmMath, operated by Hanumantha Rao Bathini, Memphis, TN, USA. Partnership and disclosure questions: hanumabathini9@gmail.com.</p>"
@@ -1360,7 +1359,7 @@ function renderCookies(){
   html += '<section style="padding-top:14px"><div class="wrap"><div class="prose">'
    + "<h2>This export build</h2><p>This static export sets no cookies and runs no analytics or advertising trackers. Your cookie-banner choice is kept only in page memory and forgotten when the tab closes.</p>"
    + "<h2>The live service</h2><p>The live PropFirmMath service uses: (1) strictly necessary cookies to keep you signed in and secure your session; (2) a cookie remembering your cookie-banner choice; (3) affiliate attribution — when you click through to a firm, that firm may set its own cookies under its own policy so a purchase can be credited. We do not run third-party advertising trackers.</p>"
-   + "<h2>Your choices</h2><p>Use the banner's Reject All option to refuse everything beyond strictly necessary cookies on the live service, or clear cookies in your browser at any time. Blocking cookies may sign you out and stop loyalty attribution for purchases.</p>"
+   + "<h2>Your choices</h2><p>Use the banner's Reject All option to refuse everything beyond strictly necessary cookies on the live service, or clear cookies in your browser at any time.</p>"
    + "<h2>Contact</h2><p>hanumabathini9@gmail.com.</p>"
    + "</div></div></section>";
   $app.innerHTML = html;
