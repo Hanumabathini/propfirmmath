@@ -1,9 +1,10 @@
 # PropFirmMath
 
-Free calculators for futures traders in prop firm evaluations and funded accounts: consistency rule, payout, trailing drawdown, profit target planner and futures position size, plus Topstep, Tradeify and MyFundedFutures rules pages and a comparison.
+Live site: https://hanumabathini.github.io/propfirmmath/
 
-- `python3 build.py` builds the static site into `dist/` (needs Python 3 and Node).
-- Pushing to `main` deploys to GitHub Pages (`.github/workflows/deploy.yml`).
-- `data/prop.json` holds every firm rule and preset, with its source pages and the date read.
-- `src/prop.js` is the one calculation engine; `prop_pages.py` builds the pages.
-- Setup steps are in `LAUNCH.md`.
+Compare prop firms by the math, not the marketing. The site is a Spatial UI & Glassmorphism multi-page site: a 47-firm directory (20 reviewed in full), deals and discount codes, a payout tracker, firm comparisons, calculators, guides, and a find-your-firm quiz. Firm data is a snapshot dated Nov 25, 2026.
+
+- The whole site is one self-contained file: `site/index.html`. It uses hash routes (`#/firms`, `#/quiz`, `#/compare`, …) and needs no build step. Notes on the pages are in `site/README.md`.
+- Pushing to `main` deploys it to GitHub Pages (`.github/workflows/deploy.yml` uploads `site/`).
+- `.github/workflows/quality.yml` checks that `site/index.html` exists and contains the title, firm data, and main routes.
+- `docs/` holds the research notes behind the directory (competitor review and verified rule methodology).
