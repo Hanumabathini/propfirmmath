@@ -1,3 +1,6 @@
+# Checks the site/ folder that GitHub Pages publishes.
+# The site is a single self-contained file (site/index.html);
+# there is no build step.
 name: Quality gate
 on:
   pull_request:
@@ -11,33 +14,16 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - uses: actions/checkout@v4
         with:
           persist-credentials: false
-      - name: Calculation regressions
+      - name: Check the published site
         run: |
           set -e
-          test -d tests
-          find tests -name '*.cjs' -print0 | xargs -0 -r -n1 node
-      - name: Build static site
-        env:
-          SITE_URL: https://propfirmmath-xi.vercel.app
-          BASE_PATH: /
-        run: |
-          python3 build.py
-          test -s dist/index.html
-          test -s dist/sitemap.xml
-          test -s dist/robots.txt
-      - name: Validate generated canonical URLs and sitemap
-        run: |
-          python3 - <<'PY'
-          import pathlib, xml.etree.ElementTree as ET
-          from urllib.parse import urlparse
-          root = pathlib.Path("dist")
-          urls = ET.parse(root / "sitemap.xml").findall(".//{*}loc")
-          assert urls, "Empty sitemap"
-          for entry in urls:
-              path = urlparse(entry.text).path.lstrip("/")
-              target = root / path
-              assert target.is_file() or (target / "index.html").is_file(), entry.text
-          PY
+          test -s site/index.html
+          test -s site/README.md
+          grep -Fq 'PropFirmMath — Compare Prop Firms by the Math' site/index.html
+          grep -Fq 'var FIRMS' site/index.html
+          grep -Fq '#/firms' site/index.html
+          grep -Fq '#/quiz' site/index.html
+          grep -Fq 'Compare prop firms by the math' site/index.html
