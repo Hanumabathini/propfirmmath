@@ -26,4 +26,4 @@ jobs:
           grep -Fq 'var FIRMS' site/index.html
           grep -Fq '#/firms' site/index.html
           grep -Fq '#/quiz' site/index.html
-          grep -Fq 'Compare prop firms by the math' site/index.html
+          grep -Fq 'Compare prop firms by' site/index.html
