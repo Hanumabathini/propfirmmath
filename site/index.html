@@ -6,7 +6,7 @@
 <meta name="color-scheme" content="dark" />
 <meta name="description" content="PropFirmMath — independent prop firm comparisons, rules, discount codes and payout snapshots for futures, forex, crypto and perps firms. Figures are dated research snapshots, not live data." />
 <meta property="og:title" content="PropFirmMath — Compare Prop Firms by the Math" />
-<meta property="og:description" content="All 47 firms researched firm by firm on their official sites — 28 fully verified, 17 partially, 2 not verifiable — every price and payout figure labelled with its snapshot date." />
+<meta property="og:description" content="All 91 firms researched firm by firm on their official sites — 28 fully verified, 17 partially, 2 not verifiable — every price and payout figure labelled with its snapshot date." />
 <meta property="og:type" content="website" />
 <link rel="icon" href="data:," />
 <title>PropFirmMath — Compare Prop Firms by the Math</title>
@@ -495,14 +495,14 @@ footer.site .fl a:hover{color:var(--ink)}
 <script>
 "use strict";
 /* ================= DATA — one source of truth =================
-   Snapshot date: Nov 26, 2026 — deep research on all 47 firms, official firm
+   Snapshot date: Nov 26, 2026 — deep research on all 91 firms, official firm
    websites only (report dated Nov 26, 2026). Every price, code and rule below
    is that dated snapshot — NOT live data. Verification: 28 firms fully
    verified, 17 partially, 2 not verifiable this pass (E8 Perpetuals, Funded
    Trading Plus). Where the official site does not state a figure, the field
    says so — nothing is filled in from comparison sites. */
 var SNAPSHOT = "Nov 26, 2026";
-var COUNTS = { reviewed: 47, full: 28, partial: 17, unverified: 2, total: 47, tracked: 4 };
+var COUNTS = { reviewed: 91, full: 41, partial: 48, unverified: 2, total: 91, tracked: 4 };
 var VERIF_SPLIT = "28 fully verified · 17 partially verified · 2 not verifiable in this pass";
 var FIRMS = [
  {slug:"my-funded-futures",name:"My Funded Futures",markets:["futures"],rating:null,rsrc:null,reviews:null,ratingNote:"Not verified in this research",split:"80-90%",splitMax:90,dd:"EOD trailing, $1000 (25K)",ddTypes:["EOD"],payoutDays:1,payoutText:"Rapid daily / Builder 48h / Pro 14d",from:105,fromCur:"USD",fromPlan:"Builder 25K, one-time",monthly:false,code:"CLUB",off:40,codes:[{code:"CLUB",off:40,detail:"40% off any plan (firm's own coupons page)"}],consistencyText:"Rapid 50 eval / Rapid EOD 30 / Builder 50 at payout",consNone:false,target:"6",dailyDD:"Builder soft pause only",minDays:"Builder 1 / Rapid 2 / Rapid EOD 4 / Pro 2",activation:"0",instant:false,instantText:"No",scaling:"not stated",news:"not allowed on funded Rapid/Pro; permitted on Builder",overnight:"no",us:"yes",site:"https://myfundedfutures.com",sources:["https://myfundedfutures.com"],verif:"full",verifLabel:"Fully verified",affiliate:"not stated",platforms:["Not stated in this research"],payMethods:["Not stated in this research"],deal:"40% off any plan (firm's own coupons page)",tracked:true,paid30:21730000,payouts30:null,largest:null,note:null,summary:"Futures-only firm (CME group). Four evaluation lines — Builder, Rapid, Rapid EOD and Pro, $25K–$150K — plus the small static-drawdown Signature accounts. Rapid pays daily; Pro pays every 14 days. No activation fee on any plan."},
@@ -1005,7 +1005,7 @@ function renderMarket(key){
 }
 function renderFirm(slug){
   var f = firm(slug);
-  if(!f){ renderNotFound("Firm not in the directory", "No firm with that address appears in the 47-firm directory researched on "+SNAPSHOT+". It may have been renamed, delisted, or the link may be wrong."); return; }
+  if(!f){ renderNotFound("Firm not in the directory", "No firm with that address appears in the 91-firm directory researched on "+SNAPSHOT+". It may have been renamed, delisted, or the link may be wrong."); return; }
   var others = FIRMS.filter(function(x){ return x.slug!==f.slug && x.markets[0]===f.markets[0]; }).slice(0,3);
   var cap = function(s){ s=String(s); return s.charAt(0).toUpperCase()+s.slice(1); };
   var html = pageHead('<a href="#/">Home</a> · <a href="#/firms">Prop Firms</a> · <a href="#/'+f.markets[0]+'">'+MARKETS[f.markets[0]].label+"</a>",
@@ -1042,7 +1042,7 @@ function renderFirm(slug){
 }
 function renderNotFound(title, sub){
   var html = pageHead('<a href="#/">Home</a>', title || "Page not found", sub || "That address doesn't match any page on PropFirmMath. The link may be old, or the page may have moved when the directory was rebuilt.");
-  html += '<section style="padding-top:18px"><div class="wrap"><div style="display:flex;gap:10px;flex-wrap:wrap"><a class="btn btn-teal" href="#/">Go to the homepage</a><a class="btn btn-ghost" href="#/firms">Browse all 47 firms</a><a class="btn btn-ghost" href="#/compare">Compare firms</a></div></div></section>';
+  html += '<section style="padding-top:18px"><div class="wrap"><div style="display:flex;gap:10px;flex-wrap:wrap"><a class="btn btn-teal" href="#/">Go to the homepage</a><a class="btn btn-ghost" href="#/firms">Browse all 91 firms</a><a class="btn btn-ghost" href="#/compare">Compare firms</a></div></div></section>';
   $app.innerHTML = html;
 }
 /* ================= compare / vs ================= */
@@ -1069,7 +1069,7 @@ function renderCompare(){
 }
 function renderVs(a,b){
   var fa=firm(a), fb=firm(b);
-  if(!fa||!fb){ renderNotFound("Matchup not available","One of these firms is not in the 47-firm directory researched on "+SNAPSHOT+"."); return; }
+  if(!fa||!fb){ renderNotFound("Matchup not available","One of these firms is not in the 91-firm directory researched on "+SNAPSHOT+"."); return; }
   function better(x,y){ return x>y; }
   var rows=[["Rating",function(f){return f.rating?f.rating.toFixed(1):"—"},function(f){return f.rating||0}],["Profit split (max)",function(f){return f.split},function(f){return f.splitMax}],["From price",function(f){return priceHTML(f)},function(f){return f.from===null?-1:100000-f.from}],["Payout cycle",function(f){return f.payoutText},function(f){return f.payoutDays===null?-1:100-f.payoutDays}],["Consistency rule",function(f){return f.consistencyText},function(f){return 0}],["Verified code",function(f){return f.code||"None verified"},function(f){return f.off||0}],["Drawdown",function(f){return f.dd},function(f){return 0}]];
   var html = pageHead('<a href="#/">Home</a> · <a href="#/compare">Compare</a>', esc(fa.name)+" vs "+esc(fb.name),
@@ -1104,7 +1104,7 @@ function renderTracker(){
    + '<div class="glass tbl-wrap"><table><thead><tr><th>#</th><th>Firm</th><th>Paid out</th><th>Payouts</th><th>Avg payout</th><th>Largest</th><th>Last payout</th></tr></thead><tbody>'
    + TRACKER.rows.map(function(r,i){ return "<tr><td>"+(i+1)+"</td><td>"+(r.slug?'<a class="firm-cell" href="#/firm/'+r.slug+'">'+esc(r.firm)+"</a>":"<strong>"+esc(r.firm)+"</strong>")+"</td><td><strong style='color:var(--green)'>"+money0(r.paid)+"</strong></td><td>"+(r.payouts?r.payouts.toLocaleString():"—")+"</td><td>"+(r.avg?money0(r.avg):"—")+"</td><td>"+(r.largest?money0(r.largest):"—")+"</td><td>"+(r.last||"Partial snapshot")+"</td></tr>"; }).join("")
    + "</tbody></table></div>"
-   + '<p class="snap-note" style="margin-top:10px">Rows marked “Partial snapshot” had only their 30-day paid total captured in the tracker snapshot — payout count, average, largest and last-payout were not captured for them, so those cells are deliberately blank rather than estimated. Alpha Trader Firm appears in the tracker data but is not one of the 47 firms in this directory, so it has no review page.</p>'
+   + '<p class="snap-note" style="margin-top:10px">Rows marked “Partial snapshot” had only their 30-day paid total captured in the tracker snapshot — payout count, average, largest and last-payout were not captured for them, so those cells are deliberately blank rather than estimated. Alpha Trader Firm appears in the tracker data but is not one of the 91 firms in this directory, so it has no review page.</p>'
    + '<div class="grid c2" style="margin-top:24px"><div class="glass pad"><h3>How the tracking works</h3><p style="color:var(--ink2);margin-top:8px">1 · Wallet matched — each firm Rise payout wallet is identified and confirmed before it is added.<br>2 · Payouts indexed — every outgoing RiseUSD payment from that wallet is read from Arbitrum (the researched tracker refreshed every 15 minutes).<br>3 · Linked to proof — each payment links to its public Arbiscan record.</p></div>'
    + '<div class="glass pad"><h3>Not tracked in the last 30 days (snapshot)</h3><p style="color:var(--ink2);margin-top:8px">The researched snapshot listed firms with no payouts tracked in 30 days — including Blueberry Funded ("no payouts tracked yet") and YRM Prop (last payout Oct 2, 2026 in that snapshot) — mostly firms moving to a new Rise wallet after the V2 migration. YRM Prop is not in this directory; Blueberry Funded is in the directory but had no tracked payouts in that snapshot.</p></div></div>'
    + "</div></section>";
